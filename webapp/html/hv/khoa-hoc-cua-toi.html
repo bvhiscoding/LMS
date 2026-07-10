@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khóa học của tôi | E-Learning VBS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body data-role="hv" data-page="hv-courses">
+
+
+
+<div id="loginScreen">
+  <div class="lg-brand">
+    <div style="display:flex;align-items:center;gap:12px"><div style="width:44px;height:44px;border-radius:11px;background:rgba(255,255,255,.15);display:grid;place-items:center;font-weight:700">VBS</div><div style="font-weight:700;font-size:17px">E-Learning VBS<div style="font-weight:400;font-size:11.5px;opacity:.8">Hệ thống Quản lý Đào tạo — TKV</div></div></div>
+    <div><div style="font-size:30px;font-weight:700;line-height:1.25;max-width:420px">Nền tảng đào tạo trực tuyến của Trường Quản trị Kinh doanh Vinacomin</div><p style="opacity:.85;margin-top:14px;font-size:14px;max-width:400px">Học mọi lúc mọi nơi · Thi trực tuyến an toàn · Lộ trình theo chức danh.</p></div>
+    <div style="opacity:.6;font-size:12px">© VBS — TKV 2026 · An toàn thông tin cấp độ 2</div>
+  </div>
+  <div class="lg-form">
+    <div class="lg-card">
+      <h1 style="font-size:24px;font-weight:700">Đăng nhập</h1>
+      <p class="muted" style="font-size:13.5px;margin:6px 0 22px">Chào mừng trở lại. Vui lòng đăng nhập để tiếp tục.</p>
+      <button class="btn primary" style="width:100%;justify-content:center;padding:13px;margin-bottom:16px" onclick="hideLogin()"><svg class="ic sm"><use href="#i-shield"/></svg>Đăng nhập bằng tài khoản AD-Domain (SSO)</button>
+      <div style="display:flex;align-items:center;gap:12px;color:var(--faint);font-size:12px;margin-bottom:16px"><span style="flex:1;height:1px;background:var(--border)"></span>hoặc tài khoản cục bộ<span style="flex:1;height:1px;background:var(--border)"></span></div>
+      <label class="fl">Tên đăng nhập / Email</label>
+      <div class="lg-in"><svg class="ic sm"><use href="#i-users"/></svg><input value="an.nv@vbs.edu.vn"></div>
+      <label class="fl">Mật khẩu</label>
+      <div class="lg-in"><svg class="ic sm"><use href="#i-lock"/></svg><input type="password" value="123456"><svg class="ic sm" style="cursor:pointer"><use href="#i-eye"/></svg></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;font-size:12.5px;margin:2px 0 18px"><label style="display:flex;align-items:center;gap:6px;color:var(--muted)"><input type="checkbox" checked style="accent-color:var(--brand)">Ghi nhớ đăng nhập</label><a style="color:var(--brand);font-weight:600">Quên mật khẩu?</a></div>
+      <button class="btn primary" style="width:100%;justify-content:center;padding:13px" onclick="hideLogin()">Đăng nhập</button>
+      <div class="notice" style="margin-top:18px"><div class="ic-wrap"><svg class="ic sm"><use href="#i-shield"/></svg></div><div style="font-size:12px">Tài khoản cục bộ (ngoài AD) yêu cầu <b>xác thực 2 lớp (MFA)</b>. Máy trong mạng nội bộ ưu tiên đăng nhập AD-Domain.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SVG sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9.5 21v-6h5v6"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19a2 2 0 0 1 2-2h13"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M10 8.5l4 2.5-4 2.5z" fill="currentColor"/><path d="M8 21h8"/></symbol>
+<symbol id="i-quiz" viewBox="0 0 24 24"><path d="M9 11l2 2 4-4"/><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 17h5"/></symbol>
+<symbol id="i-cert" viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M9 13l-1.5 7L12 18l4.5 2L15 13"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/><path d="M16 6.5a3 3 0 0 1 0 5.6"/><path d="M17 15c2 .4 3.5 2 3.5 4.5"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4"/><path d="M4 20h16"/><rect x="7" y="12" width="3" height="5"/><rect x="12" y="8" width="3" height="9"/><rect x="17" y="5" width="3" height="12"/></symbol>
+<symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.5 21a2 2 0 0 1-3 0"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+<symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v3M16 3v3"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5 10 17l9-10"/></symbol>
+<symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 13h6M9 17h6"/></symbol>
+<symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4h11l-1.5 4L16 12H5"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M22 12h-3M5 12H2M18.4 5.6l-2 2M7.6 16.4l-2 2M18.4 18.4l-2-2M7.6 7.6l-2-2"/></symbol>
+<symbol id="i-video" viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3z"/></symbol>
+<symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></symbol>
+<symbol id="i-money" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 9v.01M18 15v.01"/></symbol>
+<symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5V3h4"/><path d="M14 12H3m0 0 4-4m-4 4 4 4"/><path d="M14 8V5h7v14h-7v-3"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.6 5.5L20 9.3l-4 4 1 5.7-5-2.8-5 2.8 1-5.7-4-4 5.4-.8z"/></symbol>
+<symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1" fill="currentColor"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol><symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></symbol></defs></svg>
+<!-- ===== TOPBAR ===== -->
+<header class="topbar">
+  <button class="hamb" onclick="document.body.classList.toggle('nav-open')"><svg class="ic"><use href="#i-menu"/></svg></button>
+  <div class="brand">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQUxwCBSVQ2aKD4ZYIaXSvhYwQeepgJ3Lg6vq8DxoiqU2VJ0Ulhdpqxlki&s=10" alt="VBS" onerror="this.style.display='none'">
+    <div class="bt">E-Learning VBS<small>Hệ thống Quản lý Đào tạo — TKV</small></div>
+  </div>
+  <div class="searchbar"><svg class="ic sm"><use href="#i-search"/></svg><input placeholder="Tìm khóa học, học viên, tài liệu..."></div>
+  <div class="top-right">
+    <div class="role-switch" id="roleSwitch">
+      <button data-role="hv" data-href="../../index.html" class="active">Học viên</button>
+      <button data-role="gv" data-href="../gv/dashboard-giang-vien.html">Giảng viên / CBQL</button>
+      <button data-role="ad" data-href="../ad/quan-ly-nguoi-dung.html">Quản trị HT</button>
+      <button data-role="ld" data-href="../ld/dashboard-lanh-dao.html">Lãnh đạo</button>
+    </div>
+    <button class="iconbtn" id="bellBtn"><svg class="ic"><use href="#i-bell"/></svg><span class="dot"></span></button>
+    <div class="avatar" id="topAvatar">NA</div>
+    <button class="iconbtn" onclick="showLogin()" title="Đăng nhập / Đăng xuất"><svg class="ic"><use href="#i-logout"/></svg></button>
+  </div>
+</header>
+<div class="scrim" onclick="document.body.classList.remove('nav-open')"></div>
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar">
+  <nav class="side-role active" data-role="hv">
+    <div class="side-cap">Học tập</div>
+    <a class="nav-item" data-target="hv-dash" data-href="../../index.html"><svg class="ic"><use href="#i-home"/></svg>Trang chủ</a>
+    <a class="nav-item active" data-target="hv-courses" data-href="khoa-hoc-cua-toi.html"><svg class="ic"><use href="#i-book"/></svg>Khóa học của tôi<span class="badge2">4</span></a>
+    <a class="nav-item" data-target="hv-learn" data-href="hoc-bai-giang.html"><svg class="ic"><use href="#i-play"/></svg>Học bài giảng</a>
+    <a class="nav-item" data-target="hv-essay" data-href="bai-tu-luan.html"><svg class="ic"><use href="#i-doc"/></svg>Bài tự luận</a>
+    <a class="nav-item" data-target="hv-schedule" data-href="lich-hoc-thi.html"><svg class="ic"><use href="#i-cal"/></svg>Lịch học &amp; thi</a>
+    <a class="nav-item" data-target="hv-exam" data-href="lam-bai-thi.html"><svg class="ic"><use href="#i-quiz"/></svg>Làm bài thi</a>
+    <a class="nav-item" data-target="hv-result" data-href="ket-qua-thi.html"><svg class="ic"><use href="#i-flag"/></svg>Kết quả bài thi</a>
+    <div class="side-cap">Tương tác</div>
+    <a class="nav-item" data-target="hv-discussion" data-href="thao-luan.html"><svg class="ic"><use href="#i-users"/></svg>Thảo luận &amp; hỏi đáp</a>
+    <a class="nav-item" data-target="hv-survey" data-href="khao-sat.html"><svg class="ic"><use href="#i-doc"/></svg>Khảo sát</a>
+    <div class="side-cap">Thành tích</div>
+    <a class="nav-item" data-target="hv-cert" data-href="chung-chi-hoc-vien.html"><svg class="ic"><use href="#i-cert"/></svg>Chứng chỉ</a>
+    <a class="nav-item" data-target="hv-rank" data-href="xep-hang.html"><svg class="ic"><use href="#i-star"/></svg>Xếp hạng &amp; điểm</a>
+    <div class="side-cap">Tài khoản</div>
+    <a class="nav-item" data-target="hv-profile" data-href="thong-tin-ca-nhan.html"><svg class="ic"><use href="#i-settings"/></svg>Thông tin cá nhân</a>
+  </nav>
+  <nav class="side-role" data-role="gv">
+    <div class="side-cap">Nghiệp vụ đào tạo</div>
+    <a class="nav-item" data-target="gv-dash" data-href="../gv/dashboard-giang-vien.html"><svg class="ic"><use href="#i-home"/></svg>Tổng quan</a>
+    <a class="nav-item" data-target="gv-classes" data-href="../gv/quan-ly-lop-hoc.html"><svg class="ic"><use href="#i-book"/></svg>Quản lý lớp học</a>
+    <a class="nav-item" data-target="gv-content" data-href="../gv/quan-ly-hoc-lieu.html"><svg class="ic"><use href="#i-video"/></svg>Nội dung &amp; học liệu</a>
+    <a class="nav-item" data-target="gv-exam" data-href="../gv/ngan-hang-de-thi.html"><svg class="ic"><use href="#i-quiz"/></svg>Ngân hàng đề thi</a>
+    <a class="nav-item" data-target="gv-proctor" data-href="../gv/giam-sat-thi.html"><svg class="ic"><use href="#i-shield"/></svg>Giám sát thi</a>
+    <a class="nav-item" data-target="gv-examsession" data-href="../gv/ca-thi.html"><svg class="ic"><use href="#i-flag"/></svg>Tổ chức ca thi</a>
+    <a class="nav-item" data-target="gv-grade" data-href="../gv/diem-danh-cham-diem.html"><svg class="ic"><use href="#i-check"/></svg>Điểm danh &amp; chấm điểm</a>
+    <a class="nav-item" data-target="gv-cert" data-href="../gv/quan-ly-chung-chi.html"><svg class="ic"><use href="#i-cert"/></svg>Quản lý chứng chỉ</a>
+    <div class="side-cap">Kế hoạch</div>
+    <a class="nav-item" data-target="gv-plan" data-href="../gv/ke-hoach-dao-tao.html"><svg class="ic"><use href="#i-cal"/></svg>Kế hoạch &amp; nhu cầu</a>
+    <a class="nav-item" data-target="gv-needsurvey" data-href="../gv/khao-sat-nhu-cau.html"><svg class="ic"><use href="#i-doc"/></svg>Khảo sát nhu cầu</a>
+    <a class="nav-item" data-target="gv-completion" data-href="../gv/xet-hoan-thanh.html"><svg class="ic"><use href="#i-check"/></svg>Xét hoàn thành</a>
+    <a class="nav-item" data-target="gv-cost" data-href="../gv/chi-phi-dao-tao.html"><svg class="ic"><use href="#i-money"/></svg>Chi phí đào tạo</a>
+    <div class="side-cap">Chương trình</div>
+    <a class="nav-item" data-target="gv-instructor" data-href="../gv/quan-ly-giang-vien.html"><svg class="ic"><use href="#i-users"/></svg>Quản lý giảng viên</a>
+    <a class="nav-item" data-target="gv-competency" data-href="../gv/khung-nang-luc.html"><svg class="ic"><use href="#i-target"/></svg>Khung năng lực</a>
+    <a class="nav-item" data-target="gv-program" data-href="../gv/chu-de-chuong-trinh.html"><svg class="ic"><use href="#i-book"/></svg>Chủ đề &amp; chương trình</a>
+  </nav>
+  <nav class="side-role" data-role="ad">
+    <div class="side-cap">Quản trị hệ thống</div>
+    <a class="nav-item" data-target="ad-users" data-href="../ad/quan-ly-nguoi-dung.html"><svg class="ic"><use href="#i-users"/></svg>Người dùng<span class="badge2">5k</span></a>
+    <a class="nav-item" data-target="ad-rbac" data-href="../ad/phan-quyen.html"><svg class="ic"><use href="#i-shield"/></svg>Phân quyền (RBAC)</a>
+    <a class="nav-item" data-target="ad-catalog" data-href="../ad/danh-muc-he-thong.html"><svg class="ic"><use href="#i-list"/></svg>Danh mục hệ thống</a>
+    <div class="side-cap">Cấu hình</div>
+    <a class="nav-item" data-target="ad-config" data-href="../ad/thiet-lap-he-thong.html"><svg class="ic"><use href="#i-settings"/></svg>Thiết lập hệ thống</a>
+    <a class="nav-item" data-target="ad-log" data-href="../ad/nhat-ky-he-thong.html"><svg class="ic"><use href="#i-doc"/></svg>Nhật ký (log)</a>
+  </nav>
+  <nav class="side-role" data-role="ld">
+    <div class="side-cap">Báo cáo &amp; phân tích</div>
+    <a class="nav-item" data-target="ld-dash" data-href="../ld/dashboard-lanh-dao.html"><svg class="ic"><use href="#i-chart"/></svg>Dashboard tổng hợp</a>
+    <a class="nav-item" data-target="ld-kpi" data-href="../ld/bao-cao-kpi.html"><svg class="ic"><use href="#i-target"/></svg>KPI đào tạo</a>
+    <a class="nav-item" data-target="ld-unit" data-href="../ld/bao-cao-don-vi.html"><svg class="ic"><use href="#i-users"/></svg>Báo cáo theo đơn vị</a>
+  </nav>
+  <div class="side-foot">Prototype giao diện · v0.2<br>© VBS — TKV 2026</div>
+</aside>
+
+
+<main class="main"><section class="screen active" id="hv-courses">
+  <div class="page-head"><div><div class="crumb">Khóa học của tôi</div><h1>Khóa học của tôi</h1><div class="sub">Bạn được phân công hoặc đã đăng ký 4 khóa học.</div></div><div class="field"><svg class="ic sm"><use href="#i-search"/></svg><input placeholder="Tìm khóa học..."></div></div>
+  <div class="toolbar"><span class="chip on">Tất cả</span><span class="chip">Đang học</span><span class="chip">Đã hoàn thành</span><span class="chip">Bắt buộc</span></div>
+  <div class="grid cards-3">
+    <div class="card">
+      <div style="height:110px;background:linear-gradient(135deg,#2D65B5,#1c498c);border-radius:12px 12px 0 0;display:flex;align-items:flex-end;padding:14px;position:relative"><span class="badge b-amber" style="position:absolute;top:12px;right:12px">Bắt buộc</span><svg class="ic" style="width:34px;height:34px;color:rgba(255,255,255,.9)"><use href="#i-video"/></svg></div>
+      <div style="padding:16px"><b style="font-size:14.5px">An toàn lao động trong khai thác mỏ</b><div class="faint" style="font-size:12px;margin:6px 0 12px"><svg class="ic sm" style="vertical-align:-3px"><use href="#i-play"/></svg> 10 bài · 6 giờ · GV. Trần Minh</div><div class="prog" style="margin-bottom:8px"><i style="width:62%"></i></div><div style="display:flex;justify-content:space-between;align-items:center"><span class="faint" style="font-size:12px">Hoàn thành 62%</span><button class="btn primary sm jump" data-target="hv-learn" data-href="hoc-bai-giang.html">Học tiếp</button></div></div>
+    </div>
+    <div class="card">
+      <div style="height:110px;background:linear-gradient(135deg,var(--accent),#C9861F);border-radius:12px 12px 0 0;display:flex;align-items:flex-end;padding:14px"><svg class="ic" style="width:34px;height:34px;color:rgba(255,255,255,.9)"><use href="#i-book"/></svg></div>
+      <div style="padding:16px"><b style="font-size:14.5px">Quản trị kinh doanh cơ bản</b><div class="faint" style="font-size:12px;margin:6px 0 12px"><svg class="ic sm" style="vertical-align:-3px"><use href="#i-book"/></svg> 16 bài · 12 giờ · GV. Lê Thị Hoa</div><div class="prog" style="margin-bottom:8px"><i style="width:75%"></i></div><div style="display:flex;justify-content:space-between;align-items:center"><span class="faint" style="font-size:12px">Hoàn thành 75%</span><button class="btn primary sm jump" data-target="hv-learn" data-href="hoc-bai-giang.html">Học tiếp</button></div></div>
+    </div>
+    <div class="card">
+      <div style="height:110px;background:linear-gradient(135deg,#1F9D57,#157a42);border-radius:12px 12px 0 0;display:flex;align-items:flex-end;padding:14px"><span class="badge b-green" style="position:absolute;margin:-92px 0 0 0;background:rgba(255,255,255,.9);color:var(--success)"><svg class="ic sm"><use href="#i-check"/></svg>Hoàn thành</span><svg class="ic" style="width:34px;height:34px;color:rgba(255,255,255,.9)"><use href="#i-cert"/></svg></div>
+      <div style="padding:16px"><b style="font-size:14.5px">Văn hóa doanh nghiệp TKV</b><div class="faint" style="font-size:12px;margin:6px 0 12px"><svg class="ic sm" style="vertical-align:-3px"><use href="#i-doc"/></svg> 6 bài · 3 giờ · GV. Phạm Quốc</div><div class="prog" style="margin-bottom:8px"><i style="width:100%"></i></div><div style="display:flex;justify-content:space-between;align-items:center"><span class="badge b-green">Đã cấp chứng chỉ</span><button class="btn ghost sm jump" data-target="hv-cert" data-href="chung-chi-hoc-vien.html">Xem</button></div></div>
+    </div>
+  </div>
+</section></main>
+<script src="../../js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <title>LMS Mobile — Khóa học</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="phone-shell" aria-label="Ứng dụng học tập LMS">
+    <section class="screen screen-list is-active" id="course-list" aria-labelledby="list-title">
+      <header class="top-area">
+        <div class="status-bar" aria-hidden="true">
+          <span>9:41</span>
+          <div class="device-status"><i class="signal"></i><i class="wifi"></i><i class="battery"></i></div>
+        </div>
+        <div class="app-bar">
+          <button class="icon-btn" aria-label="Quay lại"><span class="icon">‹</span></button>
+          <h1 id="list-title">Khóa học</h1>
+          <div class="app-actions">
+            <button class="icon-btn search-btn" aria-label="Tìm kiếm"></button>
+            <button class="icon-btn filter-btn" aria-label="Bộ lọc"></button>
+          </div>
+        </div>
+        <nav class="filter-tabs" aria-label="Lọc khóa học">
+          <button class="filter-tab active" data-status="all">Tất cả</button>
+          <button class="filter-tab" data-status="learning">Đang học</button>
+          <button class="filter-tab" data-status="new">Chưa bắt đầu</button>
+          <button class="filter-tab" data-status="done">Đã hoàn thành</button>
+          <button class="filter-tab" data-status="overdue">Quá hạn</button>
+        </nav>
+      </header>
+
+      <div class="list-scroll">
+        <div class="list-heading">
+          <strong>Tất cả khóa học <span class="course-count">(12)</span></strong>
+          <button class="sort-btn" type="button"><span>↕</span> Mới nhất</button>
+        </div>
+        <div class="course-list">
+          <button class="course-card" data-status="learning" data-open-course type="button" aria-label="Mở khóa học Lập trình Web cơ bản">
+            <span class="course-thumb thumb-1" aria-hidden="true"></span>
+            <span class="course-info">
+              <span class="course-line"><strong>Lập trình Web cơ bản</strong><span class="badge learning">Đang học</span><span class="more">⋮</span></span>
+              <span class="teacher"><span class="avatar avatar-a">A</span>Thầy Nguyễn Văn A</span>
+              <span class="dates"><span class="calendar-icon"></span>01/05/2024 - 30/06/2024</span>
+              <span class="progress-line"><span class="progress"><i style="width:65%"></i></span><b>65%</b></span>
+            </span>
+          </button>
+
+          <button class="course-card" data-status="learning" type="button">
+            <span class="course-thumb thumb-2" aria-hidden="true"></span>
+            <span class="course-info">
+              <span class="course-line"><strong>Phân tích dữ liệu với Excel</strong><span class="badge learning">Đang học</span><span class="more">⋮</span></span>
+              <span class="teacher"><span class="avatar avatar-b">B</span>Cô Trần Thị B</span>
+              <span class="dates"><span class="calendar-icon"></span>10/06/2024 - 10/07/2024</span>
+              <span class="progress-line"><span class="progress"><i style="width:30%"></i></span><b>30%</b></span>
+            </span>
+          </button>
+
+          <button class="course-card" data-status="new" type="button">
+            <span class="course-thumb thumb-3" aria-hidden="true"></span>
+            <span class="course-info">
+              <span class="course-line"><strong>Digital Marketing tổng quan</strong><span class="badge new">Chưa bắt đầu</span><span class="more">⋮</span></span>
+              <span class="teacher"><span class="avatar avatar-c">C</span>Thầy Lê Minh C</span>
+              <span class="dates"><span class="calendar-icon"></span>15/07/2024 - 15/08/2024</span>
+              <span class="progress-line"><span class="progress"><i style="width:0%"></i></span><b>0%</b></span>
+            </span>
+          </button>
+
+          <button class="course-card" data-status="done" type="button">
+            <span class="course-thumb thumb-4" aria-hidden="true"></span>
+            <span class="course-info">
+              <span class="course-line"><strong>Thiết kế UI/UX cơ bản</strong><span class="badge done">Đã hoàn thành</span><span class="more">⋮</span></span>
+              <span class="teacher"><span class="avatar avatar-d">D</span>Cô Phạm Thị D</span>
+              <span class="dates"><span class="calendar-icon"></span>20/03/2024 - 20/05/2024</span>
+              <span class="progress-line"><span class="progress green"><i style="width:100%"></i></span><b>100%</b></span>
+            </span>
+          </button>
+
+          <button class="course-card" data-status="overdue" type="button">
+            <span class="course-thumb thumb-5" aria-hidden="true"></span>
+            <span class="course-info">
+              <span class="course-line"><strong>Quản lý thời gian hiệu quả</strong><span class="badge overdue">Quá hạn</span><span class="more">⋮</span></span>
+              <span class="teacher"><span class="avatar avatar-e">E</span>Thầy Hoàng Văn E</span>
+              <span class="dates"><span class="calendar-icon"></span>01/02/2024 - 01/03/2024</span>
+              <span class="progress-line"><span class="progress red"><i style="width:100%"></i></span><b>100%</b></span>
+            </span>
+          </button>
+
+          <button class="course-card" data-status="new" type="button">
+            <span class="course-thumb thumb-6" aria-hidden="true"></span>
+            <span class="course-info">
+              <span class="course-line"><strong>An ninh mạng cơ bản</strong><span class="badge new">Chưa bắt đầu</span><span class="more">⋮</span></span>
+              <span class="teacher"><span class="avatar avatar-f">F</span>Thầy Trần Văn F</span>
+              <span class="dates"><span class="calendar-icon"></span>01/08/2024 - 31/08/2024</span>
+              <span class="progress-line"><span class="progress"><i style="width:0%"></i></span><b>0%</b></span>
+            </span>
+          </button>
+        </div>
+        <p class="empty-state" hidden>Không có khóa học ở trạng thái này.</p>
+      </div>
+      <nav class="bottom-nav" aria-label="Điều hướng chính"></nav>
+    </section>
+
+    <section class="screen screen-detail" id="course-detail" aria-labelledby="detail-title" aria-hidden="true">
+      <header class="detail-top">
+        <div class="status-bar" aria-hidden="true">
+          <span>9:41</span>
+          <div class="device-status"><i class="signal"></i><i class="wifi"></i><i class="battery"></i></div>
+        </div>
+        <div class="app-bar">
+          <button class="icon-btn back-btn" aria-label="Quay lại danh sách"><span class="icon">‹</span></button>
+          <h1 id="detail-title">Chi tiết khóa học</h1>
+          <div class="app-actions">
+            <button class="icon-btn share-btn" aria-label="Chia sẻ">⌯</button>
+            <button class="icon-btn bookmark-btn" aria-label="Lưu khóa học"></button>
+          </div>
+        </div>
+      </header>
+
+      <div class="detail-scroll">
+        <article class="detail-hero surface">
+          <span class="course-thumb thumb-1 detail-thumb" aria-hidden="true"></span>
+          <div class="hero-copy">
+            <div class="hero-title-row"><h2>Lập trình Web cơ bản</h2><span class="badge learning">Đang học</span></div>
+            <span class="teacher"><span class="avatar avatar-a">A</span>Thầy Nguyễn Văn A</span>
+            <span class="dates"><span class="calendar-icon"></span>01/05/2024 - 30/06/2024</span>
+            <span class="progress-line"><span class="progress"><i style="width:65%"></i></span><b>65%</b></span>
+            <p class="completion"><span class="target-icon">◎</span>Điều kiện hoàn thành: Hoàn thành 100%<br>nội dung bắt buộc và nộp đầy đủ bài tập</p>
+          </div>
+        </article>
+
+        <section class="surface goals">
+          <span class="goal-icon">◎</span>
+          <div><h2>Mục tiêu khóa học</h2>
+            <ul><li>Nắm vững HTML, CSS, JavaScript cơ bản</li><li>Biết xây dựng giao diện web đơn giản</li><li>Hiểu quy trình phát triển web cơ bản</li></ul>
+          </div>
+        </section>
+
+        <section class="surface facts" aria-label="Thông tin khóa học">
+          <div class="fact"><span class="fact-icon person-icon"></span><span><small>Giảng viên</small><b>Thầy Nguyễn Văn A</b></span></div>
+          <div class="fact"><span class="fact-icon calendar-large"></span><span><small>Thời gian học</small><b>01/05/2024 - 30/06/2024</b></span></div>
+          <div class="fact"><span class="pie-icon"></span><span><small>Tiến độ</small><b>65%</b></span></div>
+        </section>
+
+        <nav class="content-tabs" aria-label="Nội dung khóa học">
+          <button class="active">Nội dung</button><button>Bài tập</button><button>Thảo luận</button><button>Kết quả</button>
+        </nav>
+
+        <div class="curriculum-heading"><h2>Danh sách chương và bài học</h2><button class="expand-all">Mở rộng tất cả⌄</button></div>
+
+        <section class="chapter surface is-open">
+          <button class="chapter-head" type="button" aria-expanded="true">
+            <span class="chapter-number">1</span><span><strong>Chương 1: Giới thiệu HTML</strong><small>3 bài học&nbsp; • &nbsp;<em>Hoàn thành 100%</em></small></span><span class="chevron">⌃</span>
+          </button>
+          <div class="chapter-body">
+            <div class="lesson lesson-open">
+              <span class="lesson-dot done-dot">✓</span>
+              <div class="lesson-card">
+                <button class="lesson-title" type="button"><span><strong>Bài 1: HTML là gì?</strong><small>6 học liệu</small></span><span class="lesson-complete">✓</span><span>⌄</span></button>
+                <div class="materials">
+                  <div><span class="material-icon video">▶</span><b>Video bài giảng</b><span>◷&nbsp; 15 phút</span><em class="success">Đã xem</em></div>
+                  <div><span class="material-icon slide">▣</span><b>Slide bài giảng</b><span>▤&nbsp; 20 trang</span><em class="info">Mới</em></div>
+                  <div><span class="material-icon pdf">♬</span><b>Giáo trình HTML.pdf</b><span>2.5 MB</span><em>⇩</em></div>
+                  <div><span class="material-icon task">▦</span><b>Bài tập thực hành</b><span></span><em class="danger">Chưa nộp&nbsp; ›</em></div>
+                  <div><span class="material-icon file">↕</span><b>File mẫu bai-01.zip</b><span>1.2 MB</span><em>⇩</em></div>
+                  <div><span class="material-icon quiz">?</span><b>Kiểm tra nhanh</b><span>☷&nbsp; 5 câu</span><em class="success">Hoàn thành</em></div>
+                </div>
+              </div>
+            </div>
+            <div class="lesson compact"><span class="lesson-dot">2</span><button class="lesson-title" type="button"><span><strong>Bài 2: Cấu trúc trang HTML</strong><small>5 học liệu</small></span><span>›</span></button></div>
+          </div>
+        </section>
+
+        <section class="chapter surface">
+          <button class="chapter-head" type="button" aria-expanded="false">
+            <span class="chapter-number">2</span><span><strong>Chương 2: CSS cơ bản</strong><small>4 bài học&nbsp; • &nbsp;Hoàn thành 0%</small></span><span class="chevron">⌄</span>
+          </button>
+          <div class="chapter-body"><p class="locked-message">Hoàn thành Chương 1 để tiếp tục.</p></div>
+        </section>
+
+        <button class="continue-btn" type="button"><span>▶</span> Tiếp tục học</button>
+      </div>
+      <nav class="bottom-nav" aria-label="Điều hướng chính"></nav>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
