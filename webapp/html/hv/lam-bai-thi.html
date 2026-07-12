@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/lam-bai-thi.css">
 </head>
 <body data-role="hv" data-page="hv-exam">
 
@@ -172,7 +173,41 @@
       <p class="faint" style="font-size:11.5px;margin-top:10px;text-align:center">Hệ thống tự động nộp khi hết giờ.</p>
     </div>
   </div>
+</section><section class="exam-redesign" aria-labelledby="examTitle">
+  <header class="exam-topline">
+    <nav class="exam-breadcrumb" aria-label="Điều hướng">Khóa học của tôi <span>›</span> An toàn lao động trong khai thác mỏ <span>›</span> <b>Bài kiểm tra giữa khóa</b></nav>
+    <div class="exam-actions"><div class="exam-timer"><svg class="ic"><use href="#i-clock"/></svg><div><span>Thời gian còn lại</span><strong id="examTimer">00:29:45</strong></div><button type="button" class="timer-pause" id="timerPause" aria-label="Tạm dừng">Ⅱ</button></div><button class="btn primary exam-submit" type="button" id="submitExam">Nộp bài</button></div>
+  </header>
+  <div class="exam-title"><h1 id="examTitle">Bài kiểm tra giữa khóa</h1><p>Tổng số câu: <b>20</b><i></i>Đã trả lời: <b id="answeredCount">7/20</b></p></div>
+  <div class="exam-layout">
+    <aside class="exam-nav-panel"><h2>Danh sách câu hỏi</h2><div class="exam-legend"><span><i class="not-done"></i>Chưa trả lời</span><span><i class="done"></i>Đã trả lời</span><span><i class="current"></i>Đang xem</span><span><i class="review"></i>Câu chưa hoàn thành</span></div><div class="exam-question-nav" id="examQuestionNav" aria-label="Danh sách 20 câu hỏi">
+      <button class="done" data-q="1">1</button><button class="done" data-q="2">2</button><button class="done" data-q="3">3</button><button class="current" data-q="4">4</button><button data-q="5">5</button>
+      <button class="done" data-q="6">6</button><button class="done" data-q="7">7</button><button class="review" data-q="8">8</button><button data-q="9">9</button><button data-q="10">10</button>
+      <button data-q="11">11</button><button data-q="12">12</button><button data-q="13">13</button><button data-q="14">14</button><button data-q="15">15</button>
+      <button data-q="16">16</button><button data-q="17">17</button><button data-q="18">18</button><button data-q="19">19</button><button data-q="20">20</button>
+    </div><div class="exam-nav-tools"><button type="button" id="markQuestion"><svg class="ic sm"><use href="#i-book"/></svg>Đánh dấu câu hỏi</button><button type="button"><svg class="ic sm danger-icon"><use href="#i-flag"/></svg>Câu hỏi cần xem lại</button></div>
+    </aside>
+    <article class="exam-paper"><header class="exam-paper-head"><strong>Câu <span id="questionNumber">4</span>/20</strong><div><button type="button" id="paperMark"><svg class="ic sm"><use href="#i-book"/></svg>Đánh dấu</button><button type="button" class="report-question"><svg class="ic sm"><use href="#i-flag"/></svg>Báo câu hỏi</button></div></header>
+      <div class="exam-paper-body"><h2 id="questionText">Khi phát hiện rò rỉ khí độc trong hầm lò, biện pháp đầu tiên người lao động cần thực hiện là gì?</h2>
+        <div class="exam-options" id="examOptions"><button type="button" data-answer="A"><b>A</b><span>Tiếp tục làm việc và báo cáo sau</span></button><button type="button" class="selected" data-answer="B"><b>B</b><span>Thông báo cho mọi người xung quanh và rời khỏi khu vực nguy hiểm</span></button><button type="button" data-answer="C"><b>C</b><span>Tắt toàn bộ thiết bị điện trong hầm lò</span></button><button type="button" data-answer="D"><b>D</b><span>Mở cửa thông gió để khí độc thoát ra ngoài</span></button></div>
+        <aside class="exam-explanation"><b>Giải thích:</b><p>Khi phát hiện rò rỉ khí độc, cần thông báo và nhanh chóng rời khỏi khu vực nguy hiểm để đảm bảo an toàn tính mạng.</p></aside>
+      </div><footer class="exam-paper-footer"><button class="btn primary" type="button" id="previousQuestion">‹&nbsp; Câu trước</button><span><b id="footerQuestion">4</b> / 20</span><button class="btn primary" type="button" id="nextQuestion">Câu tiếp theo&nbsp; ›</button></footer>
+    </article>
+  </div>
 </section></main>
 <script src="../../js/app.js"></script>
+<script>
+  (() => {
+    const nav = document.getElementById('examQuestionNav'); const count = document.getElementById('answeredCount');
+    const setQuestion = (value) => { nav.querySelectorAll('button').forEach(btn => btn.classList.toggle('current', Number(btn.dataset.q) === value)); document.getElementById('questionNumber').textContent = value; document.getElementById('footerQuestion').textContent = value; };
+    nav.addEventListener('click', event => { const button = event.target.closest('button'); if (button) setQuestion(Number(button.dataset.q)); });
+    document.getElementById('examOptions').addEventListener('click', event => { const option = event.target.closest('button'); if (!option) return; document.querySelectorAll('.exam-options button').forEach(item => item.classList.remove('selected')); option.classList.add('selected'); const active = nav.querySelector('.current'); if (active && !active.classList.contains('done')) { active.classList.remove('review'); active.classList.add('done'); count.textContent = `${nav.querySelectorAll('.done').length}/20`; } });
+    [document.getElementById('markQuestion'), document.getElementById('paperMark')].forEach(button => button.addEventListener('click', () => nav.querySelector('.current')?.classList.toggle('review')));
+    document.getElementById('previousQuestion').addEventListener('click', () => { const current = Number(nav.querySelector('.current').dataset.q); if (current > 1) setQuestion(current - 1); });
+    document.getElementById('nextQuestion').addEventListener('click', () => { const current = Number(nav.querySelector('.current').dataset.q); if (current < 20) setQuestion(current + 1); });
+    let paused = false; document.getElementById('timerPause').addEventListener('click', event => { paused = !paused; event.currentTarget.textContent = paused ? '▶' : 'Ⅱ'; });
+    document.getElementById('submitExam').addEventListener('click', () => { if (confirm('Bạn muốn nộp bài thi ngay bây giờ?')) window.location.href = 'ket-qua-thi.html'; });
+  })();
+</script>
 </body>
 </html>

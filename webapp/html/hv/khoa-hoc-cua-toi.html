@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/khoa-hoc-cua-toi.css">
 </head>
 <body data-role="hv" data-page="hv-courses">
 
@@ -161,7 +162,43 @@
       <div style="padding:16px"><b style="font-size:14.5px">Văn hóa doanh nghiệp TKV</b><div class="faint" style="font-size:12px;margin:6px 0 12px"><svg class="ic sm" style="vertical-align:-3px"><use href="#i-doc"/></svg> 6 bài · 3 giờ · GV. Phạm Quốc</div><div class="prog" style="margin-bottom:8px"><i style="width:100%"></i></div><div style="display:flex;justify-content:space-between;align-items:center"><span class="badge b-green">Đã cấp chứng chỉ</span><button class="btn ghost sm jump" data-target="hv-cert" data-href="chung-chi-hoc-vien.html">Xem</button></div></div>
     </div>
   </div>
+</section><section class="course-redesign" aria-labelledby="courseTitle">
+  <div class="course-heading"><div><div class="crumb">Học tập / Khóa học của tôi</div><h1 id="courseTitle">Danh sách khóa học</h1><p>Xem các khóa học được phân công hoặc đăng ký tham gia.</p></div><div class="view-switch"><button class="is-active" type="button" title="Lưới"><svg class="ic"><use href="#i-quiz"/></svg></button><button type="button" title="Danh sách"><svg class="ic"><use href="#i-list"/></svg></button></div></div>
+  <form class="course-filter" onsubmit="return false"><label class="course-search"><svg class="ic sm"><use href="#i-search"/></svg><input id="courseQuery" type="search" placeholder="Tìm theo tên khóa học..."><button type="button" aria-label="Tìm kiếm"><svg class="ic sm"><use href="#i-search"/></svg></button></label><label>Trạng thái<select id="statusFilter"><option value="all">Tất cả</option><option value="learning">Đang học</option><option value="completed">Hoàn thành</option><option value="open">Mở đăng ký</option><option value="unregistered">Chưa đăng ký</option></select></label><label>Hình thức<select><option>Tất cả</option><option>Online</option><option>Offline</option></select></label><label>Sắp xếp<select><option>Mới nhất</option><option>Tên khóa học</option><option>Tiến độ học</option></select></label><button class="btn primary course-submit" type="submit"><svg class="ic sm"><use href="#i-search"/></svg>Tìm kiếm</button></form>
+  <div class="course-grid" id="courseGrid">
+    <article class="course-card" data-status="open"><div class="course-cover"><img src="../../public/course-covers/cybersecurity.jpg" alt="Bảo mật thông tin"><span class="course-status enrollment">Mở đăng ký</span></div><div class="course-body"><h2>An toàn thông tin cơ bản</h2><div class="course-meta"><span><svg class="ic sm"><use href="#i-users"/></svg>Nguyễn Thị B</span><span><svg class="ic sm"><use href="#i-cal"/></svg>01/06/2024 - 30/06/2024</span><span><svg class="ic sm"><use href="#i-video"/></svg>Online</span></div><div class="course-progress empty"><i></i></div><div class="course-actions"><button class="btn ghost sm">Xem chi tiết</button><button class="btn primary sm">Đăng ký</button></div></div></article>
+    <article class="course-card" data-status="learning"><div class="course-cover"><img src="../../public/course-covers/time-management.jpg" alt="Quản lý thời gian"><span class="course-status learning">Đang học</span></div><div class="course-body"><h2>Kỹ năng quản lý thời gian</h2><div class="course-meta"><span><svg class="ic sm"><use href="#i-users"/></svg>Trần Văn C</span><span><svg class="ic sm"><use href="#i-cal"/></svg>15/05/2024 - 15/06/2024</span><span><svg class="ic sm"><use href="#i-video"/></svg>Online</span></div><div class="course-progress"><i style="width:68%"></i></div><div class="course-actions"><button class="btn ghost sm">Xem chi tiết</button><button class="btn primary sm jump" data-target="hv-learn" data-href="hoc-bai-giang.html">Tiếp tục học</button></div></div></article>
+    <article class="course-card" data-status="learning"><div class="course-cover"><img src="../../public/course-covers/safety.jpg" alt="Công nhân đội mũ bảo hộ"><span class="course-status learning">Đang học</span></div><div class="course-body"><h2>An toàn lao động nhóm 3</h2><div class="course-meta"><span><svg class="ic sm"><use href="#i-users"/></svg>Lê Văn D</span><span><svg class="ic sm"><use href="#i-cal"/></svg>10/05/2024 - 10/06/2024</span><span><svg class="ic sm"><use href="#i-video"/></svg>Offline</span></div><div class="course-progress warning"><i style="width:46%"></i></div><div class="course-actions"><button class="btn ghost sm">Xem chi tiết</button><button class="btn primary sm jump" data-target="hv-learn" data-href="hoc-bai-giang.html">Tiếp tục học</button></div></div></article>
+    <article class="course-card" data-status="unregistered"><div class="course-cover"><img src="../../public/course-covers/excel.jpg" alt="Bảng tính Excel"><span class="course-status unregistered">Chưa đăng ký</span></div><div class="course-body"><h2>Excel nâng cao</h2><div class="course-meta"><span><svg class="ic sm"><use href="#i-users"/></svg>Phạm Thị E</span><span><svg class="ic sm"><use href="#i-cal"/></svg>20/06/2024 - 20/07/2024</span><span><svg class="ic sm"><use href="#i-video"/></svg>Online</span></div><div class="course-progress empty"><i></i></div><div class="course-actions"><button class="btn ghost sm">Xem chi tiết</button><button class="btn primary sm">Đăng ký</button></div></div></article>
+    <article class="course-card" data-status="learning"><div class="course-cover"><img src="../../public/course-covers/analytics.jpg" alt="Màn hình dữ liệu"><span class="course-status learning">Đang học</span></div><div class="course-body"><h2>Phân tích dữ liệu cơ bản</h2><div class="course-meta"><span><svg class="ic sm"><use href="#i-users"/></svg>Hoàng Văn F</span><span><svg class="ic sm"><use href="#i-cal"/></svg>01/05/2024 - 31/05/2024</span><span><svg class="ic sm"><use href="#i-video"/></svg>Online</span></div><div class="course-progress"><i style="width:100%"></i></div><div class="course-actions"><button class="btn ghost sm">Xem chi tiết</button><button class="btn primary sm jump" data-target="hv-learn" data-href="hoc-bai-giang.html">Tiếp tục học</button></div></div></article>
+    <article class="course-card" data-status="completed"><div class="course-cover"><img src="../../public/course-covers/leadership.jpg" alt="Nhóm làm việc"><span class="course-status completed">Hoàn thành</span></div><div class="course-body"><h2>Kỹ năng lãnh đạo</h2><div class="course-meta"><span><svg class="ic sm"><use href="#i-users"/></svg>Vũ Thị G</span><span><svg class="ic sm"><use href="#i-cal"/></svg>01/04/2024 - 30/04/2024</span><span><svg class="ic sm"><use href="#i-video"/></svg>Online</span></div><div class="course-progress"><i style="width:100%"></i></div><div class="course-actions"><button class="btn ghost sm">Xem chi tiết</button><button class="btn sm course-done" disabled>Đã hoàn thành</button></div></div></article>
+    <article class="course-card" data-status="open"><div class="course-cover"><img src="../../public/course-covers/digital.jpg" alt="Công nghệ số"><span class="course-status enrollment">Mở đăng ký</span></div><div class="course-body"><h2>Chuyển đổi số trong doanh nghiệp</h2><div class="course-meta"><span><svg class="ic sm"><use href="#i-users"/></svg>Đặng Văn H</span><span><svg class="ic sm"><use href="#i-cal"/></svg>15/06/2024 - 15/07/2024</span><span><svg class="ic sm"><use href="#i-video"/></svg>Online</span></div><div class="course-progress empty"><i></i></div><div class="course-actions"><button class="btn ghost sm">Xem chi tiết</button><button class="btn primary sm">Đăng ký</button></div></div></article>
+    <article class="course-card" data-status="unregistered"><div class="course-cover"><img src="../../public/course-covers/environment.jpg" alt="Không gian thân thiện môi trường"><span class="course-status unregistered">Chưa đăng ký</span></div><div class="course-body"><h2>Bảo vệ môi trường</h2><div class="course-meta"><span><svg class="ic sm"><use href="#i-users"/></svg>Ngô Thị I</span><span><svg class="ic sm"><use href="#i-cal"/></svg>01/07/2024 - 31/07/2024</span><span><svg class="ic sm"><use href="#i-video"/></svg>Offline</span></div><div class="course-progress empty"><i></i></div><div class="course-actions"><button class="btn ghost sm">Xem chi tiết</button><button class="btn primary sm">Đăng ký</button></div></div></article>
+  </div>
+  <footer class="course-pagination"><span>Hiển thị 1 - 8 trong 24 khóa học</span><nav aria-label="Phân trang"><button disabled>‹</button><button class="current">1</button><button>2</button><button>3</button><button>…</button><button>6</button><button>›</button></nav><label>8 / trang <select><option>8</option><option>16</option><option>24</option></select></label></footer>
 </section></main>
 <script src="../../js/app.js"></script>
+<script>
+  (() => {
+    const grid = document.getElementById('courseGrid');
+    const query = document.getElementById('courseQuery');
+    const status = document.getElementById('statusFilter');
+    const filter = () => {
+      const term = query.value.trim().toLocaleLowerCase('vi');
+      grid.querySelectorAll('.course-card').forEach(card => {
+        const matchesText = card.textContent.toLocaleLowerCase('vi').includes(term);
+        const matchesStatus = status.value === 'all' || card.dataset.status === status.value;
+        card.hidden = !(matchesText && matchesStatus);
+      });
+    };
+    query.addEventListener('input', filter);
+    status.addEventListener('change', filter);
+    document.querySelector('.course-filter').addEventListener('submit', filter);
+    document.querySelectorAll('.view-switch button').forEach((button, index) => button.addEventListener('click', () => {
+      document.querySelectorAll('.view-switch button').forEach(item => item.classList.remove('is-active'));
+      button.classList.add('is-active'); grid.classList.toggle('list-view', index === 1);
+    }));
+  })();
+</script>
 </body>
 </html>

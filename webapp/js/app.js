@@ -1,4 +1,34 @@
 (() => {
+  const fontAwesome = document.createElement('link');
+  fontAwesome.rel = 'stylesheet';
+  fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css';
+  document.head.appendChild(fontAwesome);
+
+  const iconMap = {
+    'i-home':'fa-house', 'i-book':'fa-book-open', 'i-play':'fa-circle-play', 'i-quiz':'fa-clipboard-question',
+    'i-cert':'fa-certificate', 'i-users':'fa-users', 'i-shield':'fa-shield-halved', 'i-chart':'fa-chart-column',
+    'i-bell':'fa-bell', 'i-search':'fa-magnifying-glass', 'i-menu':'fa-bars', 'i-cal':'fa-calendar-days',
+    'i-clock':'fa-clock', 'i-check':'fa-check', 'i-doc':'fa-file-lines', 'i-flag':'fa-flag', 'i-plus':'fa-plus',
+    'i-settings':'fa-gear', 'i-video':'fa-video', 'i-list':'fa-list', 'i-money':'fa-money-bill',
+    'i-logout':'fa-right-from-bracket', 'i-star':'fa-star', 'i-target':'fa-bullseye', 'i-lock':'fa-lock', 'i-eye':'fa-eye'
+  };
+  document.querySelectorAll('svg').forEach((svg) => {
+    const use = svg.querySelector('use');
+    const iconId = use?.getAttribute('href')?.slice(1);
+    if (!iconMap[iconId]) return;
+    const icon = document.createElement('i');
+    icon.className = `${svg.getAttribute('class') || ''} fa-solid ${iconMap[iconId]} fa-icon`;
+    [...svg.attributes].forEach((attribute) => { if (attribute.name !== 'class') icon.setAttribute(attribute.name, attribute.value); });
+    icon.setAttribute('aria-hidden', 'true');
+    svg.replaceWith(icon);
+  });
+
+  const favicon = document.createElement('link');
+  favicon.rel = 'icon';
+  favicon.type = 'image/png';
+  favicon.href = new URL('../public/logo-school-round.png', document.currentScript.src).href;
+  document.head.appendChild(favicon);
+
   const body = document.body;
   const go = (url) => { if (url) window.location.href = url; };
 
