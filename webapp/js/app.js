@@ -41,6 +41,16 @@
     report.innerHTML = '<i class="fa-solid fa-chart-column fa-icon" aria-hidden="true"></i>Báo cáo';
     nav.appendChild(report);
   });
+  document.querySelectorAll('.side-role[data-role="hv"]').forEach((nav) => {
+    if (nav.querySelector('[data-target="hv-progress"]')) return;
+    const progress = document.createElement('a');
+    progress.className = `nav-item${body.dataset.page === 'hv-progress' ? ' active' : ''}`;
+    progress.dataset.target = 'hv-progress';
+    progress.dataset.href = new URL('../html/hv/tien-do-va-ket-qua.html', document.currentScript.src).href;
+    progress.innerHTML = '<i class="fa-solid fa-chart-line fa-icon" aria-hidden="true"></i>Tiến độ &amp; kết quả';
+    const result = nav.querySelector('[data-target="hv-result"]');
+    result ? result.after(progress) : nav.appendChild(progress);
+  });
   document.querySelectorAll('#roleSwitch [data-role]').forEach((button) => button.classList.toggle('active', button.dataset.role === body.dataset.role));
 
   document.querySelectorAll('[data-href]').forEach((item) => {
