@@ -198,6 +198,14 @@
       document.querySelectorAll('.view-switch button').forEach(item => item.classList.remove('is-active'));
       button.classList.add('is-active'); grid.classList.toggle('list-view', index === 1);
     }));
+    grid.querySelectorAll('.course-card').forEach(card => {
+      card.querySelectorAll('.course-cover, h2, .course-actions .ghost').forEach(trigger => {
+        trigger.tabIndex = 0;
+        trigger.setAttribute('role', 'link');
+        trigger.addEventListener('click', () => window.location.href = 'chi-tiet-khoa-hoc.html');
+        trigger.addEventListener('keydown', event => { if (event.key === 'Enter') trigger.click(); });
+      });
+    });
   })();
 </script>
 </body>

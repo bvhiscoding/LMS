@@ -33,6 +33,14 @@
   const go = (url) => { if (url) window.location.href = url; };
 
   document.querySelectorAll('.side-role').forEach((nav) => nav.classList.toggle('active', nav.dataset.role === body.dataset.role));
+  document.querySelectorAll('.side-role[data-role="ad"]').forEach((nav) => {
+    if (nav.querySelector('[data-target="ad-report"]')) return;
+    const report = document.createElement('a');
+    report.className = 'nav-item'; report.dataset.target = 'ad-report';
+    report.dataset.href = new URL('../html/ad/bao-cao.html', document.currentScript.src).href;
+    report.innerHTML = '<i class="fa-solid fa-chart-column fa-icon" aria-hidden="true"></i>Báo cáo';
+    nav.appendChild(report);
+  });
   document.querySelectorAll('#roleSwitch [data-role]').forEach((button) => button.classList.toggle('active', button.dataset.role === body.dataset.role));
 
   document.querySelectorAll('[data-href]').forEach((item) => {

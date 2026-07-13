@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chi tiết khóa học | E-Learning VBS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/khoa-hoc-cua-toi.css">
+</head>
+<body data-role="hv" data-page="hv-courses">
+  <header class="topbar">
+    <button class="hamb" type="button" aria-label="Mở menu" onclick="document.body.classList.toggle('nav-open')"><i class="fa-solid fa-bars"></i></button>
+    <div class="brand"><div class="avatar">VBS</div><div class="bt">E-Learning VBS<small>Hệ thống Quản lý Đào tạo — TKV</small></div></div>
+    <div class="searchbar"><i class="fa-solid fa-magnifying-glass"></i><input placeholder="Tìm khóa học, học viên, tài liệu..."></div>
+    <div class="top-right"><div class="role-switch" id="roleSwitch"><button data-role="hv" class="active">Học viên</button></div><div class="avatar">NA</div></div>
+  </header>
+  <div class="scrim" onclick="document.body.classList.remove('nav-open')"></div>
+  <aside class="sidebar"><nav class="side-role active" data-role="hv"><div class="side-cap">Học tập</div><a class="nav-item" href="../../index.html"><i class="fa-solid fa-house"></i>Trang chủ</a><a class="nav-item active" href="khoa-hoc-cua-toi.html"><i class="fa-solid fa-book-open"></i>Khóa học của tôi<span class="badge2">4</span></a><a class="nav-item" href="hoc-bai-giang.html"><i class="fa-solid fa-circle-play"></i>Học bài giảng</a><a class="nav-item" href="lich-hoc-thi.html"><i class="fa-solid fa-calendar-days"></i>Lịch học &amp; thi</a><a class="nav-item" href="lam-bai-thi.html"><i class="fa-solid fa-clipboard-question"></i>Làm bài thi</a><div class="side-cap">Tương tác</div><a class="nav-item" href="thao-luan.html"><i class="fa-solid fa-users"></i>Thảo luận &amp; hỏi đáp</a><div class="side-cap">Thành tích</div><a class="nav-item" href="chung-chi-hoc-vien.html"><i class="fa-solid fa-certificate"></i>Chứng chỉ</a><a class="nav-item" href="xep-hang.html"><i class="fa-solid fa-star"></i>Xếp hạng &amp; điểm</a><div class="side-cap">Tài khoản</div><a class="nav-item" href="thong-tin-ca-nhan.html"><i class="fa-solid fa-gear"></i>Thông tin cá nhân</a></nav><div class="side-foot">Prototype giao diện · v0.2<br>© VBS — TKV 2026</div></aside>
+  <main class="main"><div class="course-detail">
+    <a class="course-back" href="khoa-hoc-cua-toi.html"><i class="fa-solid fa-arrow-left"></i> Quay lại danh sách khóa học</a>
+    <header class="detail-heading">
+      <div><h1>An toàn lao động trong doanh nghiệp</h1><div class="detail-sub"><span class="badge b-green">Đang mở đăng ký</span><span>Mã khóa học: ATLD001</span><i></i><span>Cập nhật: 25/05/2024</span></div></div>
+      <button class="btn primary detail-register" type="button" data-open-dialog><i class="fa-solid fa-user-plus"></i>Đăng ký khóa học</button>
+    </header>
+
+    <div class="detail-layout">
+      <div class="detail-main">
+        <section class="detail-card detail-intro">
+          <figure class="course-video"><img src="../../public/course-covers/safety.jpg" alt="Mũ bảo hộ trong công trường"><figcaption><i class="fa-solid fa-circle-play"></i> Xem giới thiệu khóa học</figcaption></figure>
+          <div><h2>Giới thiệu khóa học</h2><p>Khóa học trang bị kiến thức và kỹ năng về an toàn lao động, giúp người lao động nhận diện rủi ro, phòng ngừa tai nạn và xây dựng môi trường làm việc an toàn, hiệu quả.</p>
+            <dl class="detail-facts"><div><dt><i class="fa-solid fa-user"></i> Giảng viên:</dt><dd>Nguyễn Văn A</dd></div><div><dt><i class="fa-solid fa-clock"></i> Thời lượng:</dt><dd>20 giờ</dd></div><div><dt><i class="fa-solid fa-laptop"></i> Hình thức học:</dt><dd>Online</dd></div><div><dt><i class="fa-solid fa-certificate"></i> Cấp chứng nhận:</dt><dd>Có</dd></div><div><dt><i class="fa-solid fa-users"></i> Đối tượng:</dt><dd>Nhân viên, quản lý trong doanh nghiệp</dd></div></dl>
+          </div>
+        </section>
+        <section class="detail-card course-summary"><h2>Thông tin khóa học</h2><div><p><span><i class="fa-solid fa-user"></i></span><small>Giảng viên</small>Nguyễn Văn A</p><p><span><i class="fa-solid fa-clock"></i></span><small>Thời lượng</small>20 giờ</p><p><span><i class="fa-solid fa-calendar-days"></i></span><small>Thời gian học</small>01/08/2024 - 05/08/2024</p><p><span><i class="fa-solid fa-laptop"></i></span><small>Hình thức học</small>Online</p></div></section>
+        <section class="detail-card course-program"><nav class="detail-tabs" role="tablist"><button class="active" type="button" data-tab="content">Nội dung khóa học</button><button type="button" data-tab="teacher">Giảng viên</button><button type="button" data-tab="other">Thông tin khác</button></nav>
+          <div class="tab-panel active" data-panel="content"><h2>Nội dung khóa học</h2><div class="program-list"><details><summary><i class="fa-solid fa-folder"></i><span>Chương 1: Tổng quan về an toàn lao động</span><i class="fa-solid fa-chevron-down"></i></summary><p>Khái niệm, vai trò của an toàn lao động và trách nhiệm của người lao động.</p></details><details><summary><i class="fa-solid fa-folder"></i><span>Chương 2: Nhận diện mối nguy và đánh giá rủi ro</span><i class="fa-solid fa-chevron-down"></i></summary><p>Nhận biết mối nguy tại nơi làm việc, đánh giá mức độ rủi ro và biện pháp kiểm soát.</p></details><details><summary><i class="fa-solid fa-folder"></i><span>Chương 3: Biện pháp phòng ngừa và kiểm soát rủi ro</span><i class="fa-solid fa-chevron-down"></i></summary><p>Trang bị bảo hộ, quy trình làm việc an toàn và báo cáo nguy cơ.</p></details><details><summary><i class="fa-solid fa-folder"></i><span>Chương 4: Xử lý sự cố và sơ cứu</span><i class="fa-solid fa-chevron-down"></i></summary><p>Các bước ứng phó sự cố, liên hệ hỗ trợ và kỹ năng sơ cứu cơ bản.</p></details><details><summary><i class="fa-solid fa-folder"></i><span>Chương 5: Pháp luật về an toàn lao động và trách nhiệm</span><i class="fa-solid fa-chevron-down"></i></summary><p>Quy định pháp luật, quyền lợi và nghĩa vụ của các bên liên quan.</p></details></div></div>
+          <div class="tab-panel" data-panel="teacher"><h2>Giảng viên</h2><div class="instructor tab-instructor"><div class="avatar-init">NA</div><p><b>Nguyễn Văn A</b><span>Chuyên gia An toàn lao động</span><span>10 năm kinh nghiệm trong đào tạo và quản lý an toàn tại doanh nghiệp.</span></p></div></div>
+          <div class="tab-panel" data-panel="other"><h2>Thông tin khác</h2><div class="other-info"><p><i class="fa-solid fa-certificate"></i><span>Chứng nhận</span> Cấp sau khi hoàn thành khóa học và đạt yêu cầu đánh giá.</p><p><i class="fa-solid fa-laptop"></i><span>Yêu cầu thiết bị</span> Máy tính hoặc điện thoại có kết nối Internet ổn định.</p><p><i class="fa-solid fa-circle-info"></i><span>Hỗ trợ</span> Liên hệ Phòng Đào tạo VBS khi cần hỗ trợ.</p></div></div>
+        </section>
+        <section class="detail-card course-goals"><h2>Mục tiêu khóa học</h2><ul><li>Hiểu rõ các quy định và nguyên tắc cơ bản về an toàn lao động.</li><li>Nhận diện và đánh giá các mối nguy trong môi trường làm việc.</li><li>Áp dụng các biện pháp phòng ngừa, kiểm soát rủi ro hiệu quả.</li><li>Xử lý tình huống sự cố và thực hiện sơ cứu ban đầu.</li></ul></section>
+      </div>
+      <aside class="detail-side">
+        <section class="detail-card"><h2>Thời gian học</h2><dl class="schedule"><div><dt><i class="fa-solid fa-calendar-days"></i> Ngày bắt đầu</dt><dd>01/08/2024</dd></div><div><dt><i class="fa-solid fa-calendar-days"></i> Ngày kết thúc</dt><dd>05/08/2024</dd></div><div><dt><i class="fa-solid fa-clock"></i> Lịch học</dt><dd>Thứ 2 - Thứ 6 (08:00 - 11:00)</dd></div></dl></section>
+        <section class="detail-card"><h2>Giảng viên</h2><div class="instructor"><div class="avatar-init">NA</div><p><b>Nguyễn Văn A</b><span>Chuyên gia An toàn lao động</span><span>10 năm kinh nghiệm</span></p></div></section>
+        <section class="detail-card"><h2>Điều kiện tham gia</h2><ul class="checks"><li>Đã hoàn thành khóa “An toàn cơ bản”</li><li>Thuộc đơn vị: ABC, XYZ, DEF</li><li>Không có nợ khóa học bắt buộc</li></ul></section>
+        <section class="detail-card"><h2>Tài liệu khóa học</h2><p class="document"><i class="fa-solid fa-file-pdf"></i><span>Giáo trình An toàn lao động.pdf<small>2.5 MB</small></span></p><div class="extra-documents" hidden><p class="document"><i class="fa-solid fa-file-lines"></i><span>Checklist an toàn lao động.docx<small>1.2 MB</small></span></p><p class="document"><i class="fa-solid fa-file-powerpoint"></i><span>Bài giảng an toàn lao động.pptx<small>4.1 MB</small></span></p></div><button class="document-link" type="button" id="toggleDocuments">Xem tất cả tài liệu</button></section>
+      </aside>
+    </div>
+    <footer class="detail-footer">© VBS — TKV 2026 · Hệ thống Quản lý Đào tạo</footer>
+  </div></main>
+
+  <dialog class="register-dialog" aria-labelledby="dialogTitle">
+    <button class="dialog-close" type="button" aria-label="Đóng" data-close-dialog><i class="fa-solid fa-xmark"></i></button><div class="dialog-symbol"><i class="fa-solid fa-question"></i></div><h2 id="dialogTitle">Xác nhận đăng ký</h2><p>Bạn có chắc chắn muốn đăng ký khóa học<br><strong>“An toàn lao động trong doanh nghiệp”?</strong></p><div class="dialog-actions"><button class="btn ghost" type="button" data-close-dialog>Hủy</button><button class="btn primary" type="button" id="confirmRegistration"><i class="fa-solid fa-check"></i> Xác nhận đăng ký</button></div>
+  </dialog>
+  <script src="../../js/app.js"></script>
+  <script>
+    (() => {
+      const dialog = document.querySelector('.register-dialog');
+      const button = document.querySelector('.detail-register');
+      document.querySelector('[data-open-dialog]').addEventListener('click', () => dialog.showModal());
+      document.querySelectorAll('[data-close-dialog]').forEach(item => item.addEventListener('click', () => dialog.close()));
+      dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
+      document.getElementById('confirmRegistration').addEventListener('click', () => { dialog.close(); button.innerHTML = '<i class="fa-solid fa-check"></i> Đã đăng ký'; button.disabled = true; });
+      document.querySelectorAll('[data-tab]').forEach(tab => tab.addEventListener('click', () => {
+        document.querySelectorAll('[data-tab], .tab-panel').forEach(item => item.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelector(`[data-panel="${tab.dataset.tab}"]`).classList.add('active');
+      }));
+      document.getElementById('toggleDocuments').addEventListener('click', event => {
+        const documents = document.querySelector('.extra-documents');
+        documents.hidden = !documents.hidden;
+        event.currentTarget.textContent = documents.hidden ? 'Xem tất cả tài liệu' : 'Thu gọn tài liệu';
+      });
+    })();
+  </script>
+</body>
+</html>
