@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   cover: { width: 108, minHeight: 148, borderRadius: 10 },
   content: { flex: 1, minWidth: 0, paddingHorizontal: 0, paddingVertical: 0, gap: 7 },
   titleRow: { minHeight: 42, flexDirection: 'row', alignItems: 'flex-start' },
-  title: { flex: 1, fontWeight: '700', color: palette.onSurface },
+  title: { flex: 1, fontWeight: '600', color: palette.onSurface },
   more: { margin: -10, marginLeft: -4 },
   chip: { alignSelf: 'flex-start', height: 28 },
   chipText: { fontSize: 11, lineHeight: 14 },

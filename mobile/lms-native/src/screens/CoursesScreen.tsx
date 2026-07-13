@@ -1,10 +1,11 @@
 import { useMemo, useState } from 'react';
 import { FlatList, ScrollView, StyleSheet, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Appbar, Button, Chip, Divider, Text } from 'react-native-paper';
+import { Button, Chip, Divider, Text } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AppBottomBar } from '../components/AppBottomBar';
+import { AppTopBar } from '../components/AppTopBar';
 import { CourseCard } from '../components/CourseCard';
 import { courses, statusMeta, type CourseStatus } from '../data/courses';
 import { palette } from '../theme';
@@ -30,12 +31,14 @@ export function CoursesScreen({ navigation }: Props) {
 
   return (
     <SafeAreaView edges={['top', 'left', 'right']} style={styles.safeArea}>
-      <Appbar.Header mode="center-aligned" statusBarHeight={0} elevated>
-        <Appbar.BackAction onPress={() => navigation.canGoBack() && navigation.goBack()} accessibilityLabel="Quay lại" />
-        <Appbar.Content title="Khóa học" titleStyle={styles.headerTitle} />
-        <Appbar.Action icon="magnify" accessibilityLabel="Tìm kiếm khóa học" onPress={() => undefined} />
-        <Appbar.Action icon="filter-variant" accessibilityLabel="Bộ lọc nâng cao" onPress={() => undefined} />
-      </Appbar.Header>
+      <AppTopBar
+        title="Khóa học"
+        onBack={() => navigation.canGoBack() && navigation.goBack()}
+        actions={[
+          { icon: 'magnify', accessibilityLabel: 'Tìm kiếm khóa học', onPress: () => undefined },
+          { icon: 'filter-variant', accessibilityLabel: 'Bộ lọc nâng cao', onPress: () => undefined },
+        ]}
+      />
 
       <View style={styles.filterArea}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filterContent}>
@@ -89,13 +92,13 @@ export function CoursesScreen({ navigation }: Props) {
 
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: palette.background },
-  headerTitle: { fontWeight: '700' },
+  headerTitle: { fontWeight: '600' },
   filterArea: { backgroundColor: palette.surface },
   filterContent: { paddingHorizontal: 16, paddingVertical: 12, gap: 8 },
   filterChip: { minHeight: 40 },
   listContent: { padding: 16, paddingBottom: 24 },
   listHeader: { minHeight: 48, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  listTitle: { fontWeight: '700' },
+  listTitle: { fontWeight: '600' },
   empty: { paddingVertical: 64, alignItems: 'center', gap: 8 },
   emptyText: { color: palette.onSurfaceVariant },
 });

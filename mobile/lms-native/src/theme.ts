@@ -1,4 +1,12 @@
-import { MD3LightTheme, type MD3Theme } from 'react-native-paper';
+import { Platform } from 'react-native';
+import { configureFonts, MD3LightTheme, type MD3Theme } from 'react-native-paper';
+
+const appFontFamily = Platform.select({
+  ios: 'System',
+  android: 'sans-serif',
+  web: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif',
+  default: 'System',
+}) ?? 'System';
 
 export const palette = {
   primary: '#0868F3',
@@ -22,6 +30,7 @@ export const palette = {
 export const appTheme: MD3Theme = {
   ...MD3LightTheme,
   roundness: 3,
+  fonts: configureFonts({ config: { fontFamily: appFontFamily } }),
   colors: {
     ...MD3LightTheme.colors,
     primary: palette.primary,

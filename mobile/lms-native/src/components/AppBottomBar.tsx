@@ -1,9 +1,14 @@
 import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { BottomNavigation, Icon, Portal, Snackbar } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import type { RootStackParamList } from '../types/navigation';
+
 type Props = {
   activeKey?: string;
+  onBeforeNavigate?: () => void;
 };
 
 const routes = [
@@ -14,7 +19,8 @@ const routes = [
   { key: 'profile', title: 'Cá nhân', focusedIcon: 'account', unfocusedIcon: 'account-outline' },
 ];
 
-export function AppBottomBar({ activeKey = 'courses' }: Props) {
+export function AppBottomBar({ activeKey = 'courses', onBeforeNavigate }: Props) {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const insets = useSafeAreaInsets();
   const [message, setMessage] = useState('');
   const index = Math.max(0, routes.findIndex((route) => route.key === activeKey));
@@ -25,9 +31,21 @@ export function AppBottomBar({ activeKey = 'courses' }: Props) {
         navigationState={{ index, routes }}
         safeAreaInsets={{ bottom: insets.bottom }}
         onTabPress={({ route }) => {
-          if (route.key !== activeKey) {
-            setMessage(`${route.title} chưa nằm trong phạm vi prototype này.`);
+          if (route.key === activeKey) return;
+          if (route.key === 'courses') {
+            onBeforeNavigate?.();
+            navigation.navigate('Courses');
+          } else if (route.key === 'discussion') {
+            onBeforeNavigate?.();
+            navigation.navigate('Discussion');
+          } else if (route.key === 'calendar') {
+            onBeforeNavigate?.();
+            navigation.navigate('Schedule');
+          } else if (route.key === 'profile') {
+            onBeforeNavigate?.();
+            navigation.navigate('Profile');
           }
+          else setMessage(`${route.title} chưa nằm trong phạm vi prototype này.`);
         }}
         renderIcon={({ route, focused, color }) => (
           <Icon source={focused ? route.focusedIcon : route.unfocusedIcon} color={color} size={24} />

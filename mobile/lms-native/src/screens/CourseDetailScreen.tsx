@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {
-  Appbar,
   Avatar,
   Button,
   Card,
@@ -18,6 +17,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AppBottomBar } from '../components/AppBottomBar';
+import { AppTopBar } from '../components/AppTopBar';
 import { courses } from '../data/courses';
 import { palette } from '../theme';
 import type { RootStackParamList } from '../types/navigation';
@@ -30,8 +30,25 @@ const materialItems = [
   { title: 'Giáo trình HTML.pdf', description: '2.5 MB', icon: 'file-pdf-box', color: '#D32F2F', status: 'Tải xuống', statusColor: palette.onSurfaceVariant },
   { title: 'Bài tập thực hành', description: 'Bài thực hành', icon: 'clipboard-text-outline', color: palette.success, status: 'Chưa nộp', statusColor: palette.error },
   { title: 'File mẫu bai-01.zip', description: '1.2 MB', icon: 'folder-zip-outline', color: '#1976D2', status: 'Tải xuống', statusColor: palette.onSurfaceVariant },
-  { title: 'Kiểm tra nhanh', description: '5 câu', icon: 'help-circle', color: '#E8A700', status: 'Hoàn thành', statusColor: palette.success },
 ];
+
+function ExamCurriculumItem({ title, description, status, color, onPress }: { title: string; description: string; status: string; color: string; onPress: () => void }) {
+  return (
+    <Card mode="outlined" onPress={onPress} style={styles.examCurriculumCard}>
+      <Card.Content style={styles.examCurriculumContent}>
+        <View style={[styles.examCurriculumIcon, { backgroundColor: `${color}18` }]}>
+          <Icon source="clipboard-list" size={26} color={color} />
+        </View>
+        <View style={styles.examCurriculumText}>
+          <Text variant="titleSmall" style={styles.sectionTitle}>{title}</Text>
+          <Text variant="bodySmall" style={styles.muted}>{description}</Text>
+        </View>
+        <Chip compact textStyle={{ color }} style={styles.examStatus}>{status}</Chip>
+        <Icon source="chevron-right" size={18} color={palette.onSurfaceVariant} />
+      </Card.Content>
+    </Card>
+  );
+}
 
 export function CourseDetailScreen({ navigation, route }: Props) {
   const course = courses.find((item) => item.id === route.params.courseId) ?? courses[0];
@@ -50,17 +67,20 @@ export function CourseDetailScreen({ navigation, route }: Props) {
 
   return (
     <SafeAreaView edges={['top', 'left', 'right']} style={styles.safeArea}>
-      <Appbar.Header mode="center-aligned" statusBarHeight={0} elevated>
-        <Appbar.BackAction onPress={navigation.goBack} accessibilityLabel="Quay lại danh sách khóa học" />
-        <Appbar.Content title="Chi tiết khóa học" titleStyle={styles.headerTitle} />
-        <Appbar.Action icon="share-variant-outline" accessibilityLabel="Chia sẻ khóa học" onPress={() => undefined} />
-        <Appbar.Action
-          icon={bookmarked ? 'bookmark' : 'bookmark-outline'}
-          accessibilityLabel={bookmarked ? 'Bỏ lưu khóa học' : 'Lưu khóa học'}
-          accessibilityState={{ selected: bookmarked }}
-          onPress={() => setBookmarked((value) => !value)}
-        />
-      </Appbar.Header>
+      <AppTopBar
+        title="Chi tiết khóa học"
+        onBack={navigation.goBack}
+        backLabel="Quay lại danh sách khóa học"
+        actions={[
+          { icon: 'share-variant-outline', accessibilityLabel: 'Chia sẻ khóa học', onPress: () => undefined },
+          {
+            icon: bookmarked ? 'bookmark' : 'bookmark-outline',
+            accessibilityLabel: bookmarked ? 'Bỏ lưu khóa học' : 'Lưu khóa học',
+            accessibilityState: { selected: bookmarked },
+            onPress: () => setBookmarked((value) => !value),
+          },
+        ]}
+      />
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
         <Card mode="elevated" style={styles.heroCard}>
@@ -81,8 +101,10 @@ export function CourseDetailScreen({ navigation, route }: Props) {
           </View>
           <Card.Content style={styles.progressContent}>
             <View style={styles.progressRow}>
-              <ProgressBar progress={course.progress} style={styles.progress} />
-              <Text variant="labelLarge">65%</Text>
+              <View style={styles.progressTrack}>
+                <ProgressBar progress={course.progress} style={styles.progress} />
+              </View>
+              <Text variant="labelLarge" style={styles.percent}>{Math.round(course.progress * 100)}%</Text>
             </View>
             <View style={styles.completionRow}>
               <Icon source="target" size={22} color={palette.onSurfaceVariant} />
@@ -132,7 +154,10 @@ export function CourseDetailScreen({ navigation, route }: Props) {
 
         <SegmentedButtons
           value={activeTab}
-          onValueChange={setActiveTab}
+          onValueChange={(value) => {
+            if (value === 'discussion') navigation.navigate('Discussion');
+            else setActiveTab(value);
+          }}
           density="small"
           style={styles.tabs}
           buttons={[
@@ -174,7 +199,13 @@ export function CourseDetailScreen({ navigation, route }: Props) {
                   titleNumberOfLines={1}
                   left={(props) => <List.Icon {...props} icon={item.icon} color={item.color} />}
                   right={() => <Text variant="labelSmall" style={[styles.materialStatus, { color: item.statusColor }]}>{item.status}</Text>}
-                  onPress={() => undefined}
+                  onPress={() => {
+                    if (item.title === 'Bài tập thực hành') {
+                      navigation.navigate('AssignmentDetail', { assignmentId: 'html-basic-practice' });
+                    } else if (item.title === 'Slide bài giảng' || item.title.endsWith('.pdf')) {
+                      navigation.navigate('DocumentViewer', { title: item.title });
+                    }
+                  }}
                   accessibilityLabel={`${item.title}, ${item.description}, ${item.status}`}
                 />
               ))}
@@ -186,8 +217,23 @@ export function CourseDetailScreen({ navigation, route }: Props) {
               right={(props) => <List.Icon {...props} icon="chevron-right" />}
               onPress={() => undefined}
             />
+            <List.Item
+              title="Kiểm tra nhanh cuối Chương 1"
+              description="5 câu • 10 phút"
+              left={(props) => <List.Icon {...props} icon="help-circle" color="#E8A700" />}
+              right={(props) => <List.Icon {...props} icon="chevron-right" />}
+              onPress={() => navigation.navigate('ExamDetail', { examId: 'quiz-chapter-1' })}
+            />
           </List.Accordion>
         </Card>
+
+        <ExamCurriculumItem
+          title="Bài thi Giữa kỳ"
+          description="HTML & CSS • 40 câu • 60 phút"
+          status="Sắp bắt đầu"
+          color={palette.primary}
+          onPress={() => navigation.navigate('ExamDetail', { examId: 'midterm-web' })}
+        />
 
         <Card mode="contained" style={styles.accordionCard}>
           <List.Accordion
@@ -202,8 +248,23 @@ export function CourseDetailScreen({ navigation, route }: Props) {
               description="Hoàn thành Chương 1 để tiếp tục"
               left={(props) => <List.Icon {...props} icon="lock-outline" />}
             />
+            <List.Item
+              title="Kiểm tra nhanh cuối Chương 2"
+              description="5 câu • 10 phút"
+              left={(props) => <List.Icon {...props} icon="help-circle" color="#E8A700" />}
+              right={(props) => <List.Icon {...props} icon="lock-outline" />}
+              onPress={() => navigation.navigate('ExamDetail', { examId: 'quiz-chapter-2' })}
+            />
           </List.Accordion>
         </Card>
+
+        <ExamCurriculumItem
+          title="Bài thi Cuối kỳ"
+          description="HTML, CSS & JavaScript • 50 câu • 90 phút"
+          status="Chưa mở"
+          color="#8A2BE2"
+          onPress={() => navigation.navigate('ExamDetail', { examId: 'final-web' })}
+        />
       </ScrollView>
 
       <Surface elevation={2} style={styles.actionArea}>
@@ -218,22 +279,24 @@ export function CourseDetailScreen({ navigation, route }: Props) {
 
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: palette.background },
-  headerTitle: { fontWeight: '700' },
+  headerTitle: { fontWeight: '600' },
   scrollContent: { padding: 16, paddingBottom: 24, gap: 12 },
   heroCard: { backgroundColor: palette.surface },
   heroRow: { flexDirection: 'row', padding: 12, gap: 12 },
   heroCover: { width: 124, minHeight: 148, borderRadius: 10 },
-  heroContent: { flex: 1, paddingHorizontal: 0, paddingVertical: 0, gap: 9 },
-  heroTitle: { fontWeight: '700', color: palette.onSurface },
+  heroContent: { flex: 1, minWidth: 0, paddingHorizontal: 0, paddingVertical: 0, gap: 9 },
+  heroTitle: { fontWeight: '600', color: palette.onSurface },
   statusChip: { alignSelf: 'flex-start', backgroundColor: palette.primaryContainer },
   inlineMeta: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   flexText: { flex: 1 },
   progressContent: { paddingTop: 0, paddingBottom: 14, gap: 10 },
-  progressRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
-  progress: { flex: 1, height: 7, borderRadius: 4 },
+  progressRow: { flexDirection: 'row', alignItems: 'center', gap: 12, minWidth: 0 },
+  progressTrack: { flex: 1, minWidth: 0 },
+  progress: { height: 7, borderRadius: 4 },
+  percent: { minWidth: 34, flexShrink: 0 },
   completionRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 8 },
   sectionCard: { backgroundColor: palette.surface },
-  sectionTitle: { fontWeight: '700' },
+  sectionTitle: { fontWeight: '600' },
   goals: { paddingBottom: 16, gap: 10 },
   goalRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   facts: { minHeight: 112, paddingVertical: 12, paddingHorizontal: 4, borderRadius: 12, flexDirection: 'row', backgroundColor: palette.surface },
@@ -246,4 +309,9 @@ const styles = StyleSheet.create({
   materialStatus: { alignSelf: 'center', marginRight: 8 },
   actionArea: { padding: 12, backgroundColor: palette.surface },
   continueButton: { minHeight: 48 },
+  examCurriculumCard: { backgroundColor: palette.surface },
+  examCurriculumContent: { minHeight: 78, flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 12 },
+  examCurriculumIcon: { width: 44, height: 44, alignItems: 'center', justifyContent: 'center', borderRadius: 11 },
+  examCurriculumText: { flex: 1, minWidth: 0, gap: 3 },
+  examStatus: { backgroundColor: palette.primaryContainer },
 });
