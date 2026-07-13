@@ -38,7 +38,7 @@
     const report = document.createElement('a');
     report.className = 'nav-item'; report.dataset.target = 'ad-report';
     report.dataset.href = new URL('../html/ad/bao-cao.html', document.currentScript.src).href;
-    report.innerHTML = '<i class="fa-solid fa-chart-column fa-icon" aria-hidden="true"></i>Báo cáo';
+    report.innerHTML = '<i class="ic fa-solid fa-chart-column fa-icon" aria-hidden="true"></i>Báo cáo';
     nav.appendChild(report);
   });
   document.querySelectorAll('.side-role[data-role="hv"]').forEach((nav) => {
@@ -47,9 +47,19 @@
     progress.className = `nav-item${body.dataset.page === 'hv-progress' ? ' active' : ''}`;
     progress.dataset.target = 'hv-progress';
     progress.dataset.href = new URL('../html/hv/tien-do-va-ket-qua.html', document.currentScript.src).href;
-    progress.innerHTML = '<i class="fa-solid fa-chart-line fa-icon" aria-hidden="true"></i>Tiến độ &amp; kết quả';
+    progress.innerHTML = '<i class="ic fa-solid fa-chart-line fa-icon" aria-hidden="true"></i>Tiến độ &amp; kết quả';
     const result = nav.querySelector('[data-target="hv-result"]');
     result ? result.after(progress) : nav.appendChild(progress);
+  });
+  document.querySelectorAll('.side-role[data-role="gv"]').forEach((nav) => {
+    if (nav.querySelector('[data-target="gv-students"]')) return;
+    const students = document.createElement('a');
+    students.className = `nav-item${body.dataset.page === 'gv-students' ? ' active' : ''}`;
+    students.dataset.target = 'gv-students';
+    students.dataset.href = new URL('../html/gv/quan-ly-hoc-vien.html', document.currentScript.src).href;
+    students.innerHTML = '<i class="ic fa-solid fa-user-graduate fa-icon" aria-hidden="true"></i>Quản lý học viên';
+    const classes = nav.querySelector('[data-target="gv-classes"]');
+    classes ? classes.after(students) : nav.appendChild(students);
   });
   document.querySelectorAll('#roleSwitch [data-role]').forEach((button) => button.classList.toggle('active', button.dataset.role === body.dataset.role));
 
