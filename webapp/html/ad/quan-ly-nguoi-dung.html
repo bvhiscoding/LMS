@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/ad/quan-ly-nguoi-dung.css">
 </head>
 <body data-role="ad" data-page="ad-users">
 
@@ -145,24 +146,31 @@
 </aside>
 
 
-<main class="main"><section class="screen active" id="ad-users">
-  <div class="page-head"><div><div class="crumb">Quản trị hệ thống › Người dùng</div><h1>Quản lý người dùng</h1><div class="sub">5.024 tài khoản · đồng bộ từ AD-Domain &amp; HR-TKV</div></div><div style="display:flex;gap:8px"><button class="btn ghost"><svg class="ic sm"><use href="#i-doc"/></svg>Nhập Excel</button><button class="btn primary"><svg class="ic sm"><use href="#i-plus"/></svg>Thêm người dùng</button></div></div>
-  <div class="toolbar">
-    <div class="field"><svg class="ic sm"><use href="#i-search"/></svg><input placeholder="Tìm tên, email, mã NV..."></div>
-    <div class="field"><select><option>Tất cả đơn vị</option><option>Than Hà Lầm</option><option>Than Núi Béo</option></select></div>
-    <div class="field"><select><option>Tất cả vai trò</option><option>Học viên</option><option>Giảng viên</option><option>CBQL</option></select></div>
-    <span class="chip on">Đang hoạt động</span><span class="chip">Bị khóa</span>
+<main class="main user-management"><section class="screen active" id="ad-users">
+  <div class="user-breadcrumb">Trang chủ <i class="fa-solid fa-chevron-right"></i> Quản trị hệ thống <i class="fa-solid fa-chevron-right"></i> <strong>Quản trị người dùng</strong></div>
+  <div class="user-page-head">
+    <div><h1>Quản trị người dùng</h1><p>Quản lý danh sách người dùng trong hệ thống</p></div>
+    <div class="user-page-actions"><button class="btn primary" id="addUserButton"><i class="fa-solid fa-plus"></i>Thêm người dùng</button><button class="btn ghost" id="exportUsersButton"><i class="fa-solid fa-download"></i>Xuất dữ liệu</button></div>
   </div>
-  <div class="card" style="overflow:hidden">
-    <table class="tbl"><thead><tr><th>Người dùng</th><th>Đơn vị</th><th>Chức danh</th><th>Vai trò</th><th>Nguồn</th><th>Trạng thái</th><th></th></tr></thead><tbody>
-    <tr><td><div class="u"><span class="av" style="background:#1c498c">NA</span><div><b>Nguyễn Văn An</b><div class="faint" style="font-size:11px">an.nv@vbs.edu.vn</div></div></div></td><td>Than Hà Lầm</td><td>Kỹ sư mỏ</td><td><span class="badge b-blue">Học viên</span></td><td><span class="badge b-gray">AD</span></td><td><span class="badge b-green">Hoạt động</span></td><td><button class="btn ghost sm"><svg class="ic sm"><use href="#i-settings"/></svg></button></td></tr>
-    <tr><td><div class="u"><span class="av" style="background:#D99A2B">TM</span><div><b>Trần Minh</b><div class="faint" style="font-size:11px">minh.t@vbs.edu.vn</div></div></div></td><td>Phòng Đào tạo</td><td>Giảng viên</td><td><span class="badge b-amber">Giảng viên</span></td><td><span class="badge b-gray">AD</span></td><td><span class="badge b-green">Hoạt động</span></td><td><button class="btn ghost sm"><svg class="ic sm"><use href="#i-settings"/></svg></button></td></tr>
-    <tr><td><div class="u"><span class="av" style="background:#2156A3">LH</span><div><b>Lê Thị Hoa</b><div class="faint" style="font-size:11px">hoa.lt@vbs.edu.vn</div></div></div></td><td>Phòng Đào tạo</td><td>Cán bộ QLĐT</td><td><span class="badge" style="background:#EDE3F7;color:#7B3F9E">CBQL</span></td><td><span class="badge b-gray">AD</span></td><td><span class="badge b-green">Hoạt động</span></td><td><button class="btn ghost sm"><svg class="ic sm"><use href="#i-settings"/></svg></button></td></tr>
-    <tr><td><div class="u"><span class="av" style="background:#8A94A6">HV</span><div><b>Học viên ngoài AD</b><div class="faint" style="font-size:11px">guest.hv@gmail.com</div></div></div></td><td>Đối tác</td><td>—</td><td><span class="badge b-blue">Học viên</span></td><td><span class="badge b-amber">Cục bộ</span></td><td><span class="badge b-red">Bị khóa</span></td><td><button class="btn ghost sm"><svg class="ic sm"><use href="#i-settings"/></svg></button></td></tr>
-    </tbody></table>
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-top:1px solid var(--border)"><span class="faint" style="font-size:12.5px">Hiển thị 1–4 trong 5.024</span><div style="display:flex;gap:6px"><button class="btn ghost sm">←</button><button class="btn primary sm">1</button><button class="btn ghost sm">2</button><button class="btn ghost sm">3</button><button class="btn ghost sm">→</button></div></div>
-  </div>
+  <section class="user-card" aria-label="Danh sách người dùng">
+    <div class="user-filters">
+      <label class="user-search"><span class="sr-only">Tìm kiếm người dùng</span><input id="userSearch" type="search" placeholder="Tìm kiếm theo họ tên, email, số điện thoại..."><i class="fa-solid fa-magnifying-glass"></i></label>
+      <label><span class="sr-only">Vai trò</span><select id="roleFilter"><option value="">Vai trò: Tất cả</option><option>Quản trị hệ thống</option><option>Giảng viên</option><option>Học viên</option><option>Quản lý đơn vị</option></select></label>
+      <label><span class="sr-only">Trạng thái</span><select id="statusFilter"><option value="">Trạng thái: Tất cả</option><option>Hoạt động</option><option>Bị khóa</option><option>Ngừng hoạt động</option></select></label>
+      <label><span class="sr-only">Đơn vị</span><select id="unitFilter"><option value="">Đơn vị: Tất cả</option><option>Phòng CNTT</option><option>Khoa Kinh tế</option><option>Khoa Kỹ thuật</option><option>Phòng Đào tạo</option><option>Khoa Y</option><option>Khoa Ngoại ngữ</option><option>Phòng Tài chính</option></select></label>
+      <button class="btn ghost user-filter-reset" id="resetFilters"><i class="fa-solid fa-filter-circle-xmark"></i>Bộ lọc</button>
+    </div>
+    <div class="user-table-wrap"><table class="user-table"><thead><tr><th>STT</th><th>Họ và tên</th><th>Email</th><th>Vai trò</th><th>Đơn vị</th><th>Trạng thái</th><th>Đăng nhập cuối</th><th>Thao tác</th></tr></thead><tbody id="userTableBody"></tbody></table></div>
+    <div class="user-table-footer"><p id="resultSummary" aria-live="polite"></p><nav id="pagination" class="user-pagination" aria-label="Phân trang"></nav></div>
+  </section>
+  <dialog id="userDialog" class="user-dialog"><form id="userForm">
+    <div class="dialog-head"><div><h2 id="userDialogTitle">Thêm người dùng</h2><p>Nhập thông tin tài khoản người dùng</p></div><button type="button" class="dialog-close" data-close-dialog aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="dialog-body"><input type="hidden" name="id"><label class="form-field full"><span>Họ và tên <b>*</b></span><input name="name" autocomplete="name" required maxlength="80" placeholder="Nguyễn Văn A"></label><label class="form-field full"><span>Email <b>*</b></span><input name="email" type="email" autocomplete="email" required placeholder="email@example.com"><small id="emailError" role="alert"></small></label><label class="form-field"><span>Vai trò <b>*</b></span><select name="role" required><option value="">Chọn vai trò</option><option>Quản trị hệ thống</option><option>Giảng viên</option><option>Học viên</option><option>Quản lý đơn vị</option></select></label><label class="form-field"><span>Đơn vị <b>*</b></span><select name="unit" required><option value="">Chọn đơn vị</option><option>Phòng CNTT</option><option>Khoa Kinh tế</option><option>Khoa Kỹ thuật</option><option>Phòng Đào tạo</option><option>Khoa Y</option><option>Khoa Ngoại ngữ</option><option>Phòng Tài chính</option></select></label><label class="form-field full"><span>Trạng thái</span><select name="status"><option>Hoạt động</option><option>Bị khóa</option><option>Ngừng hoạt động</option></select></label></div>
+    <div class="dialog-actions"><button type="button" class="btn ghost" data-close-dialog>Hủy</button><button type="submit" class="btn primary">Lưu người dùng</button></div>
+  </form></dialog>
+  <dialog id="confirmDialog" class="confirm-dialog"><div class="confirm-icon"><i class="fa-solid fa-lock"></i></div><h2 id="confirmTitle">Khóa người dùng?</h2><p id="confirmMessage"></p><div class="dialog-actions"><button type="button" class="btn ghost" data-close-confirm>Hủy</button><button type="button" class="btn primary" id="confirmAction">Xác nhận</button></div></dialog>
 </section></main>
 <script src="../../js/app.js"></script>
+<script src="../../js/quan-ly-nguoi-dung.js"></script>
 </body>
 </html>

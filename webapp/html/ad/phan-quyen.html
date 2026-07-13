@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/ad/phan-quyen.css">
 </head>
 <body data-role="ad" data-page="ad-rbac">
 
@@ -145,13 +146,16 @@
 </aside>
 
 
-<main class="main"><section class="screen active" id="ad-rbac">
-  <div class="page-head"><div><div class="crumb">Quản trị hệ thống › Phân quyền</div><h1>Ma trận phân quyền (RBAC)</h1><div class="sub">Vai trò × Chức năng × Phạm vi dữ liệu — 5 vai trò</div></div><button class="btn primary"><svg class="ic sm"><use href="#i-check"/></svg>Lưu phân quyền</button></div>
-  <div class="notice" style="margin-bottom:18px"><div class="ic-wrap"><svg class="ic"><use href="#i-shield"/></svg></div><div style="font-size:13px">Phạm vi dữ liệu: <b>A</b> = Toàn hệ thống · <b>T</b> = Đơn vị + cấp dưới · <b>O</b> = Đơn vị mình · <b>S</b> = Bản thân · <b>—</b> = Không có quyền.</div></div>
-  <div class="card" style="overflow:hidden">
-    <table class="tbl"><thead><tr><th style="min-width:220px">Chức năng</th><th style="text-align:center">Học viên</th><th style="text-align:center">Giảng viên</th><th style="text-align:center">CBQL</th><th style="text-align:center">Quản trị HT</th><th style="text-align:center">Lãnh đạo</th></tr></thead><tbody id="rbacBody"></tbody></table>
+<main class="main role-management"><section class="screen active" id="ad-rbac">
+  <div class="role-breadcrumb">Trang chủ <i class="fa-solid fa-chevron-right"></i> Quản trị hệ thống <i class="fa-solid fa-chevron-right"></i> <strong>Vai trò</strong></div>
+  <div class="role-page-head"><div><h1>Quản lý vai trò</h1><p>Quản lý danh sách vai trò và phân quyền cho người dùng trong hệ thống</p></div><button class="btn primary" id="addRoleButton"><i class="fa-solid fa-plus"></i>Thêm vai trò</button></div>
+  <div class="role-layout">
+    <aside class="role-list-card"><h2>Danh sách vai trò</h2><label class="role-search"><span class="sr-only">Tìm kiếm vai trò</span><input id="roleSearch" type="search" placeholder="Tìm kiếm vai trò..."><i class="fa-solid fa-magnifying-glass"></i></label><div class="role-list" id="roleList"></div><p class="role-total" id="roleTotal"></p></aside>
+    <section class="permission-card"><h2>Quyền hạn của vai trò: <strong id="selectedRoleName"></strong></h2><div class="permission-tabs"><button class="active" data-permission-tab="function">Quyền chức năng</button><button data-permission-tab="data">Quyền dữ liệu</button></div><div class="permission-table-wrap"><table class="permission-table"><thead id="permissionHead"></thead><tbody id="permissionTableBody"></tbody></table></div><div class="permission-footer"><p>Cập nhật lần cuối: <span id="permissionUpdated">20/05/2024 10:30</span></p><button class="btn ghost" id="editPermissionButton"><i class="fa-regular fa-pen-to-square"></i><span>Chỉnh sửa quyền</span></button></div></section>
   </div>
+  <dialog class="role-dialog" id="roleDialog"><form id="roleForm"><div class="role-dialog-head"><div><h2>Thêm vai trò</h2><p>Tạo vai trò mới cho hệ thống</p></div><button type="button" data-close-role aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></div><div class="role-dialog-body"><label><span>Tên vai trò <b>*</b></span><input name="name" required maxlength="50" placeholder="Nhập tên vai trò"></label><label><span>Biểu tượng</span><select name="icon"><option value="fa-user">Người dùng</option><option value="fa-shield-halved">Quản trị</option><option value="fa-headset">Hỗ trợ</option><option value="fa-building">Đơn vị</option></select></label></div><div class="role-dialog-actions"><button type="button" class="btn ghost" data-close-role>Hủy</button><button type="submit" class="btn primary">Thêm vai trò</button></div></form></dialog>
 </section></main>
 <script src="../../js/app.js"></script>
+<script src="../../js/phan-quyen.js"></script>
 </body>
 </html>

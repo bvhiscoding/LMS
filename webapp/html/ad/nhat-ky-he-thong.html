@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/ad/nhat-ky-he-thong.css">
 </head>
 <body data-role="ad" data-page="ad-log">
 
@@ -145,18 +146,23 @@
 </aside>
 
 
-<main class="main"><section class="screen active" id="ad-log">
-  <div class="page-head"><div><div class="crumb">Quản trị › Nhật ký hệ thống</div><h1>Nhật ký hệ thống (Audit log)</h1><div class="sub">Ghi nhận mọi thao tác ghi/sửa/xóa &amp; truy cập.</div></div><button class="btn ghost"><svg class="ic sm"><use href="#i-doc"/></svg>Xuất log</button></div>
-  <div class="toolbar"><div class="field"><svg class="ic sm"><use href="#i-cal"/></svg><input value="01/07 – 07/07/2026"></div><div class="field"><svg class="ic sm"><use href="#i-search"/></svg><input placeholder="Từ khóa / người dùng..."></div><div class="field"><select><option>Tất cả danh mục</option><option>Đăng nhập</option><option>Người dùng</option><option>Lớp học</option><option>Chấm điểm</option></select></div></div>
-  <div class="card" style="overflow:hidden">
-    <table class="tbl"><thead><tr><th>Thời gian</th><th>Người dùng</th><th>Hành động</th><th>Đối tượng</th><th>IP</th><th>Kết quả</th></tr></thead><tbody>
-    <tr><td class="faint" style="font-size:12px">07/07 09:12:04</td><td>hoa.lt</td><td><span class="badge b-blue">Duyệt đăng ký</span></td><td>Lớp QTKD-2026-04</td><td class="faint">10.0.2.45</td><td><span class="badge b-green">Thành công</span></td></tr>
-    <tr><td class="faint" style="font-size:12px">07/07 08:58:31</td><td>admin</td><td><span class="badge b-amber">Sửa phân quyền</span></td><td>Vai trò CBQL</td><td class="faint">10.0.1.10</td><td><span class="badge b-green">Thành công</span></td></tr>
-    <tr><td class="faint" style="font-size:12px">07/07 08:40:17</td><td>guest.hv</td><td><span class="badge b-gray">Đăng nhập</span></td><td>—</td><td class="faint">113.20.8.9</td><td><span class="badge b-red">Thất bại (khóa)</span></td></tr>
-    <tr><td class="faint" style="font-size:12px">07/07 08:22:50</td><td>minh.t</td><td><span class="badge" style="background:#EDE3F7;color:#7B3F9E">Xóa nội dung</span></td><td>Học liệu #2201</td><td class="faint">10.0.2.31</td><td><span class="badge b-green">Thành công</span></td></tr>
-    </tbody></table>
-  </div>
+<main class="main audit-log"><section class="screen active" id="ad-log">
+  <div class="audit-breadcrumb">Trang chủ <i class="fa-solid fa-chevron-right"></i> Quản trị hệ thống <i class="fa-solid fa-chevron-right"></i> <strong>Nhật ký hệ thống</strong></div>
+  <div class="audit-head"><div><h1>Nhật ký hệ thống</h1><p>Theo dõi và quản lý các hoạt động trong hệ thống</p></div><button class="btn ghost" id="exportLogs"><i class="fa-solid fa-download"></i>Xuất dữ liệu</button></div>
+  <section class="audit-card" aria-label="Danh sách nhật ký hệ thống">
+    <form class="audit-filters" id="auditFilters">
+      <div class="date-range"><label><span class="sr-only">Từ ngày</span><input id="dateFrom" type="date" value="2024-05-20"></label><span>-</span><label><span class="sr-only">Đến ngày</span><input id="dateTo" type="date" value="2024-05-27"></label><i class="fa-regular fa-calendar"></i></div>
+      <label><span class="sr-only">Hành động</span><select id="actionFilter"><option value="">Tất cả hành động</option><option>Đăng nhập</option><option>Cập nhật người dùng</option><option>Tạo mới</option><option>Phân quyền</option><option>Nộp bài kiểm tra</option><option>Xóa dữ liệu</option><option>Cấu hình hệ thống</option><option>Xuất dữ liệu</option><option>Xem dữ liệu</option></select></label>
+      <label><span class="sr-only">Người dùng</span><select id="userFilter"><option value="">Tất cả người dùng</option></select></label>
+      <label><span class="sr-only">Trạng thái</span><select id="statusFilter"><option value="">Tất cả trạng thái</option><option>Thành công</option><option>Thất bại</option></select></label>
+      <label class="audit-search"><span class="sr-only">Tìm kiếm nội dung hoặc IP</span><input id="auditSearch" type="search" placeholder="Tìm kiếm nội dung, IP..."><i class="fa-solid fa-magnifying-glass"></i></label>
+      <button class="btn primary" type="submit">Tìm kiếm</button>
+    </form>
+    <div class="audit-table-wrap"><table class="audit-table"><thead><tr><th>Thời gian</th><th>Người dùng</th><th>Hành động</th><th>Nội dung</th><th>Địa chỉ IP</th><th>Trạng thái</th></tr></thead><tbody id="auditTableBody"></tbody></table></div>
+    <div class="audit-footer"><p id="auditSummary" aria-live="polite"></p><nav id="auditPagination" class="audit-pagination" aria-label="Phân trang nhật ký"></nav></div>
+  </section>
 </section></main>
 <script src="../../js/app.js"></script>
+<script src="../../js/nhat-ky-he-thong.js"></script>
 </body>
 </html>
