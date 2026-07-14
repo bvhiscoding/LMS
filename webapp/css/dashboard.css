@@ -1,0 +1,43 @@
+/* Shared analytics dashboards for learner, instructor and leadership roles. */
+.dashboard-legacy{display:none!important}
+.analytics-dashboard{max-width:1540px;margin:0 auto}
+.dashboard-breadcrumb{display:flex;align-items:center;gap:9px;margin-bottom:8px;color:var(--faint);font-size:12.5px}
+.dashboard-breadcrumb i{font-size:9px}
+.dashboard-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:22px}
+.dashboard-head h1{font-size:26px;line-height:1.25;letter-spacing:-.035em}
+.dashboard-head p{margin-top:5px;color:var(--muted);font-size:13px}
+.dashboard-head-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.dashboard-period{display:flex;align-items:center;gap:8px;height:38px;padding:0 12px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--muted);font-size:12.5px}
+.dashboard-period select{border:0;outline:0;background:transparent;font:inherit;color:var(--text)}
+.dashboard-head .btn{height:38px;padding:0 15px;border-radius:8px}
+.dashboard-metrics{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;margin-bottom:16px}
+.dashboard-metrics.leadership-metrics{grid-template-columns:repeat(6,minmax(0,1fr))}
+.dashboard-metric{position:relative;display:grid;grid-template-columns:48px minmax(0,1fr);gap:12px;align-items:center;min-height:104px;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow);overflow:hidden}
+.dashboard-metric:after{content:"";position:absolute;right:-22px;bottom:-32px;width:74px;height:74px;border-radius:50%;background:var(--metric-soft,#eef4ff);opacity:.72}
+.metric-icon{display:grid;place-items:center;width:46px;height:46px;border-radius:13px;background:var(--metric-soft,#eaf1fb);color:var(--metric-color,var(--brand));font-size:19px}
+.metric-label{color:var(--muted);font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.metric-value{margin-top:2px;font-size:23px;font-weight:700;line-height:1.15;letter-spacing:-.035em}
+.metric-value small{font-size:12px;font-weight:500;color:var(--muted)}
+.metric-trend{margin-top:4px;color:var(--muted);font-size:10.5px}
+.metric-trend.up{color:var(--success)}.metric-trend.warn{color:#b87513}.metric-trend.danger{color:var(--danger)}
+.dashboard-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:15px}
+.dash-card{min-width:0;padding:17px 18px;background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow)}
+.dash-span-12{grid-column:span 12}.dash-span-8{grid-column:span 8}.dash-span-7{grid-column:span 7}.dash-span-6{grid-column:span 6}.dash-span-5{grid-column:span 5}.dash-span-4{grid-column:span 4}
+.dash-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:14px}
+.dash-card-head h2{font-size:15px;line-height:1.35}.dash-card-head p{margin-top:3px;color:var(--muted);font-size:10.5px}
+.dash-card-head select,.dash-card-head button{height:30px;padding:0 9px;border:1px solid var(--border);border-radius:6px;background:var(--surface);color:var(--muted);font:11px var(--font)}
+.dash-card-head a{color:#096fde;font-size:11.5px;font-weight:600;white-space:nowrap}
+.chart-wrap{position:relative;height:245px}.chart-wrap.compact{height:220px}.chart-wrap.tall{height:270px}
+.donut-center{position:absolute;top:50%;left:50%;z-index:1;text-align:center;transform:translate(-50%,-50%);pointer-events:none}
+.donut-center b{display:block;font-size:24px;letter-spacing:-.04em}.donut-center span{display:block;color:var(--muted);font-size:10px}
+.dash-legend{display:flex;justify-content:center;gap:15px;margin-top:8px;color:var(--muted);font-size:10px}.dash-legend span{display:flex;align-items:center;gap:5px}.dash-legend i{width:8px;height:8px;border-radius:50%}
+.learning-list{display:grid;gap:0}.learning-item{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:11px;align-items:center;padding:11px 0;border-top:1px solid var(--border)}.learning-item:first-child{padding-top:1px;border:0}.learning-thumb{display:grid;place-items:center;width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,#2469c4,#153c79);color:#fff}.learning-copy{min-width:0}.learning-copy b{display:block;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.learning-copy small{display:block;margin:2px 0 7px;color:var(--muted);font-size:10px}.mini-progress{height:5px;border-radius:99px;background:#e9edf4;overflow:hidden}.mini-progress i{display:block;height:100%;border-radius:inherit;background:#1676e7}.learning-item .btn{padding:6px 9px;border-radius:6px;font-size:10.5px}
+.dashboard-table-wrap{overflow:auto}.dashboard-table{width:100%;border-collapse:collapse;font-size:11.5px}.dashboard-table th{padding:10px 11px;background:var(--surface-2);color:var(--muted);font-size:10px;text-align:left;white-space:nowrap}.dashboard-table td{padding:11px;border-bottom:1px solid var(--border);vertical-align:middle}.dashboard-table tr:last-child td{border-bottom:0}.dashboard-table tbody tr:hover{background:#f8fbff}.table-title{font-weight:600}.table-title small{display:block;margin-top:2px;color:var(--muted);font-weight:400}.dashboard-status{display:inline-flex;align-items:center;gap:5px;padding:3px 7px;border-radius:999px;font-size:9.5px;font-weight:700;white-space:nowrap}.dashboard-status.blue{background:#eaf2ff;color:#1766c3}.dashboard-status.green{background:#e7f7ee;color:#16834c}.dashboard-status.amber{background:#fff4de;color:#b47715}.dashboard-status.red{background:#ffefec;color:#d44c3d}.dashboard-status.gray{background:#eef1f5;color:#68758a}
+.achievement-list,.action-list{display:grid;gap:9px}.achievement,.action-row{display:flex;align-items:center;gap:10px;padding:9px;border:1px solid var(--border);border-radius:8px}.achievement-icon,.action-icon{display:grid;place-items:center;width:34px;height:34px;border-radius:9px;background:#eaf2ff;color:#1572de;flex:none}.achievement b,.action-row b{display:block;font-size:11.5px}.achievement small,.action-row small{display:block;margin-top:2px;color:var(--muted);font-size:9.5px}.achievement time,.action-row>.dashboard-status{margin-left:auto}.action-row .btn{margin-left:auto;padding:6px 8px;border-radius:6px;font-size:9.5px}
+.achievement>strong{margin-left:auto;color:var(--text);font-size:12px;white-space:nowrap}.leadership-table{min-width:780px}.leadership-insight{border-color:#d9d8f5;background:linear-gradient(90deg,#f5f3ff,#fbfdff)}.leadership-insight>i{color:#7650c7}.system-health-list .achievement{min-height:57px}
+.kpi-scorecard-table{min-width:1080px}.unit-ranking-table{min-width:1120px}.unit-rank{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:#eef1f5;color:#68758a;font-weight:700}.unit-rank.top{background:linear-gradient(135deg,#fff4d6,#f7df9e);color:#a56b08;box-shadow:inset 0 0 0 1px #ecd18b}.unit-ranking-table tbody tr:first-child{background:#fbfdf9}
+.insight-banner{display:flex;align-items:center;gap:13px;margin-bottom:15px;padding:13px 16px;border:1px solid #d3e4fa;border-radius:9px;background:linear-gradient(90deg,#f3f8ff,#fbfdff);color:#355e8e;font-size:11.5px}.insight-banner>i{display:grid;place-items:center;width:34px;height:34px;border-radius:9px;background:#fff;color:#1372df;box-shadow:var(--shadow);font-size:15px}.insight-banner b{color:#173d6b}.insight-banner a{margin-left:auto;color:#0871df;font-weight:600;white-space:nowrap}
+@media(max-width:1280px){.dashboard-metrics,.dashboard-metrics.leadership-metrics{grid-template-columns:repeat(3,1fr)}.dash-span-8,.dash-span-7{grid-column:span 12}.dash-span-4,.dash-span-5{grid-column:span 6}}
+@media(max-width:900px){.dashboard-head{align-items:flex-start;flex-direction:column}.dashboard-metrics,.dashboard-metrics.leadership-metrics{grid-template-columns:1fr 1fr}.dash-span-6,.dash-span-5,.dash-span-4{grid-column:span 12}.chart-wrap{height:235px}.insight-banner{align-items:flex-start}.insight-banner a{display:none}}
+@media(max-width:560px){.dashboard-head h1{font-size:23px}.dashboard-head-actions{width:100%}.dashboard-period{flex:1}.dashboard-head .btn{flex:1;justify-content:center}.dashboard-metrics,.dashboard-metrics.leadership-metrics{grid-template-columns:1fr}.dashboard-metric{min-height:92px}.dash-card{padding:14px}.chart-wrap,.chart-wrap.tall{height:220px}.learning-item{grid-template-columns:40px minmax(0,1fr)}.learning-item>.btn{display:none}.dashboard-table{min-width:680px}}
+@media(prefers-reduced-motion:reduce){.dashboard-metric,.dash-card{scroll-behavior:auto}}

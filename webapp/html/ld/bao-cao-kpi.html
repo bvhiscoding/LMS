@@ -7,7 +7,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/dashboard.css">
 </head>
 <body data-role="ld" data-page="ld-kpi">
 
@@ -144,13 +146,62 @@
 </aside>
 
 
-<main class="main"><section class="screen active" id="ld-kpi">
+<main class="main">
+<section class="screen active analytics-dashboard" id="ld-kpi" data-dashboard="leadership-kpi">
+  <div class="dashboard-breadcrumb"><span>Báo cáo &amp; phân tích</span><i class="fa-solid fa-chevron-right"></i><b>KPI đào tạo</b></div>
+  <header class="dashboard-head">
+    <div><h1>Scorecard KPI đào tạo</h1><p>Theo dõi mức độ hoàn thành mục tiêu chiến lược, hiệu quả nguồn lực và dự báo cuối năm.</p></div>
+    <div class="dashboard-head-actions"><label class="dashboard-period"><i class="fa-regular fa-calendar"></i><select><option>Quý III/2026</option><option>Quý II/2026</option><option>Năm 2026</option></select></label><label class="dashboard-period"><i class="fa-solid fa-building"></i><select><option>Toàn trường</option><option>Khối khai thác</option><option>Khối văn phòng</option></select></label><button class="btn primary"><i class="fa-solid fa-file-export"></i>Xuất báo cáo</button></div>
+  </header>
+
+  <div class="insight-banner leadership-insight"><i class="fa-solid fa-bullseye"></i><div><b>Tổng quan điều hành:</b> 12/15 KPI đang đạt hoặc vượt kế hoạch. Ba chỉ số cần ưu tiên là chuẩn chức danh, chi phí trên học viên đạt chuẩn và tỷ lệ hoàn thành của nhóm đơn vị sản xuất.</div><a href="#kpi-scorecard">Xem scorecard <i class="fa-solid fa-arrow-down"></i></a></div>
+
+  <section class="dashboard-metrics leadership-metrics">
+    <article class="dashboard-metric" style="--metric-color:#176fe0;--metric-soft:#eaf2ff"><span class="metric-icon"><i class="fa-solid fa-list-check"></i></span><div><p class="metric-label">KPI đạt mục tiêu</p><p class="metric-value">12<small>/15</small></p><p class="metric-trend up">▲ Tăng 2 KPI so với Q2</p></div></article>
+    <article class="dashboard-metric" style="--metric-color:#7a47d2;--metric-soft:#f0eaff"><span class="metric-icon"><i class="fa-solid fa-gauge-high"></i></span><div><p class="metric-label">Điểm hiệu suất tổng hợp</p><p class="metric-value">86,4</p><p class="metric-trend up">▲ Cao hơn kế hoạch 3,4 điểm</p></div></article>
+    <article class="dashboard-metric" style="--metric-color:#1b9b5b;--metric-soft:#e8f7ee"><span class="metric-icon"><i class="fa-solid fa-circle-check"></i></span><div><p class="metric-label">Tỷ lệ hoàn thành</p><p class="metric-value">84%</p><p class="metric-trend up">▲ Vượt mục tiêu 4%</p></div></article>
+    <article class="dashboard-metric" style="--metric-color:#138da1;--metric-soft:#e5f7fa"><span class="metric-icon"><i class="fa-solid fa-user-check"></i></span><div><p class="metric-label">Đạt chuẩn chức danh</p><p class="metric-value">71%</p><p class="metric-trend warn">Còn thiếu 4 điểm %</p></div></article>
+    <article class="dashboard-metric" style="--metric-color:#e59b16;--metric-soft:#fff4dc"><span class="metric-icon"><i class="fa-solid fa-coins"></i></span><div><p class="metric-label">Chi phí / giờ học</p><p class="metric-value">128<small>nghìn</small></p><p class="metric-trend up">▼ Giảm 6% cùng kỳ</p></div></article>
+    <article class="dashboard-metric" style="--metric-color:#e45c4b;--metric-soft:#ffefec"><span class="metric-icon"><i class="fa-solid fa-star"></i></span><div><p class="metric-label">Hài lòng học viên</p><p class="metric-value">4,6<small>/5</small></p><p class="metric-trend up">▲ 92% phản hồi tích cực</p></div></article>
+  </section>
+
+  <div class="dashboard-grid">
+    <article class="dash-card dash-span-8"><header class="dash-card-head"><div><h2>Mức độ hoàn thành KPI trọng yếu</h2><p>So sánh thực hiện với mục tiêu quy đổi về thang 100%</p></div><select><option>15 KPI chiến lược</option><option>KPI vận hành</option></select></header><div class="chart-wrap tall"><canvas id="kpiAchievementChart"></canvas></div></article>
+    <article class="dash-card dash-span-4"><header class="dash-card-head"><div><h2>Trạng thái danh mục KPI</h2><p>15 chỉ số đang được theo dõi</p></div><span class="dashboard-status green">80% đạt</span></header><div class="chart-wrap compact"><canvas id="kpiStatusChart"></canvas><div class="donut-center"><b>12/15</b><span>Đạt mục tiêu</span></div></div><div class="dash-legend"><span><i style="background:#23a86b"></i>Đạt/vượt</span><span><i style="background:#f0a31f"></i>Cần theo dõi</span><span><i style="background:#e95d4d"></i>Không đạt</span></div></article>
+
+    <article class="dash-card dash-span-7"><header class="dash-card-head"><div><h2>Xu hướng hiệu suất đào tạo</h2><p>Điểm KPI tổng hợp và tỷ lệ hoàn thành theo tháng</p></div><select><option>7 tháng gần nhất</option></select></header><div class="chart-wrap"><canvas id="kpiTrendChart"></canvas></div></article>
+    <article class="dash-card dash-span-5"><header class="dash-card-head"><div><h2>Cân bằng mục tiêu chiến lược</h2><p>Hiệu suất theo sáu trụ cột đào tạo</p></div><a href="bao-cao-don-vi.html">So sánh đơn vị</a></header><div class="chart-wrap"><canvas id="kpiBalanceChart"></canvas></div></article>
+
+    <article class="dash-card dash-span-12" id="kpi-scorecard"><header class="dash-card-head"><div><h2>Scorecard KPI chi tiết</h2><p>Cập nhật từ kế hoạch, kết quả học tập, khảo sát và dữ liệu tài chính</p></div><button><i class="fa-solid fa-sliders"></i> Tùy chỉnh cột</button></header><div class="dashboard-table-wrap"><table class="dashboard-table kpi-scorecard-table"><thead><tr><th>Mã KPI</th><th>Chỉ số</th><th>Trọng số</th><th>Mục tiêu</th><th>Thực hiện</th><th>Hoàn thành</th><th>So với Q2</th><th>Đơn vị phụ trách</th><th>Trạng thái</th></tr></thead><tbody>
+      <tr><td><b>KPI-01</b></td><td class="table-title">Tỷ lệ hoàn thành khóa học<small>Chất lượng đào tạo</small></td><td>15%</td><td>80%</td><td><b>84%</b></td><td><div class="mini-progress"><i style="width:100%;background:#23a86b"></i></div></td><td class="metric-trend up">▲ 6%</td><td>Phòng Đào tạo</td><td><span class="dashboard-status green">Vượt mục tiêu</span></td></tr>
+      <tr><td><b>KPI-02</b></td><td class="table-title">Đạt chuẩn chức danh<small>Phát triển năng lực</small></td><td>15%</td><td>75%</td><td><b>71%</b></td><td><div class="mini-progress"><i style="width:95%;background:#f0a31f"></i></div></td><td class="metric-trend up">▲ 9%</td><td>Phòng Tổ chức</td><td><span class="dashboard-status amber">Cần theo dõi</span></td></tr>
+      <tr><td><b>KPI-03</b></td><td class="table-title">Giờ đào tạo bình quân<small>Quy mô đào tạo</small></td><td>10%</td><td>30 giờ</td><td><b>32 giờ</b></td><td><div class="mini-progress"><i style="width:100%;background:#23a86b"></i></div></td><td class="metric-trend up">▲ 4 giờ</td><td>Các đơn vị</td><td><span class="dashboard-status green">Vượt mục tiêu</span></td></tr>
+      <tr><td><b>KPI-04</b></td><td class="table-title">Chi phí / học viên đạt chuẩn<small>Hiệu quả tài chính</small></td><td>12%</td><td>≤ 900 nghìn</td><td><b>914 nghìn</b></td><td><div class="mini-progress"><i style="width:98%;background:#f0a31f"></i></div></td><td class="metric-trend up">▼ 7%</td><td>Phòng Tài chính</td><td><span class="dashboard-status amber">Sát ngưỡng</span></td></tr>
+      <tr><td><b>KPI-05</b></td><td class="table-title">Mức độ hài lòng học viên<small>Trải nghiệm học tập</small></td><td>10%</td><td>4,5/5</td><td><b>4,6/5</b></td><td><div class="mini-progress"><i style="width:100%;background:#23a86b"></i></div></td><td class="metric-trend up">▲ 0,2</td><td>QLCL</td><td><span class="dashboard-status green">Đạt mục tiêu</span></td></tr>
+      <tr><td><b>KPI-06</b></td><td class="table-title">Tỷ lệ học liệu được số hóa<small>Chuyển đổi số</small></td><td>8%</td><td>85%</td><td><b>78%</b></td><td><div class="mini-progress"><i style="width:92%;background:#e95d4d"></i></div></td><td class="metric-trend up">▲ 11%</td><td>Đào tạo &amp; CNTT</td><td><span class="dashboard-status red">Chưa đạt</span></td></tr>
+    </tbody></table></div></article>
+
+    <article class="dash-card dash-span-8"><header class="dash-card-head"><div><h2>Dự báo hoàn thành cuối năm</h2><p>Thực tế đến tháng 7 và ba kịch bản dự báo</p></div><span class="dashboard-status blue">Dự báo: 91 điểm</span></header><div class="chart-wrap"><canvas id="kpiForecastChart"></canvas></div></article>
+    <article class="dash-card dash-span-4"><header class="dash-card-head"><div><h2>Ưu tiên cải thiện KPI</h2><p>Các hành động có tác động lớn nhất</p></div><span class="dashboard-status red">3 ưu tiên</span></header><div class="action-list">
+      <div class="action-row"><span class="action-icon" style="background:#ffefec;color:#e45c4b"><i class="fa-solid fa-laptop-file"></i></span><div><b>Số hóa 34 chương trình</b><small>Đưa KPI học liệu từ 78% lên 85%</small></div><span class="dashboard-status red">Trọng yếu</span></div>
+      <div class="action-row"><span class="action-icon" style="background:#fff4dc;color:#e59b16"><i class="fa-solid fa-users-gear"></i></span><div><b>Bù khoảng trống năng lực</b><small>186 học viên chưa đạt chuẩn chức danh</small></div><span class="dashboard-status amber">Q4</span></div>
+      <div class="action-row"><span class="action-icon" style="background:#eaf2ff;color:#176fe0"><i class="fa-solid fa-scale-balanced"></i></span><div><b>Tối ưu chi phí lớp nhỏ</b><small>Gộp 8 lớp có sĩ số dưới 20</small></div><span class="dashboard-status blue">Tiết kiệm 140tr</span></div>
+    </div></article>
+
+    <article class="dash-card dash-span-12"><header class="dash-card-head"><div><h2>Mục tiêu chiến lược và đóng góp KPI</h2><p>Liên kết KPI vận hành với mục tiêu của Ban lãnh đạo</p></div><a href="dashboard-lanh-dao.html">Về dashboard điều hành</a></header><div class="dashboard-table-wrap"><table class="dashboard-table"><thead><tr><th>Mục tiêu chiến lược</th><th>KPI liên kết</th><th>Điểm đóng góp</th><th>Tiến độ hiện tại</th><th>Dự báo cuối năm</th><th>Mức tin cậy</th></tr></thead><tbody>
+      <tr><td class="table-title">Nâng cao chất lượng nguồn nhân lực<small>Ưu tiên chiến lược số 01</small></td><td>5 KPI</td><td>34/40</td><td><div class="mini-progress"><i style="width:85%;background:#23a86b"></i></div></td><td>Đạt 92%</td><td><span class="dashboard-status green">Cao</span></td></tr>
+      <tr><td class="table-title">Chuyển đổi số hoạt động đào tạo<small>Ưu tiên chiến lược số 02</small></td><td>4 KPI</td><td>25/32</td><td><div class="mini-progress"><i style="width:78%;background:#f0a31f"></i></div></td><td>Đạt 86%</td><td><span class="dashboard-status amber">Trung bình</span></td></tr>
+      <tr><td class="table-title">Tối ưu hiệu quả nguồn lực<small>Ưu tiên chiến lược số 03</small></td><td>3 KPI</td><td>23/28</td><td><div class="mini-progress"><i style="width:82%"></i></div></td><td>Đạt 88%</td><td><span class="dashboard-status blue">Khá</span></td></tr>
+    </tbody></table></div></article>
+  </div>
+</section>
+<section class="dashboard-legacy" id="ld-kpi-legacy" hidden>
   <div class="page-head"><div><div class="crumb">Báo cáo › KPI đào tạo</div><h1>KPI đào tạo &amp; hiệu quả chi phí</h1><div class="sub">Chỉ số trọng yếu toàn trường · Quý III/2026</div></div><button class="btn ghost"><svg class="ic sm"><use href="#i-doc"/></svg>Xuất PDF</button></div>
   <div class="grid cards-4" style="margin-bottom:22px">
     <div class="stat"><div class="lab">Giờ đào tạo BQ/người</div><div class="val">32h</div><div class="tr up">Mục tiêu 30h</div></div>
     <div class="stat"><div class="lab">Tỷ lệ đạt chuẩn chức danh</div><div class="val">71%</div><div class="tr up">+9%</div></div>
     <div class="stat"><div class="lab">Chi phí / giờ học</div><div class="val">128k</div><div class="tr down">-6% YoY</div></div>
-    <div class="stat"><div class="lab">Hài lòng học viên</div><div class="val">4,6/5</div><div class="tr up">★★★★☆</div></div>
+    <div class="stat"><div class="lab">Hài lòng học viên</div><div class="val">4,6/5</div><div class="tr up" aria-label="4 trên 5 sao"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div></div>
   </div>
   <div class="row">
     <div class="card pad" style="flex:1">
@@ -171,6 +222,8 @@
     </div>
   </div>
 </section></main>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <script src="../../js/app.js"></script>
+<script src="../../js/dashboard.js"></script>
 </body>
 </html>

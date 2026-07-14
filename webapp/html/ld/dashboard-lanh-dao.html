@@ -7,7 +7,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/dashboard.css">
 </head>
 <body data-role="ld" data-page="ld-dash">
 
@@ -144,7 +146,66 @@
 </aside>
 
 
-<main class="main"><section class="screen active" id="ld-dash">
+<main class="main">
+<section class="screen active analytics-dashboard" id="ld-dash" data-dashboard="leadership">
+  <div class="dashboard-breadcrumb"><span>Báo cáo &amp; phân tích</span><i class="fa-solid fa-chevron-right"></i><b>Điều hành toàn trường</b></div>
+  <header class="dashboard-head">
+    <div><h1>Dashboard điều hành đào tạo</h1><p>Bức tranh tổng hợp toàn trường từ dữ liệu học viên, giảng viên, kế hoạch đào tạo và vận hành hệ thống.</p></div>
+    <div class="dashboard-head-actions"><label class="dashboard-period"><i class="fa-regular fa-calendar"></i><select><option>Quý III/2026</option><option>Quý II/2026</option><option>Năm 2026</option></select></label><button class="btn ghost"><i class="fa-solid fa-filter"></i>Bộ lọc</button><button class="btn primary"><i class="fa-solid fa-file-export"></i>Xuất báo cáo</button></div>
+  </header>
+
+  <div class="insight-banner leadership-insight"><i class="fa-solid fa-tower-broadcast"></i><div><b>Cảnh báo điều hành:</b> 3 đơn vị có tỷ lệ hoàn thành dưới 70%, 18 nhu cầu đào tạo đang chờ phê duyệt và 2 lớp vượt ngân sách dự kiến.</div><a href="bao-cao-don-vi.html">Xem đơn vị cần chú ý <i class="fa-solid fa-arrow-right"></i></a></div>
+
+  <section class="dashboard-metrics leadership-metrics">
+    <article class="dashboard-metric" style="--metric-color:#176fe0;--metric-soft:#eaf2ff"><span class="metric-icon"><i class="fa-solid fa-user-graduate"></i></span><div><p class="metric-label">Học viên hoạt động</p><p class="metric-value">6.480</p><p class="metric-trend up">▲ 22% so với cùng kỳ</p></div></article>
+    <article class="dashboard-metric" style="--metric-color:#7a47d2;--metric-soft:#f0eaff"><span class="metric-icon"><i class="fa-solid fa-chalkboard-user"></i></span><div><p class="metric-label">Giảng viên</p><p class="metric-value">186</p><p class="metric-trend up">▲ 14 giảng viên mới</p></div></article>
+    <article class="dashboard-metric" style="--metric-color:#138da1;--metric-soft:#e5f7fa"><span class="metric-icon"><i class="fa-solid fa-school"></i></span><div><p class="metric-label">Lớp đã triển khai</p><p class="metric-value">146</p><p class="metric-trend up">▲ Đạt 91% kế hoạch quý</p></div></article>
+    <article class="dashboard-metric" style="--metric-color:#1b9b5b;--metric-soft:#e8f7ee"><span class="metric-icon"><i class="fa-solid fa-circle-check"></i></span><div><p class="metric-label">Tỷ lệ hoàn thành</p><p class="metric-value">84%</p><p class="metric-trend up">▲ Cao hơn mục tiêu 4%</p></div></article>
+    <article class="dashboard-metric" style="--metric-color:#e59b16;--metric-soft:#fff4dc"><span class="metric-icon"><i class="fa-solid fa-certificate"></i></span><div><p class="metric-label">Chứng chỉ đã cấp</p><p class="metric-value">3.912</p><p class="metric-trend up">▲ 428 trong quý này</p></div></article>
+    <article class="dashboard-metric" style="--metric-color:#e45c4b;--metric-soft:#ffefec"><span class="metric-icon"><i class="fa-solid fa-coins"></i></span><div><p class="metric-label">Chi phí đào tạo</p><p class="metric-value">4,2 <small>tỷ</small></p><p class="metric-trend warn">83% ngân sách năm</p></div></article>
+  </section>
+
+  <div class="dashboard-grid">
+    <article class="dash-card dash-span-8"><header class="dash-card-head"><div><h2>Quy mô đào tạo toàn trường</h2><p>Xu hướng học viên, lớp học và giảng viên trong 7 tháng</p></div><select><option>7 tháng gần nhất</option><option>12 tháng gần nhất</option></select></header><div class="chart-wrap tall"><canvas id="leadershipGrowthChart"></canvas></div></article>
+    <article class="dash-card dash-span-4"><header class="dash-card-head"><div><h2>Cơ cấu hình thức đào tạo</h2><p>146 lớp đã triển khai</p></div><a href="bao-cao-kpi.html">Chi tiết</a></header><div class="chart-wrap compact"><canvas id="leadershipModeChart"></canvas><div class="donut-center"><b>55%</b><span>Trực tuyến</span></div></div><div class="dash-legend"><span><i style="background:#1676e7"></i>Trực tuyến</span><span><i style="background:#f0a31f"></i>Kết hợp</span><span><i style="background:#23a86b"></i>Trực tiếp</span></div></article>
+
+    <article class="dash-card dash-span-6"><header class="dash-card-head"><div><h2>Kế hoạch và thực hiện</h2><p>Số lớp theo tháng, đối chiếu dữ liệu kế hoạch của giảng viên</p></div><a href="bao-cao-kpi.html">Xem KPI</a></header><div class="chart-wrap"><canvas id="leadershipPlanChart"></canvas></div></article>
+    <article class="dash-card dash-span-6"><header class="dash-card-head"><div><h2>Ngân sách và chi phí thực tế</h2><p>Đơn vị: triệu đồng</p></div><select><option>Năm 2026</option></select></header><div class="chart-wrap"><canvas id="leadershipCostChart"></canvas></div></article>
+
+    <article class="dash-card dash-span-7"><header class="dash-card-head"><div><h2>Hiệu quả đào tạo theo đơn vị</h2><p>Tỷ lệ hoàn thành và mục tiêu toàn trường</p></div><a href="bao-cao-don-vi.html">Tất cả đơn vị</a></header><div class="chart-wrap tall"><canvas id="leadershipUnitChart"></canvas></div></article>
+    <article class="dash-card dash-span-5"><header class="dash-card-head"><div><h2>Nhu cầu phát triển năng lực</h2><p>Tổng hợp khảo sát từ giảng viên và đơn vị</p></div><a href="../gv/khao-sat-nhu-cau.html">Xem nhu cầu</a></header><div class="chart-wrap tall"><canvas id="leadershipDemandChart"></canvas></div></article>
+
+    <article class="dash-card dash-span-8"><header class="dash-card-head"><div><h2>So sánh các đơn vị trọng điểm</h2><p>Dữ liệu tổng hợp từ đào tạo, kết quả học tập và chi phí</p></div><a href="bao-cao-don-vi.html">Mở báo cáo đơn vị</a></header><div class="dashboard-table-wrap"><table class="dashboard-table leadership-table"><thead><tr><th>Đơn vị</th><th>Lớp</th><th>Học viên</th><th>Hoàn thành</th><th>Điểm TB</th><th>Chi phí</th><th>Trạng thái</th></tr></thead><tbody>
+      <tr><td class="table-title">Công ty Than Hạ Long<small>Khối khai thác</small></td><td>24</td><td>1.120</td><td><b>88%</b></td><td>84,2</td><td>720 tr</td><td><span class="dashboard-status green">Vượt mục tiêu</span></td></tr>
+      <tr><td class="table-title">Công ty Than Núi Béo<small>Khối khai thác</small></td><td>19</td><td>945</td><td><b>81%</b></td><td>80,6</td><td>610 tr</td><td><span class="dashboard-status blue">Đúng tiến độ</span></td></tr>
+      <tr><td class="table-title">Công ty Than Cao Sơn<small>Khối sản xuất</small></td><td>17</td><td>820</td><td><b>76%</b></td><td>78,4</td><td>540 tr</td><td><span class="dashboard-status amber">Cần theo dõi</span></td></tr>
+      <tr><td class="table-title">Công ty Than Đèo Nai<small>Khối sản xuất</small></td><td>14</td><td>690</td><td><b>69%</b></td><td>73,8</td><td>430 tr</td><td><span class="dashboard-status red">Dưới mục tiêu</span></td></tr>
+    </tbody></table></div></article>
+
+    <article class="dash-card dash-span-4"><header class="dash-card-head"><div><h2>Ưu tiên điều hành</h2><p>Các đầu việc cần quyết định</p></div><span class="dashboard-status red">6 việc</span></header><div class="action-list">
+      <div class="action-row"><span class="action-icon" style="background:#ffefec;color:#e45c4b"><i class="fa-solid fa-triangle-exclamation"></i></span><div><b>3 đơn vị dưới 70%</b><small>Cần phương án cải thiện tiến độ</small></div><span class="dashboard-status red">Khẩn</span></div>
+      <div class="action-row"><span class="action-icon" style="background:#fff4dc;color:#e59b16"><i class="fa-solid fa-file-signature"></i></span><div><b>18 nhu cầu chờ duyệt</b><small>Tổng ngân sách đề xuất 1,1 tỷ</small></div><span class="dashboard-status amber">Chờ duyệt</span></div>
+      <div class="action-row"><span class="action-icon" style="background:#eaf2ff;color:#176fe0"><i class="fa-solid fa-user-shield"></i></span><div><b>12 chứng chỉ sắp hết hạn</b><small>Trong vòng 30 ngày tới</small></div><span class="dashboard-status blue">Theo dõi</span></div>
+      <div class="action-row"><span class="action-icon" style="background:#f0eaff;color:#7a47d2"><i class="fa-solid fa-database"></i></span><div><b>Đồng bộ dữ liệu nhân sự</b><small>47 hồ sơ cần đối soát</small></div><span class="dashboard-status gray">Admin</span></div>
+    </div></article>
+
+    <article class="dash-card dash-span-7"><header class="dash-card-head"><div><h2>Chất lượng kết quả học tập</h2><p>Phân bố kết quả của 5.264 học viên đã được đánh giá</p></div><select><option>Toàn trường</option><option>Khối khai thác</option><option>Khối văn phòng</option></select></header><div class="chart-wrap"><canvas id="leadershipQualityChart"></canvas></div></article>
+    <article class="dash-card dash-span-5"><header class="dash-card-head"><div><h2>Sức khỏe vận hành LMS</h2><p>Dữ liệu quản trị hệ thống trong 24 giờ</p></div><a href="../ad/nhat-ky-he-thong.html">Nhật ký hệ thống</a></header><div class="achievement-list system-health-list">
+      <div class="achievement"><span class="achievement-icon" style="background:#e8f7ee;color:#1b9b5b"><i class="fa-solid fa-server"></i></span><div><b>Độ sẵn sàng hệ thống</b><small>Không có sự cố nghiêm trọng</small></div><strong>99,97%</strong></div>
+      <div class="achievement"><span class="achievement-icon"><i class="fa-solid fa-users-viewfinder"></i></span><div><b>Người dùng hoạt động</b><small>Đồng thời cao nhất: 1.284</small></div><strong>3.846</strong></div>
+      <div class="achievement"><span class="achievement-icon" style="background:#fff4dc;color:#e59b16"><i class="fa-solid fa-shield-halved"></i></span><div><b>Cảnh báo bảo mật</b><small>Đã chặn 28 lượt đăng nhập bất thường</small></div><span class="dashboard-status amber">2 cần xem</span></div>
+      <div class="achievement"><span class="achievement-icon" style="background:#f0eaff;color:#7a47d2"><i class="fa-solid fa-hard-drive"></i></span><div><b>Dung lượng học liệu</b><small>2,8 TB trên tổng 4 TB</small></div><strong>70%</strong></div>
+    </div></article>
+
+    <article class="dash-card dash-span-12"><header class="dash-card-head"><div><h2>Danh mục mục tiêu chiến lược 2026</h2><p>Theo dõi các mục tiêu trọng yếu do Ban lãnh đạo giao</p></div><a href="bao-cao-kpi.html">Quản lý KPI</a></header><div class="dashboard-table-wrap"><table class="dashboard-table"><thead><tr><th>Mục tiêu</th><th>Đơn vị phụ trách</th><th>Kế hoạch năm</th><th>Thực hiện</th><th>Tiến độ</th><th>Dự báo</th></tr></thead><tbody>
+      <tr><td class="table-title">Phổ cập đào tạo an toàn bắt buộc<small>Toàn bộ lao động thuộc nhóm 3</small></td><td>Phòng Đào tạo</td><td>5.800 học viên</td><td>5.126 học viên</td><td><div class="mini-progress"><i style="width:88%;background:#23a86b"></i></div></td><td><span class="dashboard-status green">Sẽ hoàn thành</span></td></tr>
+      <tr><td class="table-title">Số hóa chương trình đào tạo<small>Chuyển đổi bài giảng sang e-learning</small></td><td>Đào tạo &amp; CNTT</td><td>120 chương trình</td><td>86 chương trình</td><td><div class="mini-progress"><i style="width:72%"></i></div></td><td><span class="dashboard-status blue">Đúng tiến độ</span></td></tr>
+      <tr><td class="table-title">Phát triển đội ngũ giảng viên nội bộ<small>Đạt chuẩn năng lực giảng dạy</small></td><td>Phòng Tổ chức</td><td>210 giảng viên</td><td>186 giảng viên</td><td><div class="mini-progress"><i style="width:89%;background:#23a86b"></i></div></td><td><span class="dashboard-status green">Khả quan</span></td></tr>
+      <tr><td class="table-title">Tối ưu chi phí trên lượt đào tạo<small>Giảm tối thiểu 8% so với 2025</small></td><td>Phòng Tài chính</td><td>−8%</td><td>−5,6%</td><td><div class="mini-progress"><i style="width:70%;background:#f0a31f"></i></div></td><td><span class="dashboard-status amber">Có rủi ro</span></td></tr>
+    </tbody></table></div></article>
+  </div>
+</section>
+<section class="dashboard-legacy" id="ld-dash-legacy" hidden>
   <div class="page-head"><div><div class="crumb">Báo cáo &amp; phân tích</div><h1>Dashboard tổng hợp</h1><div class="sub">Toàn Trường QTKD Vinacomin · Cập nhật thời gian thực · Quý III/2026</div></div><div style="display:flex;gap:8px"><div class="field"><svg class="ic sm"><use href="#i-cal"/></svg><select><option>Quý III/2026</option><option>Năm 2026</option></select></div><button class="btn ghost"><svg class="ic sm"><use href="#i-doc"/></svg>Xuất PDF</button></div></div>
   <div class="grid cards-4" style="margin-bottom:22px">
     <div class="stat"><div class="ic-wrap" style="background:var(--brand-050);color:var(--brand)"><svg class="ic"><use href="#i-book"/></svg></div><div class="lab">Tổng số lớp</div><div class="val">146</div><div class="tr up">+18% YoY</div></div>
@@ -192,6 +253,8 @@
     </tbody></table>
   </div>
 </section></main>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <script src="../../js/app.js"></script>
+<script src="../../js/dashboard.js"></script>
 </body>
 </html>

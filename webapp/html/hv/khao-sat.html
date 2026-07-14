@@ -67,6 +67,7 @@
     </section>
   </main>
 
+  <script src="../../js/app.js"></script>
   <script>
     document.querySelectorAll('.likert-option input, .mood-option input').forEach((input) => input.addEventListener('change', () => document.querySelectorAll(`input[name="${input.name}"]`).forEach((item) => item.closest('label').classList.toggle('selected', item.checked))));
     document.querySelectorAll('.star-rating button').forEach((button, index) => button.addEventListener('click', () => { document.querySelector('[name="instructor_rating"]').value = index + 1; document.querySelectorAll('.star-rating button').forEach((star, starIndex) => { star.classList.toggle('active', starIndex <= index); star.innerHTML = `<i class="${starIndex <= index ? 'fa-solid' : 'fa-regular'} fa-star"></i>`; }); }));

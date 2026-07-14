@@ -7,7 +7,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/dashboard.css">
 </head>
 <body data-role="ld" data-page="ld-unit">
 
@@ -144,7 +146,58 @@
 </aside>
 
 
-<main class="main"><section class="screen active" id="ld-unit">
+<main class="main">
+<section class="screen active analytics-dashboard" id="ld-unit" data-dashboard="leadership-unit">
+  <div class="dashboard-breadcrumb"><span>Báo cáo &amp; phân tích</span><i class="fa-solid fa-chevron-right"></i><b>Báo cáo theo đơn vị</b></div>
+  <header class="dashboard-head">
+    <div><h1>Hiệu quả đào tạo theo đơn vị</h1><p>So sánh quy mô, tiến độ, chất lượng, chi phí và mức độ phát triển năng lực giữa các đơn vị thành viên.</p></div>
+    <div class="dashboard-head-actions"><label class="dashboard-period"><i class="fa-regular fa-calendar"></i><select><option>Quý III/2026</option><option>Quý II/2026</option><option>Năm 2026</option></select></label><label class="dashboard-period"><i class="fa-solid fa-layer-group"></i><select><option>Tất cả khối đơn vị</option><option>Khối khai thác</option><option>Khối sản xuất</option><option>Khối văn phòng</option></select></label><button class="btn primary"><i class="fa-solid fa-file-export"></i>Xuất báo cáo</button></div>
+  </header>
+
+  <div class="insight-banner leadership-insight"><i class="fa-solid fa-building-circle-exclamation"></i><div><b>Điểm cần chú ý:</b> Than Đèo Nai và Vận tải mỏ đang dưới ngưỡng hoàn thành 70%; Cơ khí Hòn Gai có chi phí trên học viên cao hơn trung bình toàn trường 18%.</div><a href="#unit-ranking">Xem bảng xếp hạng <i class="fa-solid fa-arrow-down"></i></a></div>
+
+  <section class="dashboard-metrics leadership-metrics">
+    <article class="dashboard-metric" style="--metric-color:#176fe0;--metric-soft:#eaf2ff"><span class="metric-icon"><i class="fa-solid fa-building"></i></span><div><p class="metric-label">Đơn vị tham gia</p><p class="metric-value">18</p><p class="metric-trend up">100% đơn vị có dữ liệu</p></div></article>
+    <article class="dashboard-metric" style="--metric-color:#7a47d2;--metric-soft:#f0eaff"><span class="metric-icon"><i class="fa-solid fa-users"></i></span><div><p class="metric-label">Lượt học viên</p><p class="metric-value">6.480</p><p class="metric-trend up">▲ 22% so với cùng kỳ</p></div></article>
+    <article class="dashboard-metric" style="--metric-color:#138da1;--metric-soft:#e5f7fa"><span class="metric-icon"><i class="fa-solid fa-chalkboard"></i></span><div><p class="metric-label">Lớp đã triển khai</p><p class="metric-value">146</p><p class="metric-trend up">▲ 27 lớp trong quý</p></div></article>
+    <article class="dashboard-metric" style="--metric-color:#1b9b5b;--metric-soft:#e8f7ee"><span class="metric-icon"><i class="fa-solid fa-circle-check"></i></span><div><p class="metric-label">Hoàn thành trung bình</p><p class="metric-value">84%</p><p class="metric-trend up">▲ 4 điểm % trên mục tiêu</p></div></article>
+    <article class="dashboard-metric" style="--metric-color:#e59b16;--metric-soft:#fff4dc"><span class="metric-icon"><i class="fa-solid fa-award"></i></span><div><p class="metric-label">Chứng chỉ đã cấp</p><p class="metric-value">3.912</p><p class="metric-trend up">Tỷ lệ cấp đạt 79%</p></div></article>
+    <article class="dashboard-metric" style="--metric-color:#e45c4b;--metric-soft:#ffefec"><span class="metric-icon"><i class="fa-solid fa-money-bill-trend-up"></i></span><div><p class="metric-label">Chi phí / học viên</p><p class="metric-value">648<small>nghìn</small></p><p class="metric-trend up">▼ Giảm 5,6% cùng kỳ</p></div></article>
+  </section>
+
+  <div class="dashboard-grid">
+    <article class="dash-card dash-span-8"><header class="dash-card-head"><div><h2>So sánh hiệu quả giữa các đơn vị</h2><p>Điểm tổng hợp từ tiến độ, kết quả, mức độ tham gia và chi phí</p></div><select><option>Top 8 đơn vị</option><option>Tất cả đơn vị</option></select></header><div class="chart-wrap tall"><canvas id="unitPerformanceChart"></canvas></div></article>
+    <article class="dash-card dash-span-4"><header class="dash-card-head"><div><h2>Cơ cấu đơn vị theo trạng thái</h2><p>Phân nhóm theo mức hoàn thành</p></div><a href="bao-cao-kpi.html">Ngưỡng KPI</a></header><div class="chart-wrap compact"><canvas id="unitStatusChart"></canvas><div class="donut-center"><b>13/18</b><span>Đạt mục tiêu</span></div></div><div class="dash-legend"><span><i style="background:#23a86b"></i>Đạt/vượt</span><span><i style="background:#f0a31f"></i>Theo dõi</span><span><i style="background:#e95d4d"></i>Cảnh báo</span></div></article>
+
+    <article class="dash-card dash-span-6"><header class="dash-card-head"><div><h2>Xu hướng hoàn thành theo khối</h2><p>Tỷ lệ hoàn thành trong sáu tháng gần nhất</p></div><select><option>Tất cả chương trình</option></select></header><div class="chart-wrap"><canvas id="unitTrendChart"></canvas></div></article>
+    <article class="dash-card dash-span-6"><header class="dash-card-head"><div><h2>Hiệu quả chi phí và chất lượng</h2><p>Kích thước điểm thể hiện số lượt học viên</p></div><span class="dashboard-status blue">TB: 648 nghìn/HV</span></header><div class="chart-wrap"><canvas id="unitEfficiencyChart"></canvas></div></article>
+
+    <article class="dash-card dash-span-12" id="unit-ranking"><header class="dash-card-head"><div><h2>Bảng xếp hạng đơn vị</h2><p>Xếp hạng theo điểm hiệu suất đào tạo tổng hợp</p></div><button><i class="fa-solid fa-arrow-down-wide-short"></i> Sắp xếp: Hiệu suất</button></header><div class="dashboard-table-wrap"><table class="dashboard-table unit-ranking-table"><thead><tr><th>Hạng</th><th>Đơn vị</th><th>Khối</th><th>Lớp</th><th>Học viên</th><th>Hoàn thành</th><th>Điểm TB</th><th>Chi phí/HV</th><th>Điểm hiệu suất</th><th>Trạng thái</th></tr></thead><tbody>
+      <tr><td><span class="unit-rank top">1</span></td><td class="table-title">Công ty Than Hạ Long<small>HL-01 · Quảng Ninh</small></td><td>Khai thác</td><td>24</td><td>1.120</td><td><b>88%</b></td><td>84,2</td><td>643 nghìn</td><td><b>92,4</b></td><td><span class="dashboard-status green">Dẫn đầu</span></td></tr>
+      <tr><td><span class="unit-rank top">2</span></td><td class="table-title">Công ty Than Núi Béo<small>NB-02 · Quảng Ninh</small></td><td>Khai thác</td><td>19</td><td>945</td><td><b>81%</b></td><td>80,6</td><td>646 nghìn</td><td><b>86,8</b></td><td><span class="dashboard-status green">Vượt mục tiêu</span></td></tr>
+      <tr><td><span class="unit-rank top">3</span></td><td class="table-title">Công ty Than Cao Sơn<small>CS-03 · Cẩm Phả</small></td><td>Sản xuất</td><td>17</td><td>820</td><td><b>76%</b></td><td>78,4</td><td>659 nghìn</td><td><b>82,1</b></td><td><span class="dashboard-status blue">Ổn định</span></td></tr>
+      <tr><td><span class="unit-rank">4</span></td><td class="table-title">Cơ khí Hòn Gai<small>CK-05 · Hạ Long</small></td><td>Sản xuất</td><td>12</td><td>536</td><td><b>73%</b></td><td>77,9</td><td>765 nghìn</td><td><b>75,6</b></td><td><span class="dashboard-status amber">Chi phí cao</span></td></tr>
+      <tr><td><span class="unit-rank">5</span></td><td class="table-title">Công ty Than Đèo Nai<small>DN-04 · Cẩm Phả</small></td><td>Sản xuất</td><td>14</td><td>690</td><td><b>69%</b></td><td>73,8</td><td>623 nghìn</td><td><b>70,2</b></td><td><span class="dashboard-status red">Dưới mục tiêu</span></td></tr>
+      <tr><td><span class="unit-rank">6</span></td><td class="table-title">Vận tải mỏ<small>VT-06 · Quảng Ninh</small></td><td>Hỗ trợ</td><td>9</td><td>412</td><td><b>64%</b></td><td>71,5</td><td>681 nghìn</td><td><b>66,4</b></td><td><span class="dashboard-status red">Cần can thiệp</span></td></tr>
+    </tbody></table></div></article>
+
+    <article class="dash-card dash-span-7"><header class="dash-card-head"><div><h2>Chất lượng kết quả theo đơn vị</h2><p>Tỷ trọng học viên Khá–Giỏi và tỷ lệ chưa đạt</p></div><select><option>6 đơn vị trọng điểm</option></select></header><div class="chart-wrap"><canvas id="unitQualityChart"></canvas></div></article>
+    <article class="dash-card dash-span-5"><header class="dash-card-head"><div><h2>Cảnh báo theo đơn vị</h2><p>Các vấn đề cần giao nhiệm vụ xử lý</p></div><span class="dashboard-status red">5 cảnh báo</span></header><div class="action-list">
+      <div class="action-row"><span class="action-icon" style="background:#ffefec;color:#e45c4b"><i class="fa-solid fa-chart-line-down"></i></span><div><b>Vận tải mỏ: hoàn thành 64%</b><small>38 học viên chậm tiến độ trên 14 ngày</small></div><span class="dashboard-status red">Khẩn</span></div>
+      <div class="action-row"><span class="action-icon" style="background:#fff4dc;color:#e59b16"><i class="fa-solid fa-coins"></i></span><div><b>Cơ khí Hòn Gai: chi phí +18%</b><small>Chi phí lớp trực tiếp vượt 92 triệu</small></div><span class="dashboard-status amber">Tài chính</span></div>
+      <div class="action-row"><span class="action-icon" style="background:#eaf2ff;color:#176fe0"><i class="fa-solid fa-user-clock"></i></span><div><b>Than Đèo Nai: 52 học viên tồn</b><small>Cần bổ sung hai đợt học bù trong tháng 8</small></div><span class="dashboard-status blue">Kế hoạch</span></div>
+      <div class="action-row"><span class="action-icon" style="background:#f0eaff;color:#7a47d2"><i class="fa-solid fa-chalkboard-user"></i></span><div><b>Thiếu giảng viên chuyên môn</b><small>Ba đơn vị chưa đủ giảng viên nội bộ</small></div><span class="dashboard-status gray">Nguồn lực</span></div>
+    </div></article>
+
+    <article class="dash-card dash-span-12"><header class="dash-card-head"><div><h2>Ma trận năng lực và nhu cầu ưu tiên</h2><p>Tổng hợp khoảng trống năng lực từ khảo sát và kết quả đánh giá tại đơn vị</p></div><a href="../gv/khao-sat-nhu-cau.html">Dữ liệu khảo sát nhu cầu</a></header><div class="dashboard-table-wrap"><table class="dashboard-table"><thead><tr><th>Đơn vị</th><th>An toàn</th><th>Kỹ thuật mỏ</th><th>Chuyển đổi số</th><th>Quản trị</th><th>Kỹ năng mềm</th><th>Nhu cầu ưu tiên Q4</th><th>Đề xuất</th></tr></thead><tbody>
+      <tr><td class="table-title">Than Hạ Long</td><td><span class="dashboard-status green">92%</span></td><td><span class="dashboard-status green">86%</span></td><td><span class="dashboard-status amber">68%</span></td><td>74%</td><td>78%</td><td>Chuyển đổi số</td><td>4 lớp · 160 HV</td></tr>
+      <tr><td class="table-title">Than Núi Béo</td><td><span class="dashboard-status green">89%</span></td><td><span class="dashboard-status blue">81%</span></td><td><span class="dashboard-status amber">64%</span></td><td>72%</td><td>75%</td><td>Chuyển đổi số</td><td>3 lớp · 120 HV</td></tr>
+      <tr><td class="table-title">Cơ khí Hòn Gai</td><td><span class="dashboard-status blue">82%</span></td><td>76%</td><td><span class="dashboard-status red">58%</span></td><td>69%</td><td>71%</td><td>Số hóa sản xuất</td><td>3 lớp · 96 HV</td></tr>
+      <tr><td class="table-title">Vận tải mỏ</td><td><span class="dashboard-status amber">72%</span></td><td>70%</td><td><span class="dashboard-status red">55%</span></td><td>65%</td><td>68%</td><td>An toàn &amp; số hóa</td><td>5 lớp · 184 HV</td></tr>
+    </tbody></table></div></article>
+  </div>
+</section>
+<section class="dashboard-legacy" id="ld-unit-legacy" hidden>
   <div class="page-head"><div><div class="crumb">Báo cáo › Theo đơn vị</div><h1>Báo cáo theo đơn vị</h1><div class="sub">So sánh kết quả đào tạo giữa các đơn vị thành viên</div></div><div class="field"><svg class="ic sm"><use href="#i-cal"/></svg><select><option>Quý III/2026</option></select></div></div>
   <div class="card pad">
     <div class="sec-title"><h2>Lượt học viên &amp; tỷ lệ hoàn thành theo đơn vị</h2></div>
@@ -167,6 +220,8 @@
     </tbody></table>
   </div>
 </section></main>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <script src="../../js/app.js"></script>
+<script src="../../js/dashboard.js"></script>
 </body>
 </html>

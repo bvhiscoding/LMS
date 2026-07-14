@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="../../css/hv/chung-chi-hoc-vien.css">
 </head>
 <body data-role="hv" data-page="hv-cert">
 
@@ -144,29 +146,81 @@
 </aside>
 
 
-<main class="main"><section class="screen active" id="hv-cert">
-  <div class="page-head"><div><div class="crumb">Chứng chỉ</div><h1>Chứng chỉ &amp; chứng nhận</h1><div class="sub">Bạn đã được cấp 3 chứng chỉ sau đào tạo.</div></div></div>
-  <div class="grid cards-3">
-    <div class="card pad" style="text-align:center;border-top:4px solid var(--accent)">
-      <div style="width:60px;height:60px;border-radius:16px;background:var(--accent-050);color:var(--accent);display:grid;place-items:center;margin:6px auto 12px"><svg class="ic" style="width:30px;height:30px"><use href="#i-cert"/></svg></div>
-      <b style="font-size:15px">Văn hóa doanh nghiệp TKV</b><div class="faint" style="font-size:12px;margin:6px 0">Cấp ngày 28/06/2026 · Mã: VBS-2026-0912</div>
-      <div class="badge b-green" style="margin:4px 0 14px"><svg class="ic sm"><use href="#i-check"/></svg>Còn hiệu lực</div>
-      <div style="display:flex;gap:8px;justify-content:center"><button class="btn ghost sm"><svg class="ic sm"><use href="#i-search"/></svg>Xem</button><button class="btn primary sm"><svg class="ic sm"><use href="#i-doc"/></svg>Tải PDF</button></div>
+<main class="main learner-cert-main"><section class="screen active learner-cert-page" id="hv-cert">
+  <nav class="cert-breadcrumb" aria-label="Điều hướng">
+    <a href="../../index.html">Trang chủ</a><i class="fa-solid fa-chevron-right"></i><span>Chứng chỉ &amp; chứng nhận</span>
+  </nav>
+  <header class="cert-page-heading">
+    <h1>Chứng chỉ &amp; chứng nhận</h1>
+    <p>Danh sách các chứng chỉ và chứng nhận bạn đã đạt được.</p>
+  </header>
+  <div class="cert-toolbar">
+    <div class="cert-tabs" role="tablist" aria-label="Loại chứng chỉ">
+      <button class="cert-tab active" type="button" data-filter="all" role="tab" aria-selected="true">Tất cả <span>(8)</span></button>
+      <button class="cert-tab" type="button" data-filter="certificate" role="tab" aria-selected="false">Chứng chỉ <span>(5)</span></button>
+      <button class="cert-tab" type="button" data-filter="certification" role="tab" aria-selected="false">Chứng nhận <span>(3)</span></button>
     </div>
-    <div class="card pad" style="text-align:center;border-top:4px solid var(--brand)">
-      <div style="width:60px;height:60px;border-radius:16px;background:var(--brand-050);color:var(--brand);display:grid;place-items:center;margin:6px auto 12px"><svg class="ic" style="width:30px;height:30px"><use href="#i-cert"/></svg></div>
-      <b style="font-size:15px">Nghiệp vụ đấu thầu cơ bản</b><div class="faint" style="font-size:12px;margin:6px 0">Cấp ngày 15/05/2026 · Mã: VBS-2026-0781</div>
-      <div class="badge b-green" style="margin:4px 0 14px"><svg class="ic sm"><use href="#i-check"/></svg>Còn hiệu lực</div>
-      <div style="display:flex;gap:8px;justify-content:center"><button class="btn ghost sm"><svg class="ic sm"><use href="#i-search"/></svg>Xem</button><button class="btn primary sm"><svg class="ic sm"><use href="#i-doc"/></svg>Tải PDF</button></div>
-    </div>
-    <div class="card pad" style="text-align:center;border-top:4px solid var(--border-strong);opacity:.85">
-      <div style="width:60px;height:60px;border-radius:16px;background:#EEF1F6;color:var(--faint);display:grid;place-items:center;margin:6px auto 12px"><svg class="ic" style="width:30px;height:30px"><use href="#i-cert"/></svg></div>
-      <b style="font-size:15px">An toàn lao động khai thác mỏ</b><div class="faint" style="font-size:12px;margin:6px 0">Cấp khi hoàn thành &amp; đạt bài thi cuối khóa</div>
-      <div class="badge b-gray" style="margin:4px 0 14px"><svg class="ic sm"><use href="#i-clock"/></svg>Chưa đủ điều kiện</div>
-      <div style="display:flex;gap:8px;justify-content:center"><button class="btn ghost sm" disabled style="opacity:.5">Chưa khả dụng</button></div>
+    <div class="cert-view-tools">
+      <label class="sr-only" for="certSort">Sắp xếp</label>
+      <select id="certSort" class="cert-sort"><option value="newest">Mới nhất</option><option value="oldest">Cũ nhất</option><option value="title">Tên A–Z</option></select>
+      <div class="cert-view-switch" aria-label="Kiểu hiển thị">
+        <button type="button" class="active" data-view="grid" aria-label="Dạng lưới" aria-pressed="true"><i class="fa-solid fa-table-cells-large"></i></button>
+        <button type="button" data-view="list" aria-label="Dạng danh sách" aria-pressed="false"><i class="fa-solid fa-list"></i></button>
+      </div>
     </div>
   </div>
+
+  <div class="certificate-grid" id="certificateGrid">
+    <article class="certificate-card" data-kind="certificate" data-date="2026-06-28" data-title="Văn hóa doanh nghiệp TKV">
+      <div class="certificate-art gold"><div class="art-inner"><b>CERTIFICATE</b><small>OF ACHIEVEMENT</small><em>TRÂN TRỌNG TRAO TẶNG</em><strong>Nguyễn Văn A</strong><i></i><span>Văn hóa doanh nghiệp TKV</span><div class="art-seal"><i class="fa-solid fa-award"></i></div></div></div>
+      <div class="certificate-info"><span class="type-tag gold"><i class="fa-solid fa-award"></i> Chứng chỉ</span><h2>Văn hóa doanh nghiệp TKV</h2><p><i class="fa-regular fa-calendar"></i> Cấp ngày: 28/06/2026</p><p><i class="fa-regular fa-square-check"></i> Mã: VBS-2026-0912</p></div>
+      <div class="certificate-actions"><button type="button" class="view-cert"><i class="fa-regular fa-eye"></i> Xem chi tiết</button><button type="button" class="download-cert" aria-label="Tải chứng chỉ"><i class="fa-solid fa-download"></i></button></div>
+    </article>
+    <article class="certificate-card" data-kind="certificate" data-date="2026-05-15" data-title="Nghiệp vụ đấu thầu cơ bản">
+      <div class="certificate-art blue"><div class="art-inner"><b>CERTIFICATE</b><small>OF COMPLETION</small><em>HOÀN THÀNH KHÓA HỌC</em><strong>Nguyễn Văn A</strong><i></i><span>Nghiệp vụ đấu thầu cơ bản</span><div class="art-seal"><i class="fa-solid fa-star"></i></div></div></div>
+      <div class="certificate-info"><span class="type-tag blue"><i class="fa-solid fa-award"></i> Chứng chỉ</span><h2>Nghiệp vụ đấu thầu cơ bản</h2><p><i class="fa-regular fa-calendar"></i> Cấp ngày: 15/05/2026</p><p><i class="fa-regular fa-square-check"></i> Mã: VBS-2026-0781</p></div>
+      <div class="certificate-actions"><button type="button" class="view-cert"><i class="fa-regular fa-eye"></i> Xem chi tiết</button><button type="button" class="download-cert" aria-label="Tải chứng chỉ"><i class="fa-solid fa-download"></i></button></div>
+    </article>
+    <article class="certificate-card" data-kind="certification" data-date="2026-04-02" data-title="An toàn lao động khai thác mỏ">
+      <div class="certificate-art green"><div class="art-inner"><b>CERTIFICATE</b><small>OF ACHIEVEMENT</small><em>ĐÃ HOÀN THÀNH</em><strong>Nguyễn Văn A</strong><i></i><span>An toàn lao động khai thác mỏ</span><div class="art-seal"><i class="fa-solid fa-certificate"></i></div></div></div>
+      <div class="certificate-info"><span class="type-tag green"><i class="fa-solid fa-certificate"></i> Chứng nhận</span><h2>An toàn lao động khai thác mỏ</h2><p><i class="fa-regular fa-calendar"></i> Cấp ngày: 02/04/2026</p><p><i class="fa-regular fa-square-check"></i> Mã: VBS-2026-0543</p></div>
+      <div class="certificate-actions"><button type="button" class="view-cert"><i class="fa-regular fa-eye"></i> Xem chi tiết</button><button type="button" class="download-cert" aria-label="Tải chứng nhận"><i class="fa-solid fa-download"></i></button></div>
+    </article>
+    <article class="certificate-card" data-kind="certificate" data-date="2026-03-18" data-title="Kỹ năng giao tiếp hiệu quả">
+      <div class="certificate-art gold"><div class="art-inner"><b>CERTIFICATE</b><small>OF COMPLETION</small><em>HOÀN THÀNH XUẤT SẮC</em><strong>Nguyễn Văn A</strong><i></i><span>Kỹ năng giao tiếp hiệu quả</span><div class="art-seal"><i class="fa-solid fa-medal"></i></div></div></div>
+      <div class="certificate-info"><span class="type-tag gold"><i class="fa-solid fa-award"></i> Chứng chỉ</span><h2>Kỹ năng giao tiếp hiệu quả</h2><p><i class="fa-regular fa-calendar"></i> Cấp ngày: 18/03/2026</p><p><i class="fa-regular fa-square-check"></i> Mã: VBS-2026-0322</p></div>
+      <div class="certificate-actions"><button type="button" class="view-cert"><i class="fa-regular fa-eye"></i> Xem chi tiết</button><button type="button" class="download-cert" aria-label="Tải chứng chỉ"><i class="fa-solid fa-download"></i></button></div>
+    </article>
+    <article class="certificate-card" data-kind="certification" data-date="2026-02-22" data-title="Phòng cháy chữa cháy cơ bản">
+      <div class="certificate-art green"><div class="art-inner"><b>CHỨNG NHẬN</b><small>HOÀN THÀNH CHƯƠNG TRÌNH</small><em>TRÂN TRỌNG CHỨNG NHẬN</em><strong>Nguyễn Văn A</strong><i></i><span>Phòng cháy chữa cháy cơ bản</span><div class="art-seal"><i class="fa-solid fa-certificate"></i></div></div></div>
+      <div class="certificate-info"><span class="type-tag green"><i class="fa-solid fa-certificate"></i> Chứng nhận</span><h2>Phòng cháy chữa cháy cơ bản</h2><p><i class="fa-regular fa-calendar"></i> Cấp ngày: 22/02/2026</p><p><i class="fa-regular fa-square-check"></i> Mã: VBS-2026-0218</p></div>
+      <div class="certificate-actions"><button type="button" class="view-cert"><i class="fa-regular fa-eye"></i> Xem chi tiết</button><button type="button" class="download-cert" aria-label="Tải chứng nhận"><i class="fa-solid fa-download"></i></button></div>
+    </article>
+    <article class="certificate-card" data-kind="certificate" data-date="2026-01-30" data-title="Tin học văn phòng nâng cao">
+      <div class="certificate-art blue"><div class="art-inner"><b>CERTIFICATE</b><small>OF COMPLETION</small><em>HOÀN THÀNH KHÓA HỌC</em><strong>Nguyễn Văn A</strong><i></i><span>Tin học văn phòng nâng cao</span><div class="art-seal"><i class="fa-solid fa-star"></i></div></div></div>
+      <div class="certificate-info"><span class="type-tag blue"><i class="fa-solid fa-award"></i> Chứng chỉ</span><h2>Tin học văn phòng nâng cao</h2><p><i class="fa-regular fa-calendar"></i> Cấp ngày: 30/01/2026</p><p><i class="fa-regular fa-square-check"></i> Mã: VBS-2026-0130</p></div>
+      <div class="certificate-actions"><button type="button" class="view-cert"><i class="fa-regular fa-eye"></i> Xem chi tiết</button><button type="button" class="download-cert" aria-label="Tải chứng chỉ"><i class="fa-solid fa-download"></i></button></div>
+    </article>
+    <article class="certificate-card" data-kind="certification" data-date="2025-12-12" data-title="Sơ cứu và ứng phó khẩn cấp">
+      <div class="certificate-art green"><div class="art-inner"><b>CHỨNG NHẬN</b><small>HOÀN THÀNH CHƯƠNG TRÌNH</small><em>TRÂN TRỌNG CHỨNG NHẬN</em><strong>Nguyễn Văn A</strong><i></i><span>Sơ cứu và ứng phó khẩn cấp</span><div class="art-seal"><i class="fa-solid fa-certificate"></i></div></div></div>
+      <div class="certificate-info"><span class="type-tag green"><i class="fa-solid fa-certificate"></i> Chứng nhận</span><h2>Sơ cứu và ứng phó khẩn cấp</h2><p><i class="fa-regular fa-calendar"></i> Cấp ngày: 12/12/2025</p><p><i class="fa-regular fa-square-check"></i> Mã: VBS-2025-1248</p></div>
+      <div class="certificate-actions"><button type="button" class="view-cert"><i class="fa-regular fa-eye"></i> Xem chi tiết</button><button type="button" class="download-cert" aria-label="Tải chứng nhận"><i class="fa-solid fa-download"></i></button></div>
+    </article>
+    <article class="certificate-card" data-kind="certificate" data-date="2025-11-08" data-title="Quản trị thời gian">
+      <div class="certificate-art gold"><div class="art-inner"><b>CERTIFICATE</b><small>OF ACHIEVEMENT</small><em>HOÀN THÀNH XUẤT SẮC</em><strong>Nguyễn Văn A</strong><i></i><span>Quản trị thời gian</span><div class="art-seal"><i class="fa-solid fa-medal"></i></div></div></div>
+      <div class="certificate-info"><span class="type-tag gold"><i class="fa-solid fa-award"></i> Chứng chỉ</span><h2>Quản trị thời gian</h2><p><i class="fa-regular fa-calendar"></i> Cấp ngày: 08/11/2025</p><p><i class="fa-regular fa-square-check"></i> Mã: VBS-2025-1108</p></div>
+      <div class="certificate-actions"><button type="button" class="view-cert"><i class="fa-regular fa-eye"></i> Xem chi tiết</button><button type="button" class="download-cert" aria-label="Tải chứng chỉ"><i class="fa-solid fa-download"></i></button></div>
+    </article>
+  </div>
+  <div class="cert-empty" hidden><i class="fa-regular fa-folder-open"></i><p>Không có chứng chỉ phù hợp.</p></div>
+  <footer class="cert-pagination" aria-label="Phân trang">
+    <div class="page-buttons"><button type="button" aria-label="Trang trước"><i class="fa-solid fa-angles-left"></i></button><button type="button" class="active">1</button><button type="button">2</button><button type="button">3</button><button type="button" aria-label="Trang sau"><i class="fa-solid fa-angles-right"></i></button></div>
+    <label>Hiển thị <select><option>8 / trang</option><option>12 / trang</option><option>20 / trang</option></select></label>
+  </footer>
+  <dialog class="cert-dialog" id="certDialog"><button type="button" class="dialog-close" aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button><div class="dialog-preview"></div><div class="dialog-copy"><span class="dialog-type"></span><h2></h2><p class="dialog-date"></p><p class="dialog-code"></p><button type="button" class="dialog-download"><i class="fa-solid fa-download"></i> Tải chứng chỉ</button></div></dialog>
+  <div class="cert-toast" role="status" aria-live="polite"><i class="fa-solid fa-circle-check"></i><span></span></div>
 </section></main>
 <script src="../../js/app.js"></script>
+<script src="../../js/chung-chi-hoc-vien.js"></script>
 </body>
 </html>

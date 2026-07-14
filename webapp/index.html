@@ -7,7 +7,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body data-role="hv" data-page="hv-dash">
 
@@ -144,7 +146,30 @@
 </aside>
 
 
-<main class="main"><section class="screen active" id="hv-dash">
+<main class="main">
+<section class="screen active analytics-dashboard" id="hv-dash" data-dashboard="student">
+  <div class="dashboard-breadcrumb"><span>Học tập</span><i class="fa-solid fa-chevron-right"></i><b>Tổng quan học viên</b></div>
+  <header class="dashboard-head"><div><h1>Xin chào, Nguyễn Văn An 👋</h1><p>Hôm nay bạn có 2 bài học cần hoàn thành và một bài thi sắp diễn ra.</p></div><div class="dashboard-head-actions"><label class="dashboard-period"><i class="fa-regular fa-calendar"></i><select><option>Tháng 07/2026</option><option>Tháng 06/2026</option></select></label><a class="btn primary" href="html/hv/hoc-bai-giang.html"><i class="fa-solid fa-circle-play"></i>Tiếp tục học</a></div></header>
+  <div class="insight-banner"><i class="fa-solid fa-wand-magic-sparkles"></i><div><b>Gợi ý học tập hôm nay:</b> Hoàn thành bài “Kỹ thuật thông gió hầm lò” sẽ giúp tiến độ khóa An toàn lao động đạt 90%.</div><a href="html/hv/hoc-bai-giang.html">Học ngay <i class="fa-solid fa-arrow-right"></i></a></div>
+  <section class="dashboard-metrics">
+    <article class="dashboard-metric" style="--metric-color:#176fe0;--metric-soft:#eaf2ff"><span class="metric-icon"><i class="fa-solid fa-book-open"></i></span><div><p class="metric-label">Khóa đang học</p><p class="metric-value">4</p><p class="metric-trend up">▲ 2 khóa sắp hoàn thành</p></div></article>
+    <article class="dashboard-metric" style="--metric-color:#1b9b5b;--metric-soft:#e8f7ee"><span class="metric-icon"><i class="fa-solid fa-chart-line"></i></span><div><p class="metric-label">Tiến độ trung bình</p><p class="metric-value">68%</p><p class="metric-trend up">▲ 12% so với tháng trước</p></div></article>
+    <article class="dashboard-metric" style="--metric-color:#e59b16;--metric-soft:#fff4dc"><span class="metric-icon"><i class="fa-regular fa-clock"></i></span><div><p class="metric-label">Thời gian học tháng này</p><p class="metric-value">24.5 <small>giờ</small></p><p class="metric-trend up">▲ Vượt mục tiêu 3.5 giờ</p></div></article>
+    <article class="dashboard-metric" style="--metric-color:#7a47d2;--metric-soft:#f0eaff"><span class="metric-icon"><i class="fa-solid fa-clipboard-check"></i></span><div><p class="metric-label">Điểm trung bình</p><p class="metric-value">82<small>/100</small></p><p class="metric-trend up">▲ Tăng 5 điểm</p></div></article>
+    <article class="dashboard-metric" style="--metric-color:#e45c4b;--metric-soft:#ffefec"><span class="metric-icon"><i class="fa-solid fa-fire"></i></span><div><p class="metric-label">Chuỗi ngày học</p><p class="metric-value">12 <small>ngày</small></p><p class="metric-trend warn">Kỷ lục cá nhân: 18 ngày</p></div></article>
+  </section>
+  <div class="dashboard-grid">
+    <article class="dash-card dash-span-8"><header class="dash-card-head"><div><h2>Hoạt động học tập trong tuần</h2><p>Số phút học thực tế so với mục tiêu mỗi ngày</p></div><select><option>7 ngày gần nhất</option></select></header><div class="chart-wrap"><canvas id="studentActivityChart"></canvas></div></article>
+    <article class="dash-card dash-span-4"><header class="dash-card-head"><div><h2>Trạng thái khóa học</h2><p>18 khóa học trong lộ trình</p></div><a href="html/hv/khoa-hoc-cua-toi.html">Chi tiết</a></header><div class="chart-wrap compact"><canvas id="studentCompletionChart"></canvas><div class="donut-center"><b>67%</b><span>Đã hoàn thành</span></div></div><div class="dash-legend"><span><i style="background:#23a86b"></i>Hoàn thành</span><span><i style="background:#1676e7"></i>Đang học</span><span><i style="background:#e6ebf2"></i>Chưa học</span></div></article>
+    <article class="dash-card dash-span-7"><header class="dash-card-head"><div><h2>Tiến độ theo khóa học</h2><p>5 khóa gần nhất trong lộ trình của bạn</p></div><a href="html/hv/khoa-hoc-cua-toi.html">Xem tất cả</a></header><div class="chart-wrap"><canvas id="studentCourseChart"></canvas></div></article>
+    <article class="dash-card dash-span-5"><header class="dash-card-head"><div><h2>Xu hướng điểm kiểm tra</h2><p>6 bài đánh giá gần nhất</p></div><select><option>Tất cả môn</option></select></header><div class="chart-wrap"><canvas id="studentScoreChart"></canvas></div></article>
+    <article class="dash-card dash-span-5"><header class="dash-card-head"><div><h2>Hồ sơ năng lực</h2><p>So sánh năng lực hiện tại với mục tiêu</p></div><a href="html/hv/tien-do-va-ket-qua.html">Xem kết quả</a></header><div class="chart-wrap tall"><canvas id="studentSkillChart"></canvas></div></article>
+    <article class="dash-card dash-span-7"><header class="dash-card-head"><div><h2>Tiếp tục học</h2><p>Các nội dung đang thực hiện</p></div><a href="html/hv/khoa-hoc-cua-toi.html">Tất cả khóa học</a></header><div class="learning-list"><div class="learning-item"><span class="learning-thumb"><i class="fa-solid fa-helmet-safety"></i></span><div class="learning-copy"><b>An toàn lao động trong khai thác mỏ</b><small>Bài 6/10 · Kỹ thuật thông gió hầm lò</small><div class="mini-progress"><i style="width:82%"></i></div></div><a class="btn ghost" href="html/hv/hoc-bai-giang.html">Học tiếp</a></div><div class="learning-item"><span class="learning-thumb" style="background:linear-gradient(135deg,#7550ce,#442a8b)"><i class="fa-solid fa-chart-pie"></i></span><div class="learning-copy"><b>Quản trị kinh doanh cơ bản</b><small>Bài 12/16 · Lập kế hoạch tài chính</small><div class="mini-progress"><i style="width:75%;background:#8055d8"></i></div></div><a class="btn ghost" href="html/hv/hoc-bai-giang.html">Học tiếp</a></div><div class="learning-item"><span class="learning-thumb" style="background:linear-gradient(135deg,#e59b16,#a96b08)"><i class="fa-solid fa-people-group"></i></span><div class="learning-copy"><b>Kỹ năng lãnh đạo và quản lý đội nhóm</b><small>Bài 3/8 · Giao tiếp hiệu quả</small><div class="mini-progress"><i style="width:38%;background:#e59b16"></i></div></div><a class="btn ghost" href="html/hv/hoc-bai-giang.html">Học tiếp</a></div></div></article>
+    <article class="dash-card dash-span-8"><header class="dash-card-head"><div><h2>Lịch học, bài tập và kỳ thi sắp tới</h2><p>Các mốc cần chú ý trong 14 ngày tới</p></div><a href="html/hv/lich-hoc-thi.html">Xem lịch</a></header><div class="dashboard-table-wrap"><table class="dashboard-table"><thead><tr><th>Nội dung</th><th>Loại</th><th>Thời gian</th><th>Trạng thái</th><th></th></tr></thead><tbody><tr><td class="table-title">Thi cuối khóa — An toàn lao động<small>40 câu · 60 phút</small></td><td>Bài thi</td><td>09/07 · 09:00</td><td><span class="dashboard-status amber">Sắp diễn ra</span></td><td><a href="html/hv/lam-bai-thi.html">Chi tiết</a></td></tr><tr><td class="table-title">Bài tự luận: Kế hoạch tài chính<small>Quản trị kinh doanh cơ bản</small></td><td>Bài tập</td><td>11/07 · 23:59</td><td><span class="dashboard-status blue">Đang thực hiện</span></td><td><a href="html/hv/bai-tu-luan.html">Làm bài</a></td></tr><tr><td class="table-title">Học trực tiếp — Kỹ năng lãnh đạo<small>Phòng 301</small></td><td>Lớp học</td><td>14/07 · 14:00</td><td><span class="dashboard-status green">Đã đăng ký</span></td><td><a href="html/hv/lich-hoc-thi.html">Chi tiết</a></td></tr></tbody></table></div></article>
+    <article class="dash-card dash-span-4"><header class="dash-card-head"><div><h2>Thành tích gần đây</h2><p>Chứng chỉ và cột mốc mới</p></div><a href="html/hv/xep-hang.html">Xem hạng</a></header><div class="achievement-list"><div class="achievement"><span class="achievement-icon" style="background:#fff4dc;color:#e59b16"><i class="fa-solid fa-trophy"></i></span><div><b>Top 10 học viên tháng</b><small>Hạng 8/152 học viên</small></div></div><div class="achievement"><span class="achievement-icon" style="background:#e8f7ee;color:#1b9b5b"><i class="fa-solid fa-certificate"></i></span><div><b>Chứng chỉ An toàn cơ bản</b><small>Cấp ngày 02/07/2026</small></div></div><div class="achievement"><span class="achievement-icon" style="background:#f0eaff;color:#7a47d2"><i class="fa-solid fa-medal"></i></span><div><b>Hoàn thành sớm</b><small>Trước hạn 5 ngày</small></div></div></div></article>
+  </div>
+</section>
+<section class="dashboard-legacy" id="hv-dash-legacy" hidden>
   <div class="page-head">
     <div><div class="crumb">Trang chủ</div><h1>Xin chào, Nguyễn Văn An 👋</h1><div class="sub">Bạn đang hoàn thành tốt lộ trình — còn 2 khóa cần hoàn tất trong tháng này.</div></div>
     <button class="btn primary"><svg class="ic sm"><use href="#i-play"/></svg>Tiếp tục học</button>
@@ -187,6 +212,8 @@
     </div>
   </div>
 </section></main>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="js/app.js"></script>
+<script src="js/dashboard.js"></script>
 </body>
 </html>

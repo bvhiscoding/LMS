@@ -163,7 +163,7 @@
         <label class="opt"><input type="radio" name="q19"><span>C. Chiều dài đường lò tính từ cửa mỏ</span></label>
         <label class="opt"><input type="radio" name="q19"><span>D. Công suất của quạt gió chính</span></label>
       </div>
-      <div style="display:flex;justify-content:space-between;margin-top:24px"><button class="btn ghost">← Câu trước</button><button class="btn primary">Câu tiếp →</button></div>
+      <div style="display:flex;justify-content:space-between;margin-top:24px"><button class="btn ghost"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Câu trước</button><button class="btn primary">Câu tiếp <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div>
     </div>
     <div class="card pad" style="flex:1">
       <div class="sec-title"><h2>Bảng câu hỏi</h2></div>
@@ -205,7 +205,7 @@
     [document.getElementById('markQuestion'), document.getElementById('paperMark')].forEach(button => button.addEventListener('click', () => nav.querySelector('.current')?.classList.toggle('review')));
     document.getElementById('previousQuestion').addEventListener('click', () => { const current = Number(nav.querySelector('.current').dataset.q); if (current > 1) setQuestion(current - 1); });
     document.getElementById('nextQuestion').addEventListener('click', () => { const current = Number(nav.querySelector('.current').dataset.q); if (current < 20) setQuestion(current + 1); });
-    let paused = false; document.getElementById('timerPause').addEventListener('click', event => { paused = !paused; event.currentTarget.textContent = paused ? '▶' : 'Ⅱ'; });
+    let paused = false; document.getElementById('timerPause').addEventListener('click', event => { paused = !paused; event.currentTarget.innerHTML = paused ? '<i class="fa-solid fa-play" aria-hidden="true"></i>' : '<i class="fa-solid fa-pause" aria-hidden="true"></i>'; });
     document.getElementById('submitExam').addEventListener('click', () => { if (confirm('Bạn muốn nộp bài thi ngay bây giờ?')) window.location.href = 'ket-qua-thi.html'; });
   })();
 </script>
