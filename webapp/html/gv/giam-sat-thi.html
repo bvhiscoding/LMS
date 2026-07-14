@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/gv/giam-sat-thi.css">
 </head>
 <body data-role="gv" data-page="gv-proctor">
 
@@ -144,24 +145,13 @@
 </aside>
 
 
-<main class="main"><section class="screen active" id="gv-proctor">
-  <div class="page-head"><div><div class="crumb">Nghiệp vụ › Giám sát thi</div><h1>Giám sát thi trực tuyến</h1><div class="sub">Ca thi: AT cuối khóa — Mã đề 04 · 42 thí sinh đang thi</div></div><div style="display:flex;align-items:center;gap:10px;background:var(--danger-050);color:var(--danger);padding:8px 14px;border-radius:10px"><span style="width:8px;height:8px;border-radius:50%;background:var(--danger);display:inline-block"></span><b>Đang diễn ra · 24:17</b></div></div>
-  <div class="grid cards-4" style="margin-bottom:18px">
-    <div class="stat"><div class="lab">Đang làm bài</div><div class="val" style="color:var(--brand)">40</div></div>
-    <div class="stat"><div class="lab">Đã nộp</div><div class="val" style="color:var(--success)">2</div></div>
-    <div class="stat"><div class="lab">Cảnh báo vi phạm</div><div class="val" style="color:var(--warning)">3</div></div>
-    <div class="stat"><div class="lab">Bị đình chỉ</div><div class="val" style="color:var(--danger)">1</div></div>
-  </div>
-  <div class="card pad">
-    <div class="sec-title"><h2>Thí sinh</h2><div class="toolbar" style="margin:0"><span class="chip on">Tất cả</span><span class="chip">Có vi phạm</span></div></div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px">
-      <div style="border:1px solid var(--border);border-radius:10px;overflow:hidden"><div style="aspect-ratio:4/3;background:#243043;display:grid;place-items:center;color:rgba(255,255,255,.5);position:relative"><svg class="ic"><use href="#i-users"/></svg><span class="badge b-green" style="position:absolute;top:6px;right:6px;font-size:9px">OK</span></div><div style="padding:8px 10px;font-size:12px"><b>Nguyễn Văn An</b><div class="faint" style="font-size:10.5px">18/30 câu</div></div></div>
-      <div style="border:1px solid var(--warning);border-radius:10px;overflow:hidden"><div style="aspect-ratio:4/3;background:#243043;display:grid;place-items:center;color:rgba(255,255,255,.5);position:relative"><svg class="ic"><use href="#i-users"/></svg><span class="badge b-amber" style="position:absolute;top:6px;right:6px;font-size:9px">2 lần</span></div><div style="padding:8px 10px;font-size:12px"><b>Trần Thị Bình</b><div style="color:var(--warning);font-size:10.5px">Chuyển tab</div></div></div>
-      <div style="border:1px solid var(--danger);border-radius:10px;overflow:hidden;opacity:.7"><div style="aspect-ratio:4/3;background:#3a2020;display:grid;place-items:center;color:rgba(255,255,255,.5);position:relative"><svg class="ic"><use href="#i-users"/></svg><span class="badge b-red" style="position:absolute;top:6px;right:6px;font-size:9px">Đình chỉ</span></div><div style="padding:8px 10px;font-size:12px"><b>Lê Văn Cường</b><div style="color:var(--danger);font-size:10.5px">Vượt ngưỡng</div></div></div>
-      <div style="border:1px solid var(--border);border-radius:10px;overflow:hidden"><div style="aspect-ratio:4/3;background:#243043;display:grid;place-items:center;color:rgba(255,255,255,.5);position:relative"><svg class="ic"><use href="#i-users"/></svg><span class="badge b-green" style="position:absolute;top:6px;right:6px;font-size:9px">OK</span></div><div style="padding:8px 10px;font-size:12px"><b>Phạm Thị Dung</b><div class="faint" style="font-size:10.5px">25/30 câu</div></div></div>
-    </div>
-  </div>
+<main class="main proctor-page"><section class="screen active" id="gv-proctor">
+  <header class="proctor-head"><div><h1>Giám sát thi</h1><p>Chọn ca thi để bắt đầu giám sát</p></div><button class="btn ghost" id="proctorGuide"><i class="fa-regular fa-circle-question"></i>Hướng dẫn</button></header>
+  <section class="proctor-card"><div class="proctor-filters"><label class="proctor-search"><input id="proctorSearch" type="search" placeholder="Tìm kiếm ca thi, mã ca thi..."><i class="fa-solid fa-magnifying-glass"></i></label><select id="proctorTopic"><option value="">Chuyên đề: Tất cả</option></select><select id="proctorExam"><option value="">Đề thi: Tất cả</option></select><select id="proctorStatus"><option value="">Trạng thái: Tất cả</option><option>Đang diễn ra</option><option>Sắp diễn ra</option><option>Đã kết thúc</option><option>Đã hủy</option></select><input id="proctorDate" type="date" aria-label="Ngày thi"><button class="btn ghost" id="refreshProctors"><i class="fa-solid fa-rotate"></i>Làm mới</button></div><div class="proctor-table-wrap"><table class="proctor-table"><thead><tr><th>Ca thi</th><th>Chuyên đề</th><th>Đề thi</th><th>Thời gian thi</th><th>Thí sinh</th><th>Trạng thái</th><th>Giám thị</th><th>Thao tác</th></tr></thead><tbody id="proctorTableBody"></tbody></table></div><footer class="proctor-footer"><span id="proctorSummary"></span><div id="proctorPagination"></div><select id="proctorPageSize"><option value="6">6 / trang</option><option value="10">10 / trang</option></select></footer></section>
+  <dialog class="proctor-dialog" id="proctorGuideDialog"><header><h2>Hướng dẫn giám sát thi</h2><button type="button" data-close-proctor-dialog aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></header><div><ol><li>Chọn ca thi đang diễn ra và nhấn “Giám sát”.</li><li>Theo dõi trạng thái kết nối, camera và nhật ký của từng thí sinh.</li><li>Ghi nhận vi phạm trước khi kết thúc ca thi.</li></ol></div><footer><button class="btn primary" type="button" data-close-proctor-dialog>Đã hiểu</button></footer></dialog>
+  <div class="proctor-toast" id="proctorToast" hidden role="status"></div>
 </section></main>
 <script src="../../js/app.js"></script>
+<script src="../../js/giam-sat-thi.js"></script>
 </body>
 </html>

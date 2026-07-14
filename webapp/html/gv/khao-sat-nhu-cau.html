@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/gv/khao-sat-nhu-cau.css">
 </head>
 <body data-role="gv" data-page="gv-needsurvey">
 
@@ -144,24 +145,30 @@
 </aside>
 
 
-<main class="main"><section class="screen active" id="gv-needsurvey">
-  <div class="page-head"><div><div class="crumb">Kế hoạch › Khảo sát nhu cầu</div><h1>Khảo sát nhu cầu đào tạo</h1><div class="sub">Tạo bộ khảo sát định kỳ gửi các đơn vị.</div></div><div style="display:flex;gap:8px"><button class="btn ghost">Xem kết quả</button><button class="btn primary"><svg class="ic sm"><use href="#i-check"/></svg>Phát hành khảo sát</button></div></div>
-  <div class="row" style="align-items:flex-start">
-    <div class="card pad" style="flex:2">
-      <div class="sec-title"><h2>Thiết kế câu hỏi</h2><button class="btn ghost sm"><svg class="ic sm"><use href="#i-plus"/></svg>Thêm câu hỏi</button></div>
-      <div style="border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:12px"><div style="display:flex;justify-content:space-between"><b style="font-size:13.5px">1. Đơn vị có nhu cầu đào tạo về lĩnh vực nào? (nhiều lựa chọn)</b><span class="badge b-blue">Nhiều lựa chọn</span></div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><span class="chip on">An toàn lao động</span><span class="chip on">Kỹ thuật mỏ</span><span class="chip">Quản trị</span><span class="chip">Kỹ năng mềm</span></div></div>
-      <div style="border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:12px"><div style="display:flex;justify-content:space-between"><b style="font-size:13.5px">2. Số lượng nhân sự dự kiến tham gia?</b><span class="badge b-amber">Nhập số</span></div><div class="field" style="margin-top:10px;width:160px"><input placeholder="Nhập số lượng"></div></div>
-      <div style="border:1px solid var(--border);border-radius:10px;padding:14px"><div style="display:flex;justify-content:space-between"><b style="font-size:13.5px">3. Thời điểm mong muốn tổ chức?</b><span class="badge b-green">1 lựa chọn</span></div><div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"><span class="chip">Quý I</span><span class="chip on">Quý II</span><span class="chip">Quý III</span><span class="chip">Quý IV</span></div></div>
-    </div>
-    <div class="card pad" style="flex:1">
-      <div class="sec-title"><h2>Thiết lập phát hành</h2></div>
-      <div><label class="fl">Tên khảo sát</label><div class="field"><input value="Khảo sát nhu cầu ĐT 2027"></div></div>
-      <div style="margin-top:12px"><label class="fl">Đối tượng</label><div class="field"><select><option>Tất cả đơn vị thành viên</option><option>Chọn đơn vị cụ thể</option></select></div></div>
-      <div style="margin-top:12px"><label class="fl">Hạn phản hồi</label><div class="field"><svg class="ic sm"><use href="#i-cal"/></svg><input value="31/08/2026"></div></div>
-      <div style="margin-top:16px;background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:12px"><div class="faint" style="font-size:12px">Trạng thái phản hồi</div><div style="display:flex;justify-content:space-between;margin-top:6px"><b>18 / 42 đơn vị</b><span class="badge b-blue">43%</span></div><div class="prog" style="margin-top:8px"><i style="width:43%"></i></div></div>
-    </div>
-  </div>
+<main class="main need-survey-page"><section class="screen active" id="gv-needsurvey">
+  <header class="need-survey-head"><h1>Khảo sát nhu cầu đào tạo</h1></header>
+  <section class="need-survey-card">
+    <h2>Danh sách khảo sát</h2>
+    <div class="need-survey-filters"><label class="need-survey-search"><input id="needSurveySearch" type="search" placeholder="Tìm kiếm theo tên khảo sát..."><i class="fa-solid fa-magnifying-glass"></i></label><select id="needSurveyStatus" aria-label="Trạng thái"><option value="">-- Trạng thái --</option><option>Chưa thực hiện</option><option>Đã hoàn thành</option><option>Đã hết hạn</option></select><select id="needSurveyYear" aria-label="Năm"><option value="2025">Năm 2025</option><option value="2026">Năm 2026</option></select><button class="btn primary" id="openNeedRegistration"><i class="fa-solid fa-plus"></i>Đăng ký nhu cầu đào tạo</button><button class="btn ghost" id="resetNeedSurvey"><i class="fa-solid fa-rotate-right"></i>Đặt lại bộ lọc</button></div>
+    <div class="need-survey-table-wrap"><table class="need-survey-table"><thead><tr><th>STT</th><th>Tên khảo sát</th><th>Đơn vị áp dụng</th><th>Thời gian</th><th>Trạng thái</th><th>Thao tác</th></tr></thead><tbody id="needSurveyTableBody"></tbody></table></div>
+    <footer class="need-survey-footer"><span id="needSurveySummary"></span><div id="needSurveyPagination"></div></footer>
+  </section>
+
+  <dialog class="need-registration-dialog" id="needRegistrationDialog"><form id="needRegistrationForm"><header><h2>Đăng ký nhu cầu đào tạo</h2><button type="button" data-close-registration aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></header><div class="need-registration-body">
+    <label class="full"><span>Tên khóa học / chương trình <b>*</b></span><input name="course" required placeholder="Nhập tên khóa học hoặc chương trình bạn mong muốn tham gia"></label>
+    <label><span>Lĩnh vực đào tạo <b>*</b></span><select name="field" required><option value="">-- Chọn lĩnh vực --</option><option>An toàn lao động</option><option>Công nghệ thông tin</option><option>Quản trị</option><option>Kỹ năng mềm</option><option>Ngoại ngữ</option></select></label>
+    <fieldset><legend>Hình thức đào tạo <b>*</b></legend><label><input type="radio" name="format" value="Trực tiếp" checked> Trực tiếp</label><label><input type="radio" name="format" value="Trực tuyến"> Trực tuyến</label><label><input type="radio" name="format" value="Kết hợp"> Kết hợp</label></fieldset>
+    <label><span>Đơn vị tổ chức (nếu có)</span><input name="organizer" placeholder="Nhập đơn vị tổ chức"></label><label><span>Mức độ ưu tiên <b>*</b></span><select name="priority" required><option value="">-- Chọn mức độ ưu tiên --</option><option>Cao</option><option>Trung bình</option><option>Thấp</option></select></label>
+    <label class="full"><span>Lý do đăng ký <b>*</b></span><textarea name="reason" maxlength="500" required placeholder="Trình bày lý do bạn muốn tham gia khóa đào tạo này"></textarea><small><output data-count-for="reason">0</output>/500</small></label>
+    <label class="full"><span>Mục tiêu mong muốn</span><textarea name="goal" maxlength="500" placeholder="Bạn kỳ vọng đạt được điều gì sau khóa học?"></textarea><small><output data-count-for="goal">0</output>/500</small></label>
+    <label class="full"><span>Thời gian dự kiến mong muốn</span><input name="date" type="date"></label>
+    <label class="full"><span>Ghi chú (nếu có)</span><textarea name="note" maxlength="500" placeholder="Nhập thêm thông tin khác (nếu có)"></textarea><small><output data-count-for="note">0</output>/500</small></label>
+  </div><footer><button type="button" class="btn ghost" data-close-registration>Hủy bỏ</button><button type="submit" class="btn primary"><i class="fa-regular fa-file-lines"></i>Gửi đăng ký</button></footer></form></dialog>
+
+  <dialog class="need-survey-detail-dialog" id="needSurveyDetailDialog"><header><div><h2 id="needSurveyDetailTitle"></h2><p id="needSurveyDetailSub"></p></div><button type="button" data-close-survey-detail aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></header><div id="needSurveyDetailBody"></div><footer><button type="button" class="btn ghost" data-close-survey-detail>Đóng</button><button type="button" class="btn primary" id="completeNeedSurvey" hidden>Hoàn thành khảo sát</button></footer></dialog>
+  <div class="need-survey-toast" id="needSurveyToast" hidden role="status"></div>
 </section></main>
 <script src="../../js/app.js"></script>
+<script src="../../js/khao-sat-nhu-cau.js"></script>
 </body>
 </html>

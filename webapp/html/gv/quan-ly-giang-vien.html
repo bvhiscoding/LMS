@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/gv/quan-ly-giang-vien.css">
 </head>
 <body data-role="gv" data-page="gv-instructor">
 
@@ -144,15 +145,50 @@
 </aside>
 
 
-<main class="main"><section class="screen active" id="gv-instructor">
-  <div class="page-head"><div><div class="crumb">Chương trình › Quản lý giảng viên</div><h1>Quản lý giảng viên</h1><div class="sub">48 giảng viên · nội bộ &amp; thỉnh giảng</div></div><button class="btn primary"><svg class="ic sm"><use href="#i-plus"/></svg>Thêm giảng viên</button></div>
-  <div class="toolbar"><div class="field"><svg class="ic sm"><use href="#i-search"/></svg><input placeholder="Tìm giảng viên..."></div><span class="chip on">Tất cả</span><span class="chip">Nội bộ</span><span class="chip">Thỉnh giảng</span></div>
-  <div class="grid cards-3">
-    <div class="card pad"><div style="display:flex;gap:12px;align-items:center"><span class="avatar-init" style="width:48px;height:48px;background:#1c498c;font-size:16px">TM</span><div><b>Trần Minh</b><div class="faint" style="font-size:11.5px">An toàn lao động · Nội bộ</div></div></div><div style="display:flex;gap:14px;margin-top:14px;font-size:12px"><div><div class="faint">Lớp</div><b>8</b></div><div><div class="faint">Học viên</div><b>320</b></div><div><div class="faint">Đánh giá</div><b style="color:var(--accent)">★ 4.8</b></div></div><button class="btn ghost sm" style="width:100%;justify-content:center;margin-top:12px">Xem lịch giảng</button></div>
-    <div class="card pad"><div style="display:flex;gap:12px;align-items:center"><span class="avatar-init" style="width:48px;height:48px;background:#D99A2B;font-size:16px">LH</span><div><b>Lê Thị Hoa</b><div class="faint" style="font-size:11.5px">Quản trị KD · Nội bộ</div></div></div><div style="display:flex;gap:14px;margin-top:14px;font-size:12px"><div><div class="faint">Lớp</div><b>6</b></div><div><div class="faint">Học viên</div><b>245</b></div><div><div class="faint">Đánh giá</div><b style="color:var(--accent)">★ 4.6</b></div></div><button class="btn ghost sm" style="width:100%;justify-content:center;margin-top:12px">Xem lịch giảng</button></div>
-    <div class="card pad"><div style="display:flex;gap:12px;align-items:center"><span class="avatar-init" style="width:48px;height:48px;background:#1F9D57;font-size:16px">PQ</span><div><b>Phạm Quốc</b><div class="faint" style="font-size:11.5px">Kỹ năng LĐ · Thỉnh giảng</div></div></div><div style="display:flex;gap:14px;margin-top:14px;font-size:12px"><div><div class="faint">Lớp</div><b>4</b></div><div><div class="faint">Học viên</div><b>120</b></div><div><div class="faint">Đánh giá</div><b style="color:var(--accent)">★ 4.9</b></div></div><button class="btn ghost sm" style="width:100%;justify-content:center;margin-top:12px">Xem lịch giảng</button></div>
+<main class="main instructor-page"><section class="screen active" id="gv-instructor">
+  <div class="instructor-head">
+    <div><h1>Quản lý giảng viên</h1><div class="crumb">Trang chủ <i class="fa-solid fa-chevron-right"></i> Quản lý giảng viên</div></div>
+    <button class="btn primary" id="addInstructor"><i class="fa-solid fa-plus"></i>Thêm giảng viên</button>
   </div>
+
+  <section class="instructor-filter-card" aria-label="Bộ lọc giảng viên">
+    <div class="instructor-filter-row">
+      <label class="instructor-search"><input id="instructorSearch" type="search" placeholder="Tìm giảng viên theo tên, email, SĐT..."><i class="fa-solid fa-magnifying-glass"></i></label>
+      <label><span>Khoa / Phòng</span><select id="instructorUnit"><option value="">Tất cả</option></select></label>
+      <label><span>Bộ môn</span><select id="instructorDepartment"><option value="">Tất cả</option></select></label>
+      <label><span>Trạng thái</span><select id="instructorStatus"><option value="">Tất cả</option><option>Hoạt động</option><option>Tạm ngưng</option></select></label>
+      <button class="btn ghost instructor-more-filter" id="toggleInstructorFilters" aria-expanded="false"><i class="fa-solid fa-filter"></i>Bộ lọc khác</button>
+      <div class="instructor-view-switch" aria-label="Kiểu hiển thị"><button class="active" data-view="grid" aria-label="Dạng lưới"><i class="fa-solid fa-table-cells-large"></i></button><button data-view="list" aria-label="Dạng danh sách"><i class="fa-solid fa-list"></i></button></div>
+    </div>
+    <div class="instructor-advanced" id="instructorAdvanced" hidden><label><span>Đánh giá tối thiểu</span><select id="instructorRating"><option value="0">Tất cả</option><option value="4">Từ 4.0</option><option value="4.5">Từ 4.5</option><option value="4.8">Từ 4.8</option></select></label><button class="btn ghost sm" id="resetInstructorFilters"><i class="fa-solid fa-rotate-left"></i>Đặt lại</button></div>
+    <div class="instructor-type-tabs" id="instructorTypeTabs"><button class="active" data-type="">Tất cả <b>(48)</b></button><button data-type="Nội bộ">Nội bộ <b>(32)</b></button><button data-type="Thỉnh giảng">Thỉnh giảng <b>(16)</b></button></div>
+  </section>
+
+  <div class="instructor-grid" id="instructorGrid" aria-live="polite"></div>
+  <footer class="instructor-footer"><span id="instructorSummary"></span><div class="instructor-pagination" id="instructorPagination"></div><select id="instructorPageSize" aria-label="Số giảng viên mỗi trang"><option value="8">8 / trang</option><option value="12">12 / trang</option><option value="16">16 / trang</option></select></footer>
+
+  <dialog class="instructor-dialog" id="instructorDialog">
+    <form id="instructorForm">
+      <header><div><h2 id="instructorDialogTitle">Thêm giảng viên</h2><p>Nhập thông tin giảng viên dùng cho bản demo.</p></div><button type="button" data-close-instructor aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></header>
+      <div class="instructor-form-grid">
+        <input type="hidden" name="id">
+        <label><span>Họ và tên <b>*</b></span><input name="name" required maxlength="80"></label>
+        <label><span>Loại giảng viên <b>*</b></span><select name="type" required><option>Nội bộ</option><option>Thỉnh giảng</option></select></label>
+        <label><span>Email <b>*</b></span><input name="email" type="email" required></label>
+        <label><span>Số điện thoại <b>*</b></span><input name="phone" inputmode="tel" pattern="[0-9 ]{9,13}" required></label>
+        <label><span>Khoa / Phòng <b>*</b></span><select name="unit" required></select></label>
+        <label><span>Bộ môn <b>*</b></span><select name="department" required></select></label>
+        <label><span>Trạng thái</span><select name="status"><option>Hoạt động</option><option>Tạm ngưng</option></select></label>
+        <label><span>Đánh giá</span><input name="rating" type="number" min="0" max="5" step="0.1" value="4.5"></label>
+      </div>
+      <footer><button type="button" class="btn ghost" data-close-instructor>Hủy</button><button class="btn primary" type="submit"><i class="fa-solid fa-floppy-disk"></i>Lưu</button></footer>
+    </form>
+  </dialog>
+
+  <dialog class="instructor-dialog instructor-info-dialog" id="instructorInfoDialog"><header><div><h2 id="instructorInfoTitle"></h2><p id="instructorInfoSub"></p></div><button type="button" data-close-info aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></header><div class="instructor-info-body" id="instructorInfoBody"></div><footer><button type="button" class="btn primary" data-close-info>Đóng</button></footer></dialog>
+  <div class="instructor-toast" id="instructorToast" role="status" hidden></div>
 </section></main>
 <script src="../../js/app.js"></script>
+<script src="../../js/quan-ly-giang-vien.js"></script>
 </body>
 </html>

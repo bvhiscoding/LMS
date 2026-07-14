@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/gv/chu-de-chuong-trinh.css">
 </head>
 <body data-role="gv" data-page="gv-program">
 
@@ -144,27 +145,15 @@
 </aside>
 
 
-<main class="main"><section class="screen active" id="gv-program">
-  <div class="page-head"><div><div class="crumb">Chương trình › Chủ đề &amp; chương trình</div><h1>Chủ đề – chương trình – chuyên đề</h1><div class="sub">Quản lý phân nhóm chủ đề và chương trình đào tạo.</div></div><button class="btn primary"><svg class="ic sm"><use href="#i-plus"/></svg>Thêm chủ đề</button></div>
-  <div class="row" style="align-items:flex-start">
-    <div class="card pad" style="flex:1">
-      <div class="sec-title"><h2>Phân nhóm chủ đề</h2></div>
-      <div class="list-row" style="padding:11px 8px;background:var(--brand-050);border-radius:8px;margin:0 -8px"><svg class="ic" style="color:var(--brand)"><use href="#i-book"/></svg><div style="flex:1;font-size:13px;font-weight:600;color:var(--brand)">An toàn &amp; kỹ thuật mỏ</div><span class="badge b-gray">18</span></div>
-      <div class="list-row" style="padding:11px 8px;margin:0 -8px"><svg class="ic faint"><use href="#i-book"/></svg><div style="flex:1;font-size:13px">Quản trị &amp; kinh doanh</div><span class="badge b-gray">12</span></div>
-      <div class="list-row" style="padding:11px 8px;margin:0 -8px"><svg class="ic faint"><use href="#i-book"/></svg><div style="flex:1;font-size:13px">Kỹ năng mềm</div><span class="badge b-gray">9</span></div>
-      <div class="list-row" style="padding:11px 8px;margin:0 -8px"><svg class="ic faint"><use href="#i-book"/></svg><div style="flex:1;font-size:13px">Chính trị &amp; văn hóa DN</div><span class="badge b-gray">6</span></div>
-    </div>
-    <div class="card" style="flex:2;overflow:hidden">
-      <div style="padding:14px 18px" class="sec-title"><h2 style="margin:0">Chủ đề — An toàn &amp; kỹ thuật mỏ</h2></div>
-      <table class="tbl"><thead><tr><th>Chủ đề</th><th>Chương trình</th><th>Khóa học</th><th>Trạng thái</th></tr></thead><tbody>
-      <tr><td><b>An toàn lao động hầm lò</b></td><td>Sát hạch định kỳ</td><td>3</td><td><span class="badge b-green">Đang dùng</span></td></tr>
-      <tr><td><b>Thông gió &amp; khí mỏ</b></td><td>Sát hạch định kỳ</td><td>2</td><td><span class="badge b-green">Đang dùng</span></td></tr>
-      <tr><td><b>Vận hành thiết bị khai thác</b></td><td>Nâng bậc thợ</td><td>4</td><td><span class="badge b-green">Đang dùng</span></td></tr>
-      <tr><td><b>Cứu hộ mỏ</b></td><td>—</td><td>1</td><td><span class="badge b-gray">Nháp</span></td></tr>
-      </tbody></table>
-    </div>
-  </div>
+<main class="main topic-page"><section class="screen active" id="gv-program">
+  <header class="topic-head"><div><h1>Quản lý chủ đề &amp; chương trình</h1><div class="crumb">Trang chủ <i class="fa-solid fa-chevron-right"></i> Quản lý nội dung</div></div><div><button class="btn ghost" id="openTopicGroups"><i class="fa-solid fa-layer-group"></i>Phân nhóm chủ đề</button><button class="btn primary" id="addTopicProgram"><i class="fa-solid fa-plus"></i>Thêm mới</button></div></header>
+  <nav class="topic-main-tabs" id="topicProgramTabs"><button class="active" data-main-tab="topics">Chủ đề</button><button data-main-tab="programs">Chương trình</button></nav>
+  <section class="topic-filter-card"><label><span>Từ khóa</span><div><input id="topicSearch" type="search" placeholder="Nhập tên chủ đề..."><i class="fa-solid fa-magnifying-glass"></i></div></label><label><span>Phân nhóm</span><select id="topicGroup"><option value="">-- Tất cả phân nhóm --</option></select></label><label><span>Trạng thái</span><select id="topicStatus"><option value="">-- Tất cả trạng thái --</option><option>Hoạt động</option><option>Ngừng hoạt động</option></select></label><button class="btn primary" id="searchTopics"><i class="fa-solid fa-magnifying-glass"></i>Tìm kiếm</button><button class="btn ghost" id="resetTopics"><i class="fa-solid fa-rotate"></i>Làm mới</button></section>
+  <section class="topic-table-card"><div class="topic-table-wrap"><table class="topic-table"><thead id="topicTableHead"></thead><tbody id="topicTableBody"></tbody></table></div><footer class="topic-footer"><span id="topicSummary"></span><div id="topicPagination"></div></footer></section>
+  <dialog class="topic-dialog" id="topicDialog"><form id="topicForm"><header><div><h2 id="topicDialogTitle">Thêm chủ đề</h2><p id="topicDialogSub">Tạo mới chủ đề trong hệ thống</p></div><button type="button" data-close-topic aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></header><div class="topic-form-body"><input name="id" type="hidden"><label class="full"><span>Tên <b>*</b></span><input name="name" required maxlength="100"></label><label><span>Phân nhóm <b>*</b></span><select name="group" required></select></label><label><span>Trạng thái</span><select name="status"><option>Hoạt động</option><option>Ngừng hoạt động</option></select></label><label class="full"><span>Mô tả</span><textarea name="description" maxlength="500" rows="4"></textarea><small><output id="topicDescriptionCount">0</output>/500</small></label><label><span>Ảnh đại diện</span><input name="image" type="file" accept="image/*"><em id="topicImageName">Chưa chọn ảnh</em></label><label><span>Thứ tự hiển thị</span><input name="order" type="number" min="0" value="0"></label></div><footer><button type="button" class="btn ghost" data-close-topic>Hủy</button><button type="submit" class="btn primary"><i class="fa-solid fa-floppy-disk"></i>Lưu</button></footer></form></dialog>
+  <div class="topic-toast" id="topicToast" hidden></div>
 </section></main>
 <script src="../../js/app.js"></script>
+<script src="../../js/chu-de-chuong-trinh.js"></script>
 </body>
 </html>

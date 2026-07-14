@@ -52,15 +52,33 @@
     result ? result.after(progress) : nav.appendChild(progress);
   });
   document.querySelectorAll('.side-role[data-role="gv"]').forEach((nav) => {
-    if (nav.querySelector('[data-target="gv-students"]')) return;
-    const students = document.createElement('a');
-    students.className = `nav-item${body.dataset.page === 'gv-students' ? ' active' : ''}`;
-    students.dataset.target = 'gv-students';
-    students.dataset.href = new URL('../html/gv/quan-ly-hoc-vien.html', document.currentScript.src).href;
-    students.innerHTML = '<i class="ic fa-solid fa-user-graduate fa-icon" aria-hidden="true"></i>Quản lý học viên';
     const classes = nav.querySelector('[data-target="gv-classes"]');
-    classes ? classes.after(students) : nav.appendChild(students);
+    if (!nav.querySelector('[data-target="gv-courses"]')) {
+      const courses = document.createElement('a');
+      courses.className = 'nav-item';
+      courses.dataset.target = 'gv-courses';
+      courses.dataset.href = new URL('../html/gv/quan-ly-khoa-hoc.html', document.currentScript.src).href;
+      courses.innerHTML = '<i class="ic fa-solid fa-book-open fa-icon" aria-hidden="true"></i>Quản lý khóa học';
+      classes ? classes.before(courses) : nav.appendChild(courses);
+    }
+    if (!nav.querySelector('[data-target="gv-students"]')) {
+      const students = document.createElement('a');
+      students.className = 'nav-item';
+      students.dataset.target = 'gv-students';
+      students.dataset.href = new URL('../html/gv/quan-ly-hoc-vien.html', document.currentScript.src).href;
+      students.innerHTML = '<i class="ic fa-solid fa-user-graduate fa-icon" aria-hidden="true"></i>Quản lý học viên';
+      classes ? classes.after(students) : nav.appendChild(students);
+    }
   });
+  const parentPage = {
+    'gv-course-create':'gv-courses', 'gv-course-detail':'gv-courses',
+    'gv-class-form':'gv-classes', 'gv-class-detail':'gv-classes',
+    'gv-plan-form':'gv-plan', 'gv-plan-detail':'gv-plan',
+    'gv-position-form':'gv-competency', 'gv-position-detail':'gv-competency',
+    'gv-proctor-detail':'gv-proctor', 'gv-question-detail':'gv-exam', 'gv-question-form':'gv-exam',
+    'gv-topic-detail':'gv-program', 'gv-topic-groups':'gv-program'
+  }[body.dataset.page] || body.dataset.page;
+  document.querySelectorAll('.side-role .nav-item').forEach((item) => item.classList.toggle('active', item.dataset.target === parentPage));
   document.querySelectorAll('#roleSwitch [data-role]').forEach((button) => button.classList.toggle('active', button.dataset.role === body.dataset.role));
 
   document.querySelectorAll('[data-href]').forEach((item) => {
