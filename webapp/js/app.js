@@ -79,6 +79,7 @@
   const parentPage = {
     'hv-result':'hv-exam',
     'gv-course-create':'gv-courses', 'gv-course-detail':'gv-courses',
+    'gv-content-create':'gv-content', 'gv-content-constraint':'gv-content',
     'gv-class-form':'gv-classes', 'gv-class-detail':'gv-classes',
     'gv-plan-form':'gv-plan', 'gv-plan-detail':'gv-plan',
     'gv-position-form':'gv-competency', 'gv-position-detail':'gv-competency',
@@ -223,7 +224,7 @@ window.appDialog = ({ title = 'Thông báo', message = '', html = '', confirmTex
   const dialog = ensureDialog();
   dialog.innerHTML = `
     <form method="dialog">
-      <header><h2>${escapeHtml(title)}</h2><button value="cancel" class="app-dialog-close" aria-label="Đóng">×</button></header>
+      <header><h2>${escapeHtml(title)}</h2><button value="cancel" class="app-dialog-close" aria-label="Đóng"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></header>
       <div class="app-dialog-body">${html || `<p>${escapeHtml(message)}</p>`}</div>
       <footer>${cancelText ? `<button value="cancel" class="btn secondary">${escapeHtml(cancelText)}</button>` : ''}<button value="confirm" class="btn primary">${escapeHtml(confirmText)}</button></footer>
     </form>`;
@@ -271,7 +272,7 @@ document.querySelectorAll('.searchbar input, .topbar input[type="search"], .sear
   if (!query) return;
   const routes = (routeCatalog[body.dataset.role] || routeCatalog.hv).filter(([label]) => label.toLocaleLowerCase('vi').includes(query));
   const html = routes.length
-    ? `<div class="app-search-results">${routes.map(([label, path]) => `<a href="${new URL(path, appScriptUrl).href}">${escapeHtml(label)}<span>→</span></a>`).join('')}</div>`
+    ? `<div class="app-search-results">${routes.map(([label, path]) => `<a href="${new URL(path, appScriptUrl).href}">${escapeHtml(label)}<i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>`).join('')}</div>`
     : '<p>Không tìm thấy trang phù hợp. Hãy thử từ khóa khác.</p>';
   await window.appDialog({ title: `Kết quả cho “${input.value.trim()}”`, html, confirmText: 'Đóng', cancelText: '' });
 }));
@@ -283,7 +284,7 @@ document.querySelectorAll('.password-eye, svg:has(use[href="#i-eye"])').forEach(
   button.type = 'button';
   button.className = `${icon.className} password-toggle`;
   button.setAttribute('aria-label', 'Hiện mật khẩu');
-  button.innerHTML = icon.innerHTML || '👁';
+  button.innerHTML = icon.innerHTML || '<i class="fa-solid fa-eye" aria-hidden="true"></i>';
   button.addEventListener('click', () => {
     input.type = input.type === 'password' ? 'text' : 'password';
     button.setAttribute('aria-label', input.type === 'password' ? 'Hiện mật khẩu' : 'Ẩn mật khẩu');
@@ -459,6 +460,7 @@ document.getElementById('planDialog')?.querySelector('#dialogConfirm')?.addEvent
 }, true);
 
 document.getElementById('classTabView')?.addEventListener('click', event => {
+  if (event.currentTarget.dataset.realStudentActions === 'true') return;
   const button = event.target.closest('[data-class-action="approve"], [data-class-action="reject"]'); if (!button) return;
   event.preventDefault(); event.stopImmediatePropagation();
   const approve = button.dataset.classAction === 'approve'; const checked = [...document.querySelectorAll('[data-student-select]:checked')];
@@ -527,6 +529,7 @@ document.getElementById('testBuilderForm')?.addEventListener('submit', event => 
 }, true);
 
 document.getElementById('classActionForm')?.addEventListener('submit', event => {
+  if (event.target.dataset.confirmAction === 'true') return;
   if (!event.target.reportValidity()) return;
   event.preventDefault(); event.stopImmediatePropagation(); const title = document.getElementById('classDialogTitle')?.textContent || ''; document.getElementById('classActionDialog')?.close();
   if (title.includes('học viên')) { document.querySelector('[data-class-tab="students"]')?.click(); const tbody = document.querySelector('#classTabView tbody'); if (tbody) { const row = tbody.insertRow(); row.innerHTML = '<td><input type="checkbox"></td><td>HV-NEW</td><td>Trần Văn Nam</td><td>Đơn vị mới</td><td><span class="approval">Đã duyệt</span></td><td>Chưa học</td><td>Vừa thêm</td><td></td>'; } }

@@ -18,7 +18,7 @@
       button.classList.toggle('answered', Boolean(state.answers[number].trim()));
       button.classList.toggle('marked', state.marked.has(number));
       button.querySelector('em')?.remove();
-      if (state.answers[number].trim()) button.insertAdjacentHTML('beforeend', '<em>✓</em>');
+      if (state.answers[number].trim()) button.insertAdjacentHTML('beforeend', '<em><i class="fa-solid fa-check" aria-hidden="true"></i></em>');
     });
     const answered = Object.values(state.answers).filter(value => value.trim()).length;
     document.getElementById('essayAnswered').textContent = `${answered}/2`;

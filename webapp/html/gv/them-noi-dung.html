@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Thêm nội dung mới | E-Learning VBS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/main.css"><link rel="stylesheet" href="../../css/gv/noi-dung-hoc-lieu.css">
+</head>
+<body data-role="gv" data-page="gv-content-create">
+<main class="main content-page"><section class="screen active content-shell" id="contentCreatePage">
+  <header class="content-title"><div><h1>Quản lý nội dung &amp; học liệu</h1><nav class="content-crumb"><a href="dashboard-giang-vien.html">Trang chủ</a><i class="fa-solid fa-chevron-right"></i><a href="quan-ly-hoc-lieu.html">Quản lý nội dung</a><i class="fa-solid fa-chevron-right"></i><span>Thêm nội dung</span></nav></div></header>
+  <section class="content-card content-form-card"><header><h2>Thêm nội dung mới</h2></header>
+    <form class="content-form" id="contentCreateForm">
+      <div class="form-column">
+        <label class="form-field"><span>Tên nội dung <b>*</b></span><input name="title" required placeholder="Nhập tên nội dung"></label>
+        <div class="form-field type-picker"><span>Loại nội dung <b>*</b></span><button class="type-picker-button" id="typePickerButton" type="button"><span id="selectedType">Chọn loại nội dung</span><i class="fa-solid fa-chevron-up"></i></button><div class="type-menu" id="typeMenu">
+          <button type="button" data-type="Video"><i class="fa-solid fa-video"></i>Video</button><button type="button" data-type="SCORM"><i class="fa-solid fa-cube"></i>SCORM</button><button type="button" data-type="PDF"><i class="fa-solid fa-file-pdf"></i>PDF</button><button type="button" data-type="Word"><i class="fa-solid fa-file-word"></i>Word</button><button type="button" data-type="Excel"><i class="fa-solid fa-file-excel"></i>Excel</button><button type="button" data-type="PPT"><i class="fa-solid fa-file-powerpoint"></i>PPT</button><button type="button" data-type="Bài kiểm tra"><i class="fa-solid fa-clipboard-check"></i>Bài kiểm tra</button><button type="button" data-type="Nội dung Offline"><i class="fa-solid fa-chalkboard-user"></i>Nội dung Offline</button>
+        </div><input type="hidden" name="type" id="contentType" required></div>
+        <label class="form-field"><span>Chọn chương <b>*</b></span><select name="chapter" required><option value="">Chọn chương</option><option>Chương 1. Tổng quan về điều lệnh CAND</option><option>Chương 2. Thực hành điều lệnh</option></select></label>
+        <label class="form-field"><span>Mô tả nội dung</span><div class="editor-box"><div class="editor-toolbar"><select><option>Normal</option></select><button type="button"><b>B</b></button><button type="button"><i>I</i></button><button type="button"><u>U</u></button><button type="button"><i class="fa-solid fa-font"></i></button><button type="button"><i class="fa-solid fa-list"></i></button><button type="button"><i class="fa-solid fa-link"></i></button></div><textarea name="description" maxlength="500" placeholder="Nhập mô tả nội dung..."></textarea><span class="char-count"><output id="descriptionCount">0</output> ký tự</span></div></label>
+      </div>
+      <div class="form-column">
+        <label class="form-field"><span>Tệp nội dung <b>*</b></span><span class="upload-zone" id="contentUpload"><span><i class="fa-solid fa-cloud-arrow-up"></i><b>Kéo thả tệp vào đây hoặc</b><button class="btn ghost" type="button">Chọn tệp</button><small>Hỗ trợ: mp4, mov, pdf, docx, xlsx, pptx, zip (Tối đa 2GB)</small></span><input type="file" name="file"></span></label>
+        <label class="form-field"><span>Dung lượng</span><span class="input-unit"><input name="size" value="0" readonly><span>MB</span></span><small>Hệ thống sẽ tự động cập nhật dung lượng sau khi tải tệp lên.</small></label>
+        <label class="form-field"><span>Thời lượng</span><input name="duration" placeholder="Ví dụ: 45:20 (phút:giây)"><small>Áp dụng với nội dung Video/Audio.</small></label>
+        <div class="form-field"><span>Nguồn <b>*</b></span><div class="inline-radios"><label><input type="radio" name="source" value="Upload" checked>Upload</label><label><input type="radio" name="source" value="Thư viện">Thư viện</label><label><input type="radio" name="source" value="Tạo mới">Tạo mới</label><label><input type="radio" name="source" value="Khác">Khác</label></div></div>
+        <div class="form-field"><span>Trạng thái <b>*</b></span><div class="inline-radios"><label><input type="radio" name="status" value="Bắt buộc" checked>Bắt buộc</label><label><input type="radio" name="status" value="Tùy chọn">Tùy chọn</label></div></div>
+        <label class="form-field"><span>Ràng buộc</span><select name="constraint"><option value="">Chọn ràng buộc (nếu có)</option><option>Hoàn thành nội dung trước</option><option>Đạt bài kiểm tra</option><option>Đến ngày mở</option></select></label>
+        <label class="form-field"><span>Thao tác sau khi hoàn thành <b>*</b></span><select name="after"><option value="">Chọn thao tác</option><option>Chuyển tới nội dung tiếp theo</option><option>Quay về danh sách khóa học</option><option>Hiển thị kết quả</option></select><small>Hành động học viên sẽ được chuyển đến sau khi hoàn thành nội dung.</small></label>
+      </div>
+    </form>
+    <footer class="content-card-footer"><a class="btn ghost" href="quan-ly-hoc-lieu.html">Hủy</a><button class="btn primary" type="submit" form="contentCreateForm"><i class="fa-regular fa-floppy-disk"></i> Lưu nội dung</button></footer>
+  </section><div class="content-toast" id="contentToast" hidden></div>
+</section></main>
+<script src="../../js/gv-shell.js"></script><script src="../../js/app.js"></script><script src="../../js/quan-ly-hoc-lieu.js"></script>
+</body></html>

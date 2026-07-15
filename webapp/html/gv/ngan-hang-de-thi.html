@@ -1,5 +1,105 @@
-<!doctype html><html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Ngân hàng câu hỏi & đề thi | E-Learning VBS</title><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../css/main.css"><link rel="stylesheet" href="../../css/gv/ngan-hang-de-thi.css"></head><body data-role="gv" data-page="gv-exam">
-<main class="main exam-bank-page"><section class="screen active"><header class="exam-bank-head"><div><h1>Ngân hàng câu hỏi & đề thi</h1><div class="crumb">Trang chủ <i class="fa-solid fa-chevron-right"></i> Ngân hàng đề thi</div></div></header><nav class="exam-bank-tabs"><button class="active" data-bank-tab="questions"><i class="fa-regular fa-circle-question"></i>Câu hỏi</button><button data-bank-tab="exams"><i class="fa-regular fa-file-lines"></i>Đề thi</button></nav><section id="bankView"></section><div class="bank-toast" id="bankToast" hidden></div></section></main>
-<dialog class="bank-dialog" id="importDialog"><form id="importForm"><header><div><h2>Nhập dữ liệu từ Excel</h2><p>Chọn tệp mẫu để bổ sung dữ liệu demo</p></div><button type="button" data-close-dialog><i class="fa-solid fa-xmark"></i></button></header><div class="bank-dialog-body"><label class="file-drop"><i class="fa-solid fa-cloud-arrow-up"></i><b>Chọn hoặc kéo thả tệp Excel</b><small>Định dạng .xlsx, tối đa 10MB</small><input type="file" accept=".xlsx" required></label><a class="sample-link"><i class="fa-solid fa-download"></i>Tải tệp mẫu</a></div><footer><button type="button" class="btn ghost" data-close-dialog>Hủy</button><button class="btn primary"><i class="fa-solid fa-file-import"></i>Nhập dữ liệu</button></footer></form></dialog>
-<dialog class="bank-dialog" id="autoExamDialog"><form id="autoExamForm"><header><div><h2>Tạo đề thi tự động</h2><p>Hệ thống chọn câu hỏi theo cấu hình</p></div><button type="button" data-close-dialog><i class="fa-solid fa-xmark"></i></button></header><div class="bank-dialog-body form-grid"><label><span>Tên đề thi *</span><input name="name" required></label><label><span>Chuyên đề</span><select name="topic"><option>An toàn lao động</option><option>Phòng cháy chữa cháy</option><option>Sơ cứu y tế</option></select></label><label><span>Số câu *</span><input name="count" type="number" min="5" value="40" required></label><label><span>Thời gian (phút)</span><input name="duration" type="number" min="10" value="60"></label></div><footer><button type="button" class="btn ghost" data-close-dialog>Hủy</button><button class="btn primary"><i class="fa-solid fa-wand-magic-sparkles"></i>Tạo đề</button></footer></form></dialog>
-<script src="../../js/gv-shell.js"></script><script src="../../js/app.js"></script><script src="../../js/ngan-hang-de-thi.js"></script></body></html>
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Ngân hàng câu hỏi & đề thi | E-Learning VBS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/gv/ngan-hang-de-thi.css">
+</head>
+<body data-role="gv" data-page="gv-exam">
+  <main class="main exam-bank-page">
+    <section class="screen active">
+      <header class="exam-bank-head">
+        <div><h1>Ngân hàng câu hỏi & đề thi</h1><div class="crumb">Trang chủ <i class="fa-solid fa-chevron-right"></i> Ngân hàng đề thi</div></div>
+      </header>
+      <nav class="exam-bank-tabs">
+        <button class="active" data-bank-tab="questions"><i class="fa-regular fa-circle-question"></i>Câu hỏi</button>
+        <button data-bank-tab="exams"><i class="fa-regular fa-file-lines"></i>Đề thi</button>
+      </nav>
+      <section id="bankView"></section>
+      <div class="bank-toast" id="bankToast" hidden></div>
+    </section>
+  </main>
+
+  <dialog class="bank-dialog" id="importDialog">
+    <form id="importForm">
+      <header><div><h2>Nhập dữ liệu từ Excel</h2><p>Chọn tệp mẫu để bổ sung dữ liệu</p></div><button type="button" data-close-dialog aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></header>
+      <div class="bank-dialog-body"><label class="file-drop"><i class="fa-solid fa-cloud-arrow-up"></i><b>Chọn hoặc kéo thả tệp Excel</b><small>Định dạng .xlsx, tối đa 10MB</small><input type="file" accept=".xlsx" required></label><a class="sample-link"><i class="fa-solid fa-download"></i>Tải tệp mẫu</a></div>
+      <footer><button type="button" class="btn ghost" data-close-dialog>Hủy</button><button class="btn primary"><i class="fa-solid fa-file-import"></i>Nhập dữ liệu</button></footer>
+    </form>
+  </dialog>
+
+  <dialog class="bank-dialog exam-builder-dialog auto-builder-dialog" id="autoExamDialog">
+    <form id="autoExamBuilderForm">
+      <header><h2>Tạo đề tự động</h2><button type="button" data-close-dialog aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></header>
+      <div class="exam-builder-body">
+        <div class="auto-form-grid">
+          <label class="wide"><span>Tên đề thi <em>*</em></span><input name="name" value="Đề thi cuối khóa – An toàn lao động" required></label>
+          <label><span>Chuyên đề <em>*</em></span><select><option>An toàn lao động</option><option>Phòng cháy chữa cháy</option><option>Sơ cứu y tế</option></select></label>
+          <label><span>Thời gian làm bài (phút) <em>*</em></span><div class="builder-input-unit"><input type="number" value="45" min="5"><b>phút</b></div></label>
+          <label><span>Tổng điểm <em>*</em></span><div class="builder-input-unit"><input type="number" value="10" min="1"><b>điểm</b></div></label>
+          <label><span>Số đề cần tạo <em>*</em></span><div class="builder-input-unit"><input type="number" value="4" min="1"><b>đề</b></div></label>
+        </div>
+        <section class="auto-matrix-section">
+          <h3>Cấu hình câu hỏi</h3>
+          <p><i class="fa-regular fa-circle-info"></i> Chọn cấu hình số lượng câu hỏi theo loại câu hỏi và mức độ. Hệ thống sẽ tự động lấy câu hỏi phù hợp từ ngân hàng.</p>
+          <div class="auto-matrix-wrap"><table class="auto-matrix"><thead><tr><th>Loại câu hỏi</th><th>Mức độ</th><th>Số câu</th><th>Thao tác</th></tr></thead><tbody id="autoMatrixBody"></tbody></table><footer><span><i class="fa-solid fa-list"></i> Tổng số câu: <b id="autoQuestionTotal">37</b></span><span>Tổng điểm: <b>10.0 điểm</b></span></footer></div>
+        </section>
+        <div class="auto-options"><label><input type="checkbox" checked> Xáo trộn câu hỏi</label><label><input type="checkbox" checked> Xáo trộn đáp án</label></div>
+        <div class="builder-note"><i class="fa-regular fa-circle-info"></i> Hệ thống sẽ tự chọn câu hỏi từ ngân hàng theo cấu hình đã thiết lập và xáo trộn để tạo đề.</div>
+      </div>
+      <footer><button type="button" class="btn ghost" data-close-dialog>Hủy</button><button class="btn primary">Tạo đề</button></footer>
+    </form>
+  </dialog>
+
+  <dialog class="bank-dialog exam-builder-dialog manual-builder-dialog" id="manualExamDialog">
+    <form id="manualExamBuilderForm">
+      <header><h2>Tạo đề thủ công</h2><button type="button" data-close-dialog aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></header>
+      <div class="exam-builder-body">
+        <div class="manual-form-grid">
+          <label class="wide"><span>Tên đề thi</span><input name="name" value="Đề thi cuối khóa - An toàn lao động" required></label>
+          <label><span>Chuyên đề</span><select><option>An toàn lao động</option><option>Phòng cháy chữa cháy</option></select></label>
+          <label><span>Thời gian làm bài (phút)</span><input type="number" value="45"></label>
+          <label><span>Tổng điểm</span><input type="number" value="10"></label>
+          <div class="manual-checks"><label><input type="checkbox" checked> Xáo trộn câu hỏi</label><label><input type="checkbox" checked> Xáo trộn đáp án</label></div>
+        </div>
+        <section class="manual-question-section">
+          <h3>Chọn câu hỏi</h3>
+          <nav class="manual-tabs"><button type="button" class="active" data-manual-tab="bank">Ngân hàng câu hỏi</button><button type="button" data-manual-tab="selected">Câu hỏi đã chọn (<span id="manualSelectedTabCount">3</span>)</button></nav>
+          <div class="manual-filters"><label><i class="fa-solid fa-magnifying-glass"></i><input id="manualQuestionSearch" placeholder="Tìm theo mã câu hỏi, nội dung..."></label><select><option>Chủ đề</option></select><select><option>Loại câu hỏi</option></select><select><option>Mức độ</option></select><button type="button" aria-label="Lọc"><i class="fa-solid fa-filter"></i></button></div>
+          <div class="manual-table-wrap"><table class="manual-question-table"><thead><tr><th><input id="manualSelectAll" type="checkbox"></th><th>Mã câu hỏi</th><th>Nội dung câu hỏi</th><th>Loại</th><th>Mức độ</th><th>Điểm</th><th>Thao tác</th></tr></thead><tbody id="manualQuestionBody"></tbody></table></div>
+          <div class="manual-summary"><span><i class="fa-regular fa-circle-check"></i> Đã chọn: <b id="manualSelectedCount">3 câu</b></span><span><i class="fa-regular fa-star"></i> Tổng điểm hiện tại: <b id="manualSelectedScore">2.0 / 10</b></span><button type="button" data-show-selected><i class="fa-regular fa-eye"></i> Xem danh sách đã chọn</button></div>
+        </section>
+      </div>
+      <footer class="manual-footer"><button type="button" class="btn ghost" data-close-dialog>Hủy</button><span></span><button type="button" class="btn ghost" data-save-draft>Lưu nháp</button><button type="button" class="btn ghost" data-preview-manual>Xem trước đề</button><button class="btn primary">Lưu đề thi</button></footer>
+    </form>
+  </dialog>
+
+  <dialog class="bank-dialog exam-detail-dialog" id="examDetailDialog">
+    <section class="exam-detail-shell">
+      <header class="exam-detail-modal-header">
+        <div class="exam-detail-heading"><span><i class="fa-solid fa-file-circle-check"></i></span><div><h2 id="examDetailModalTitle">Chi tiết đề thi</h2><p id="examDetailModalSubtitle">Xem thông tin cấu hình và nội dung đề</p></div></div>
+        <div class="exam-detail-header-actions" id="examDetailHeaderActions"><button type="button" class="btn ghost" data-detail-action="copy"><i class="fa-regular fa-copy"></i>Sao chép</button><button type="button" class="btn ghost" data-detail-action="export"><i class="fa-solid fa-download"></i>Xuất PDF</button><button type="button" class="btn primary" data-detail-action="edit"><i class="fa-solid fa-pen"></i>Chỉnh sửa</button><button type="button" class="exam-detail-close" data-close-dialog aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></div>
+      </header>
+      <div class="exam-detail-body">
+        <section class="exam-detail-hero">
+          <div><span class="exam-state">ĐỀ THI</span><h3 id="detailExamName">Đề thi cuối khóa – An toàn lao động</h3><p>Mã đề <b id="detailExamCode">DE-000123</b> · Cập nhật 11/07/2026 09:45</p></div>
+          <div class="exam-detail-metrics"><article><i class="fa-solid fa-list-ol"></i><span>Số câu<b id="detailQuestionCount">40</b></span></article><article><i class="fa-solid fa-award"></i><span>Tổng điểm<b id="detailExamScore">40.0</b></span></article><article><i class="fa-regular fa-clock"></i><span>Thời gian<b id="detailExamDuration">60 phút</b></span></article><article><i class="fa-solid fa-wand-magic-sparkles"></i><span>Hình thức<b id="detailExamMethod">Thủ công</b></span></article></div>
+        </section>
+        <div class="exam-detail-workspace">
+          <aside class="exam-info-panel">
+            <div id="examDetailReadView"><div class="panel-title"><h3>Thông tin đề thi</h3><span class="status-dot"><i></i>Đang sử dụng</span></div><dl class="exam-info-list" id="detailExamInfo"></dl><div class="exam-note"><i class="fa-regular fa-note-sticky"></i><div><b>Ghi chú</b><p id="detailExamNote">Đề thi tổng hợp kiến thức An toàn lao động dành cho học viên cuối khóa.</p></div></div></div>
+            <form id="examDetailEditForm" hidden><div class="panel-title"><h3>Chỉnh sửa thông tin</h3><span class="edit-badge"><i class="fa-solid fa-pen"></i>Đang chỉnh sửa</span></div><div class="exam-edit-fields"><label class="wide"><span>Tên đề thi <em>*</em></span><input id="editExamName" name="name" required></label><label><span>Chuyên đề <em>*</em></span><select id="editExamCategory" name="category"><option>An toàn lao động</option><option>Phòng cháy chữa cháy</option><option>Sơ cứu y tế</option><option>An toàn điện</option></select></label><label><span>Hình thức tạo</span><input id="editExamMethod" disabled></label><label><span>Thời gian làm bài <em>*</em></span><div class="edit-input-unit"><input id="editExamDuration" type="number" min="5" required><b>phút</b></div></label><label><span>Tổng điểm <em>*</em></span><div class="edit-input-unit"><input id="editExamScore" type="number" min="1" step="0.5" required><b>điểm</b></div></label><fieldset class="wide"><legend>Cài đặt đề thi</legend><label><input id="editShuffleQuestion" type="checkbox" checked> Xáo trộn thứ tự câu hỏi</label><label><input id="editShuffleAnswer" type="checkbox" checked> Xáo trộn thứ tự đáp án</label></fieldset><label class="wide"><span>Ghi chú</span><textarea id="editExamNote" rows="4"></textarea></label></div></form>
+          </aside>
+          <section class="exam-preview-panel"><header><div><h3>Bản xem trước đề thi</h3><p>Nội dung hiển thị như bản in thực tế</p></div><div class="preview-tools"><button type="button" data-preview-zoom="out" aria-label="Thu nhỏ"><i class="fa-solid fa-minus"></i></button><span id="previewZoomLabel">85%</span><button type="button" data-preview-zoom="in" aria-label="Phóng to"><i class="fa-solid fa-plus"></i></button><button type="button" data-detail-action="export" aria-label="Tải PDF"><i class="fa-solid fa-download"></i></button></div></header><div class="exam-paper-viewport"><article class="exam-paper" id="detailExamPaper"></article></div></section>
+        </div>
+      </div>
+      <footer id="examDetailFooter"><button type="button" class="btn ghost" data-detail-action="delete"><i class="fa-regular fa-trash-can"></i>Xóa đề</button><span></span><button type="button" class="btn ghost" data-close-dialog>Đóng</button></footer>
+    </section>
+  </dialog>
+
+  <script src="../../js/gv-shell.js"></script><script src="../../js/app.js"></script><script src="../../js/ngan-hang-de-thi.js"></script>
+</body>
+</html>
