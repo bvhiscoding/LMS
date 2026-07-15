@@ -186,5 +186,6 @@
 <script>
   (() => { const tabs = document.querySelectorAll('.result-tabs button'); const groups = document.querySelectorAll('.result-group'); tabs.forEach(tab => tab.addEventListener('click', () => { tabs.forEach(item => item.classList.toggle('active', item === tab)); groups.forEach(group => group.hidden = tab.dataset.filter !== 'all' && group.dataset.type !== tab.dataset.filter); })); })();
 </script>
+<script src="../../js/ket-qua-thi.js"></script>
 </body>
 </html>

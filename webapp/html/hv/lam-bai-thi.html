@@ -196,18 +196,6 @@
   </div>
 </section></main>
 <script src="../../js/app.js"></script>
-<script>
-  (() => {
-    const nav = document.getElementById('examQuestionNav'); const count = document.getElementById('answeredCount');
-    const setQuestion = (value) => { nav.querySelectorAll('button').forEach(btn => btn.classList.toggle('current', Number(btn.dataset.q) === value)); document.getElementById('questionNumber').textContent = value; document.getElementById('footerQuestion').textContent = value; };
-    nav.addEventListener('click', event => { const button = event.target.closest('button'); if (button) setQuestion(Number(button.dataset.q)); });
-    document.getElementById('examOptions').addEventListener('click', event => { const option = event.target.closest('button'); if (!option) return; document.querySelectorAll('.exam-options button').forEach(item => item.classList.remove('selected')); option.classList.add('selected'); const active = nav.querySelector('.current'); if (active && !active.classList.contains('done')) { active.classList.remove('review'); active.classList.add('done'); count.textContent = `${nav.querySelectorAll('.done').length}/20`; } });
-    [document.getElementById('markQuestion'), document.getElementById('paperMark')].forEach(button => button.addEventListener('click', () => nav.querySelector('.current')?.classList.toggle('review')));
-    document.getElementById('previousQuestion').addEventListener('click', () => { const current = Number(nav.querySelector('.current').dataset.q); if (current > 1) setQuestion(current - 1); });
-    document.getElementById('nextQuestion').addEventListener('click', () => { const current = Number(nav.querySelector('.current').dataset.q); if (current < 20) setQuestion(current + 1); });
-    let paused = false; document.getElementById('timerPause').addEventListener('click', event => { paused = !paused; event.currentTarget.innerHTML = paused ? '<i class="fa-solid fa-play" aria-hidden="true"></i>' : '<i class="fa-solid fa-pause" aria-hidden="true"></i>'; });
-    document.getElementById('submitExam').addEventListener('click', () => { if (confirm('Bạn muốn nộp bài thi ngay bây giờ?')) window.location.href = 'ket-qua-thi.html'; });
-  })();
-</script>
+<script src="../../js/lam-bai-thi.js"></script>
 </body>
 </html>

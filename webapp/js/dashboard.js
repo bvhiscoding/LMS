@@ -9,7 +9,8 @@
   const blue = '#1676e7', green = '#23a86b', amber = '#f0a31f', purple = '#8655d9', red = '#e95d4d', grid = '#edf0f5';
   const common = { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false }, plugins: { legend: { display: false }, tooltip: { backgroundColor: '#172b4d', padding: 10, cornerRadius: 7 } } };
   const canvas = id => document.getElementById(id);
-  const make = (id, config) => { if (canvas(id)) new Chart(canvas(id), config); };
+  const charts = [];
+  const make = (id, config) => { if (canvas(id)) charts.push(new Chart(canvas(id), config)); };
   const xy = { x: { grid: { display: false }, border: { display: false }, ticks: { color: '#8a94a6' } }, y: { beginAtZero: true, grid: { color: grid }, border: { display: false }, ticks: { color: '#8a94a6' } } };
 
   if (root.dataset.dashboard === 'student') {
@@ -19,6 +20,59 @@
     make('studentScoreChart', { type: 'bar', data: { labels: ['T1','T2','T3','T4','T5','T6'], datasets: [{ label: 'Điểm bài kiểm tra', data: [72,78,74,86,82,88], backgroundColor: 'rgba(22,118,231,.78)', borderRadius: 5 }, { label: 'Điểm trung bình', data: [76,76,77,79,80,82], type: 'line', borderColor: amber, tension: .35, pointRadius: 2 }] }, options: { ...common, scales: { ...xy, y: { ...xy.y, suggestedMax: 100 } }, plugins: { ...common.plugins, legend: { display:true, position:'bottom', labels:{usePointStyle:true,boxWidth:7} } } } });
     make('studentSkillChart', { type: 'radar', data: { labels: ['Chuyên môn','An toàn','Số hóa','Giao tiếp','Quản lý','Ngoại ngữ'], datasets: [{ label:'Hiện tại', data:[82,90,68,76,64,58], borderColor:blue, backgroundColor:'rgba(22,118,231,.14)', pointBackgroundColor:blue }, { label:'Mục tiêu', data:[90,90,80,85,75,70], borderColor:green, borderDash:[4,4], backgroundColor:'transparent', pointRadius:1 }] }, options: { ...common, scales: { r: { beginAtZero:true, max:100, ticks:{display:false}, grid:{color:grid}, angleLines:{color:grid}, pointLabels:{font:{size:9}} } }, plugins:{...common.plugins,legend:{display:true,position:'bottom',labels:{usePointStyle:true,boxWidth:7}}} } });
   }
+
+  const tableRows = () => [...root.querySelectorAll('table tr')].map(row => [...row.cells].map(cell => cell.innerText.trim()));
+  const exportDashboard = () => {
+    const rows = tableRows();
+    if (!rows.length) rows.push(['Chỉ số', 'Giá trị'], ...[...root.querySelectorAll('.dash-kpi, .stat')].map(card => [card.querySelector('span,.lab')?.innerText || 'KPI', card.querySelector('strong,.val')?.innerText || '']));
+    window.downloadCsv?.(`${root.dataset.dashboard}-${new Date().toISOString().slice(0, 10)}.csv`, rows);
+  };
+
+  root.querySelectorAll('select').forEach(select => select.addEventListener('change', () => {
+    const factor = 1 - Math.min(select.selectedIndex, 3) * .08;
+    charts.forEach(chart => {
+      chart.data.datasets.forEach(dataset => {
+        if (!dataset._baseline) dataset._baseline = dataset.data.map(value => typeof value === 'number' ? value : value);
+        dataset.data = dataset._baseline.map(value => typeof value === 'number' ? Math.round(value * factor * 10) / 10 : value);
+      });
+      chart.update();
+    });
+    root.querySelectorAll('.dash-kpi strong, .stat .val').forEach(value => {
+      if (!value.dataset.baseline) value.dataset.baseline = value.textContent;
+      const number = Number(value.dataset.baseline.replace(/[^\d.]/g, ''));
+      if (Number.isFinite(number)) value.textContent = value.dataset.baseline.includes('%') ? `${Math.round(number * factor)}%` : Math.round(number * factor).toLocaleString('vi-VN');
+    });
+    window.showAppToast?.(`Đã cập nhật dữ liệu theo “${select.options[select.selectedIndex].text}”.`);
+  }));
+
+  root.querySelectorAll('button').forEach(button => {
+    const label = button.textContent.trim().toLocaleLowerCase('vi');
+    if (label.includes('xuất báo cáo')) button.addEventListener('click', exportDashboard);
+    if (label.includes('xuất pdf') || label.includes('in / lưu pdf')) button.addEventListener('click', () => window.print());
+    if (label.includes('bộ lọc')) button.addEventListener('click', async () => {
+      const confirmed = await window.appDialog?.({ title: 'Bộ lọc báo cáo', html: '<div class="field"><label>Phạm vi dữ liệu</label><select id="dashboardScope"><option>Toàn trường</option><option>Khối khai thác</option><option>Khối văn phòng</option></select></div><p class="muted">Bộ lọc sẽ cập nhật tất cả biểu đồ trên trang.</p>', confirmText: 'Áp dụng' });
+      if (confirmed) root.querySelector('select')?.dispatchEvent(new Event('change'));
+    });
+    if (label.includes('tùy chỉnh cột')) button.addEventListener('click', async () => {
+      const table = root.querySelector('table');
+      if (!table) return;
+      const headings = [...table.querySelectorAll('th')];
+      const html = `<div class="app-column-picker">${headings.map((heading, index) => `<label><input type="checkbox" data-column="${index}" checked> ${heading.textContent}</label>`).join('')}</div>`;
+      const accepted = await window.appDialog?.({ title: 'Tùy chỉnh cột', html, confirmText: 'Áp dụng' });
+      if (!accepted) return;
+      document.querySelectorAll('#appDialog [data-column]').forEach(input => {
+        table.querySelectorAll('tr').forEach(row => row.cells[input.dataset.column]?.toggleAttribute('hidden', !input.checked));
+      });
+    });
+    if (label.includes('sắp xếp')) button.addEventListener('click', () => {
+      const tbody = root.querySelector('table tbody');
+      if (!tbody) return;
+      const rows = [...tbody.rows].reverse();
+      rows.forEach(row => tbody.appendChild(row));
+      button.classList.toggle('is-reversed');
+      window.showAppToast?.(`Đã sắp xếp ${button.classList.contains('is-reversed') ? 'tăng dần' : 'giảm dần'}.`);
+    });
+  });
 
   if (root.dataset.dashboard === 'instructor') {
     make('teacherActivityChart', { type:'line', data:{ labels:['T2','T3','T4','T5','T6','T7','CN'], datasets:[{label:'Học viên hoạt động',data:[186,214,198,248,231,172,126],borderColor:blue,backgroundColor:'rgba(22,118,231,.1)',fill:true,tension:.38},{label:'Bài hoàn thành',data:[92,118,104,146,138,81,62],borderColor:green,tension:.38}] }, options:{...common,scales:xy,plugins:{...common.plugins,legend:{display:true,position:'bottom',labels:{usePointStyle:true,boxWidth:7}}}} });
@@ -115,5 +169,15 @@
       data:{labels:['Than Hạ Long','Than Núi Béo','Than Cao Sơn','Cơ khí Hòn Gai','Than Đèo Nai','Vận tải mỏ'],datasets:[{label:'Khá–Giỏi',data:[72,68,64,61,56,51],backgroundColor:blue,borderRadius:4},{label:'Trung bình',data:[23,26,29,31,34,37],backgroundColor:amber,borderRadius:4},{label:'Chưa đạt',data:[5,6,7,8,10,12],backgroundColor:red,borderRadius:4}]},
       options:{...common,scales:{x:{stacked:true,grid:{display:false},border:{display:false}},y:{stacked:true,max:100,grid:{color:grid},border:{display:false},ticks:{callback:v=>v+'%'}}},plugins:{...common.plugins,legend:unitLegend}}
     });
+  }
+  if (root.dataset.dashboard.startsWith('leadership')) {
+    const actions = root.querySelector('.dashboard-head-actions');
+    if (actions && !actions.querySelector('[data-print-report]')) {
+      const print = document.createElement('button');
+      print.type = 'button'; print.className = 'btn ghost'; print.dataset.printReport = '';
+      print.innerHTML = '<i class="fa-solid fa-print"></i> In / Lưu PDF';
+      print.addEventListener('click', () => window.print());
+      actions.appendChild(print);
+    }
   }
 })();

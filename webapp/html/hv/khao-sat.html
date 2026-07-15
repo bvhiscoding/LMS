@@ -74,5 +74,6 @@
     document.getElementById('feedback').addEventListener('input', (event) => document.getElementById('characters').textContent = event.target.value.length);
     document.getElementById('postTrainingSurvey').addEventListener('submit', (event) => { event.preventDefault(); const button = event.currentTarget.querySelector('[type="submit"]'); button.innerHTML = '<i class="fa-solid fa-check"></i>Đã gửi khảo sát'; });
   </script>
+  <script src="../../js/khao-sat.js"></script>
 </body>
 </html>

@@ -1,0 +1,11 @@
+(() => {
+  const root = document.getElementById('ad-config'); if (!root) return;
+  const save = root.querySelector('.page-head button'); const upload = [...root.querySelectorAll('button')].find(button => button.textContent.includes('Tải logo'));
+  const inputs = [...root.querySelectorAll('.field input')]; const colors = inputs.filter(input => input.value.startsWith('#')); const font = root.querySelector('.field select');
+  const logoBox = upload.previousElementSibling; const picker = Object.assign(document.createElement('input'), { type: 'file', accept: 'image/*', hidden: true }); let previewUrl;
+  root.appendChild(picker); upload.addEventListener('click', () => picker.click()); picker.addEventListener('change', () => { const file = picker.files[0]; if (!file?.type.startsWith('image/')) return window.showAppToast('Vui lòng chọn tệp ảnh.', 'error'); if (previewUrl) URL.revokeObjectURL(previewUrl); previewUrl = URL.createObjectURL(file); logoBox.innerHTML = `<img src="${previewUrl}" alt="Logo xem trước" style="max-width:80px;max-height:80px">`; });
+  colors.forEach((input, index) => input.addEventListener('input', () => { if (/^#[0-9a-f]{6}$/i.test(input.value)) { input.setCustomValidity(''); input.parentElement.previousElementSibling.style.background = input.value; document.documentElement.style.setProperty(index ? '--accent' : '--brand', input.value); } else input.setCustomValidity('Màu phải có dạng #RRGGBB'); }));
+  font.addEventListener('change', () => document.body.style.fontFamily = `${font.value}, sans-serif`);
+  save.addEventListener('click', () => { const invalidColor = colors.find(input => !input.reportValidity()); if (invalidColor) return; const score = Number(inputs.find(input => /^\d+(\.\d+)?$/.test(input.value))?.value); const scale = root.querySelectorAll('.field select')[1]?.value.includes('100') ? 100 : 10; if (!Number.isFinite(score) || score < 0 || score > scale) return window.showAppToast(`Điểm đạt phải từ 0 đến ${scale}.`, 'error'); localStorage.setItem('lms-settings', JSON.stringify({ colors: colors.map(input => input.value), font: font.value, score })); window.showAppToast('Đã lưu thiết lập hệ thống trong trình duyệt.'); });
+  window.addEventListener('beforeunload', () => { if (previewUrl) URL.revokeObjectURL(previewUrl); });
+})();

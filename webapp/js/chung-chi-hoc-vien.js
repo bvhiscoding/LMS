@@ -11,6 +11,7 @@
   const toast = document.querySelector('.cert-toast');
   let activeFilter = 'all';
   let toastTimer;
+  let currentCard;
 
   function applyFilter() {
     let visible = 0;
@@ -58,6 +59,7 @@
   }
 
   function fillDialog(card) {
+    currentCard = card;
     dialog.querySelector('.dialog-preview').innerHTML = card.querySelector('.certificate-art').outerHTML;
     dialog.querySelector('.dialog-type').innerHTML = card.querySelector('.type-tag').outerHTML;
     dialog.querySelector('h2').textContent = card.querySelector('h2').textContent;
@@ -66,23 +68,38 @@
     dialog.querySelector('.dialog-code').textContent = details[1].textContent.trim();
   }
 
+  function downloadCertificate(card) {
+    const title = card?.dataset.title || 'Chứng chỉ học viên';
+    const code = card?.querySelector('.certificate-info p:nth-child(2)')?.textContent.trim() || 'VBS-2026';
+    const safeTitle = title.replace(/[^\p{L}\p{N}]+/gu, '-');
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800"><rect width="100%" height="100%" fill="#fffdf7"/><rect x="30" y="30" width="1140" height="740" rx="18" fill="none" stroke="#1c498c" stroke-width="8"/><text x="600" y="180" text-anchor="middle" font-family="Arial" font-size="34" fill="#1c498c">TRƯỜNG QUẢN TRỊ KINH DOANH - VINACOMIN</text><text x="600" y="310" text-anchor="middle" font-family="Arial" font-size="64" font-weight="bold">CHỨNG CHỈ</text><text x="600" y="410" text-anchor="middle" font-family="Arial" font-size="32">${title}</text><text x="600" y="500" text-anchor="middle" font-family="Arial" font-size="28">Cấp cho: Nguyễn Văn An</text><text x="600" y="600" text-anchor="middle" font-family="Arial" font-size="22">${code}</text></svg>`;
+    const url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml;charset=utf-8' }));
+    Object.assign(document.createElement('a'), { href: url, download: `${safeTitle}.svg` }).click();
+    URL.revokeObjectURL(url);
+    showToast('Đã tải tệp: ' + title);
+  }
+
   grid.addEventListener('click', function (event) {
     const view = event.target.closest('.view-cert');
     const download = event.target.closest('.download-cert');
     const card = event.target.closest('.certificate-card');
     if (view && card) { fillDialog(card); dialog.showModal(); }
-    if (download && card) showToast('Đã chuẩn bị tệp: ' + card.dataset.title);
+    if (download && card) downloadCertificate(card);
   });
 
   dialog.querySelector('.dialog-close').addEventListener('click', function () { dialog.close(); });
   dialog.addEventListener('click', function (event) { if (event.target === dialog) dialog.close(); });
-  dialog.querySelector('.dialog-download').addEventListener('click', function () { showToast('Đã chuẩn bị tệp chứng chỉ để tải xuống.'); });
+  dialog.querySelector('.dialog-download').addEventListener('click', function () { downloadCertificate(currentCard); });
   document.querySelectorAll('.page-buttons button').forEach(function (button) {
     button.addEventListener('click', function () {
       if (!/^\d+$/.test(button.textContent.trim())) return;
+      if (button.textContent.trim() !== '1') return showToast('Không còn dữ liệu ở trang này.');
       document.querySelectorAll('.page-buttons button').forEach(function (item) { item.classList.remove('active'); });
       button.classList.add('active');
       showToast('Đã chuyển tới trang ' + button.textContent.trim());
     });
+  });
+  document.querySelectorAll('.page-buttons button').forEach(function (button) {
+    if (/^[23]$/.test(button.textContent.trim())) button.hidden = true;
   });
 })();

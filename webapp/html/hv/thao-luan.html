@@ -43,5 +43,6 @@
   <div class="question-modal" id="discussionModal" aria-hidden="true"><form class="modal-card"><h2>Tạo thảo luận / Đặt câu hỏi</h2><label for="topic">Tiêu đề</label><input id="topic" placeholder="Nhập tiêu đề thảo luận"><label for="detail">Nội dung</label><textarea id="detail" placeholder="Chia sẻ câu hỏi hoặc ý kiến của bạn..."></textarea><div class="modal-actions"><button class="btn ghost" type="button" id="closeModal">Hủy</button><button class="btn primary" type="submit">Đăng thảo luận</button></div></form></div>
   <script src="../../js/app.js"></script>
   <script>const modal=document.getElementById('discussionModal');document.getElementById('newDiscussion').onclick=()=>{modal.classList.add('show');modal.setAttribute('aria-hidden','false')};document.getElementById('closeModal').onclick=()=>{modal.classList.remove('show');modal.setAttribute('aria-hidden','true')};modal.addEventListener('click',(event)=>{if(event.target===modal)document.getElementById('closeModal').click()});modal.querySelector('form').addEventListener('submit',(event)=>{event.preventDefault();document.getElementById('closeModal').click()});</script>
+  <script src="../../js/thao-luan.js"></script>
 </body>
 </html>

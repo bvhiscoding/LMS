@@ -22,6 +22,10 @@
   }
   document.querySelectorAll('[data-view]').forEach(button => button.onclick = () => { view = button.dataset.view; document.querySelectorAll('[data-view]').forEach(tab => tab.classList.toggle('active', tab === button)); render(); });
   el('searchInput').oninput = event => document.querySelectorAll('#tableBody tr').forEach(row => row.hidden = !row.textContent.toLowerCase().includes(event.target.value.toLowerCase()));
-  el('exportBtn').onclick = () => { el('toast').textContent = 'Đã tạo báo cáo, sẵn sàng tải xuống.'; el('toast').classList.add('show'); setTimeout(() => el('toast').classList.remove('show'), 2500); };
+  el('exportBtn').onclick = () => {
+    const rows = [['STT', 'Học viên / khóa học', 'Tổng', 'Hoàn thành', 'Đang học', 'Tiến độ'], ...[...el('tableBody').rows].map(row => [...row.cells].map(cell => cell.innerText.trim()))];
+    window.downloadCsv(`bao-cao-${view}-${new Date().toISOString().slice(0, 10)}.csv`, rows);
+    window.showAppToast('Đã xuất báo cáo theo dữ liệu đang hiển thị.');
+  };
   el('showAll').onclick = () => el('tableTitle').scrollIntoView({ behavior: 'smooth' }); render();
 })();

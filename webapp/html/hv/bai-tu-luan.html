@@ -171,8 +171,6 @@
   </div>
 </section></main>
 <script src="../../js/app.js"></script>
-<script>
-  (() => { const text = document.getElementById('essayAnswer'); const words = document.getElementById('essayWords'); const nav = document.getElementById('essayQuestionList'); const updateWords = () => words.textContent = text.value.trim() ? text.value.trim().split(/\s+/).length : 0; text.addEventListener('input', () => { updateWords(); const active = nav.querySelector('.active'); if (text.value.trim() && active) { active.classList.add('answered'); active.querySelector('em') || active.insertAdjacentHTML('beforeend', '<em>✓</em>'); document.getElementById('essayAnswered').textContent = '2/2'; } }); nav.addEventListener('click', event => { const button = event.target.closest('button'); if (!button) return; nav.querySelectorAll('button').forEach(item => item.classList.toggle('active', item === button)); document.getElementById('essayQuestionNo').textContent = button.dataset.question; document.getElementById('essayPoint').textContent = button.dataset.question === '1' ? '30 điểm' : '70 điểm'; }); [document.getElementById('essayMark'), document.getElementById('essayReviewMark')].forEach(button => button.addEventListener('click', () => nav.querySelector('.active')?.classList.toggle('marked'))); document.getElementById('essayPrevious').addEventListener('click', () => nav.querySelector('[data-question="1"]').click()); [document.getElementById('essaySubmit'), document.getElementById('essaySubmitBottom')].forEach(button => button.addEventListener('click', () => { if (confirm('Bạn muốn nộp bài tự luận?')) window.location.href = 'ket-qua-thi.html'; })); })();
-</script>
+<script src="../../js/bai-tu-luan.js"></script>
 </body>
 </html>

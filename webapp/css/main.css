@@ -134,11 +134,12 @@ svg.ic.sm{width:16px;height:16px}
 @media(max-width:860px){
   .sidebar{transform:translateX(-100%);transition:.25s;box-shadow:var(--shadow-lg)}
   body.nav-open .sidebar{transform:none}
-  .main{margin-left:0;padding:20px 16px 50px}
+  .main{margin-left:0;padding:20px 16px 78px}
   .hamb{display:grid;place-items:center}
   .brand{min-width:auto} .brand .bt small{display:none}
   .searchbar{display:none}
-  .role-switch{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:60;box-shadow:var(--shadow-lg);flex-wrap:wrap;justify-content:center;max-width:94vw}
+  .role-switch{position:fixed;bottom:10px;left:12px;right:12px;transform:none;z-index:60;box-shadow:var(--shadow-lg);flex-wrap:nowrap;justify-content:center;max-width:480px;margin:auto}
+  .role-switch button{flex:1;min-width:0;padding:7px 5px;font-size:11px;overflow:hidden;text-overflow:ellipsis}
   .cards-4,.cards-3,.cards-2{grid-template-columns:1fr}
   .row{flex-direction:column}
   .scrim{display:none;position:fixed;inset:var(--top-h) 0 0;background:rgba(10,20,40,.35);z-index:35}
@@ -170,6 +171,21 @@ svg.ic.sm{width:16px;height:16px}
 
 /* Every HTML file renders one screen. */
 .screen{display:block}
+
+/* Shared interactive shell */
+.app-dialog{position:fixed;inset:0;margin:auto;width:min(520px,calc(100vw - 32px));max-height:min(80vh,720px);padding:0;border:0;border-radius:18px;background:#fff;color:#17213b;box-shadow:0 24px 80px rgba(18,32,64,.24)}
+.app-dialog::backdrop{background:rgba(15,25,48,.5);backdrop-filter:blur(3px)}
+.app-dialog form{margin:0}.app-dialog header{display:flex;align-items:center;justify-content:space-between;padding:20px 22px 14px;border-bottom:1px solid #e8edf5}
+.app-dialog h2{margin:0;font-size:20px}.app-dialog-close{border:0;background:#f1f4f9;color:#526079;border-radius:50%;width:34px;height:34px;font-size:22px;cursor:pointer}
+.app-dialog-body{padding:22px;line-height:1.55}.app-dialog-body p{margin:0}.app-dialog footer{display:flex;justify-content:flex-end;gap:10px;padding:0 22px 22px}
+.app-dialog-body .field{display:grid;width:100%;height:auto;gap:7px;margin:0 0 14px;padding:0;border:0;background:transparent;color:#526079;font-size:13px}
+.app-dialog-body .field input,.app-dialog-body .field select,.app-dialog-body .field textarea{box-sizing:border-box;width:100%;min-height:42px;padding:10px 12px;border:1px solid #d8e0ec;border-radius:9px;background:#fff;color:#17213b;font:inherit;outline:none}
+.app-dialog-body .field textarea{min-height:92px;resize:vertical}.app-dialog-body .field input:focus,.app-dialog-body .field select:focus,.app-dialog-body .field textarea:focus{border-color:#3157d5;box-shadow:0 0 0 3px rgba(49,87,213,.12)}
+.app-column-picker{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 18px}.app-column-picker label{display:flex;align-items:center;gap:8px;padding:9px 10px;border:1px solid #e2e8f2;border-radius:9px;background:#f8fafc}.app-column-picker input{width:16px;height:16px;accent-color:var(--brand)}
+.app-search-results{display:grid;gap:8px}.app-search-results a{display:flex;justify-content:space-between;gap:16px;padding:12px 14px;border:1px solid #e2e8f2;border-radius:10px;color:#253454;text-decoration:none}.app-search-results a:hover{border-color:#3157d5;background:#f4f7ff}
+.app-toast{position:fixed;right:24px;bottom:24px;z-index:10000;max-width:min(420px,calc(100vw - 32px));padding:14px 18px;border-radius:12px;background:#176b47;color:#fff;box-shadow:0 14px 40px rgba(18,32,64,.24);opacity:0;transform:translateY(12px);transition:.2s ease}.app-toast.error{background:#b42318}.app-toast.show{opacity:1;transform:none}
+.password-toggle{cursor:pointer;border:0;background:transparent}
+main>.screen:has(+section[class*="-redesign"]){display:none}
 
 /* ===== Global content typography normalisation =====
    Individual prototype screens previously used 9–11px text extensively.  These
