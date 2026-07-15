@@ -6,6 +6,8 @@
   const tabs = Array.from(document.querySelectorAll('.cert-tab'));
   const viewButtons = Array.from(document.querySelectorAll('.cert-view-switch button'));
   const sort = document.getElementById('certSort');
+  const search = document.getElementById('certSearch');
+  const searchResult = document.getElementById('certSearchResult');
   const empty = document.querySelector('.cert-empty');
   const dialog = document.getElementById('certDialog');
   const toast = document.querySelector('.cert-toast');
@@ -13,15 +15,32 @@
   let toastTimer;
   let currentCard;
 
+  function normalize(value) {
+    return value.toLocaleLowerCase('vi').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').trim();
+  }
+
   function applyFilter() {
+    const query = normalize(search.value);
     let visible = 0;
     cards.forEach(function (card) {
-      const show = activeFilter === 'all' || card.dataset.kind === activeFilter;
+      const matchesKind = activeFilter === 'all' || card.dataset.kind === activeFilter;
+      const matchesQuery = !query || normalize(card.textContent).includes(query);
+      const show = matchesKind && matchesQuery;
       card.hidden = !show;
       if (show) visible += 1;
     });
     empty.hidden = visible !== 0;
+    empty.querySelector('p').textContent = query ? 'Không tìm thấy chứng chỉ phù hợp với từ khóa.' : 'Không có chứng chỉ phù hợp.';
+    searchResult.textContent = query ? `Tìm thấy ${visible} kết quả.` : '';
   }
+
+  search.addEventListener('input', applyFilter);
+  search.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && search.value) {
+      search.value = '';
+      applyFilter();
+    }
+  });
 
   tabs.forEach(function (tab) {
     tab.addEventListener('click', function () {

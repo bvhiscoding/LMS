@@ -1,30 +1,10 @@
 (() => {
-  const root = document.getElementById('hv-profile');
-  if (!root) return;
-  const save = root.querySelector('.page-head button');
-  const changePhoto = [...root.querySelectorAll('button')].find(button => button.textContent.includes('Đổi ảnh'));
-  const avatar = root.querySelector('.avatar-init');
-  const inputs = [...root.querySelectorAll('input:not([disabled])')];
-  const picker = Object.assign(document.createElement('input'), { type: 'file', accept: 'image/*', hidden: true });
-  let previewUrl;
-  root.appendChild(picker);
-  changePhoto.addEventListener('click', () => picker.click());
-  picker.addEventListener('change', () => {
-    const file = picker.files[0];
-    if (!file) return;
-    if (!file.type.startsWith('image/')) return window.showAppToast('Vui lòng chọn một tệp ảnh.', 'error');
-    if (previewUrl) URL.revokeObjectURL(previewUrl);
-    previewUrl = URL.createObjectURL(file);
-    avatar.textContent = '';
-    Object.assign(avatar.style, { backgroundImage: `url(${previewUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' });
-  });
-  save.addEventListener('click', () => {
-    const email = inputs.find(input => input.value.includes('@') || input.closest('div')?.previousElementSibling?.textContent.includes('Email'));
-    const passwords = inputs.filter(input => input.type === 'password');
-    if (email && !/^\S+@\S+\.\S+$/.test(email.value)) return window.showAppToast('Email không hợp lệ.', 'error');
-    if (passwords[1]?.value !== passwords[2]?.value) return window.showAppToast('Mật khẩu xác nhận không khớp.', 'error');
-    if (passwords[1]?.value && passwords[1].value.length < 6) return window.showAppToast('Mật khẩu mới cần ít nhất 6 ký tự.', 'error');
-    window.showAppToast('Đã lưu thông tin cá nhân và mật khẩu mới.');
-  });
-  window.addEventListener('beforeunload', () => { if (previewUrl) URL.revokeObjectURL(previewUrl); });
+  const root=document.getElementById('hv-profile');if(!root)return;const save=root.querySelector('.page-head button'),changePhoto=[...root.querySelectorAll('button')].find(button=>button.textContent.includes('Đổi ảnh')),avatar=root.querySelector('.avatar-init'),cards=[...root.querySelectorAll('.card.pad')],accountCard=cards.find(card=>card.textContent.includes('Thông tin tài khoản')),passwordCard=cards.find(card=>card.textContent.includes('Đổi mật khẩu')),editable=[...accountCard.querySelectorAll('input:not([disabled])')];
+  const labels=[...accountCard.querySelectorAll('.fl')].map(label=>label.textContent.trim()),profile=window.LMSStore.read('profile',{});let dirty=false,avatarData=profile.avatar||'';
+  editable.forEach(input=>{const label=input.closest('div')?.previousElementSibling?.textContent.trim();input.dataset.profileField=label==='Họ và tên'?'name':label==='Email'?'email':'phone';if(profile[input.dataset.profileField])input.value=profile[input.dataset.profileField];input.addEventListener('input',()=>dirty=true)});
+  if(avatarData){avatar.textContent='';Object.assign(avatar.style,{backgroundImage:`url(${avatarData})`,backgroundSize:'cover',backgroundPosition:'center'})}
+  const picker=Object.assign(document.createElement('input'),{type:'file',accept:'image/*',hidden:true});root.appendChild(picker);changePhoto.addEventListener('click',()=>picker.click());picker.addEventListener('change',()=>{const file=picker.files[0];if(!file)return;if(!file.type.startsWith('image/'))return window.showAppToast('Vui lòng chọn tệp ảnh.','error');if(file.size>2*1024*1024)return window.showAppToast('Ảnh đại diện không được vượt quá 2MB.','error');const reader=new FileReader();reader.onload=()=>{avatarData=reader.result;avatar.textContent='';Object.assign(avatar.style,{backgroundImage:`url(${avatarData})`,backgroundSize:'cover',backgroundPosition:'center'});dirty=true};reader.readAsDataURL(file)});
+  passwordCard.innerHTML='<div class="sec-title"><div><h2>Bảo mật tài khoản</h2><p class="faint" style="margin:4px 0 0">Mật khẩu được thay đổi trong một cửa sổ bảo mật riêng.</p></div><button class="btn ghost" id="openPasswordDialog"><i class="fa-solid fa-key"></i>Đổi mật khẩu</button></div><div class="notice"><div class="ic-wrap"><i class="fa-solid fa-shield-halved"></i></div><div style="font-size:12.5px">Mật khẩu cần tối thiểu 8 ký tự, gồm chữ hoa, chữ thường và số.</div></div>';
+  document.getElementById('openPasswordDialog').addEventListener('click',async()=>{const accepted=await window.appDialog({title:'Đổi mật khẩu',html:'<p class="app-dialog-note">Sau khi đổi mật khẩu, bạn có thể đăng xuất các phiên đăng nhập khác để bảo vệ tài khoản.</p><label class="field">Mật khẩu hiện tại<input id="currentPassword" type="password" autocomplete="current-password"></label><label class="field">Mật khẩu mới<input id="newPassword" type="password" autocomplete="new-password"></label><label class="field">Xác nhận mật khẩu mới<input id="confirmPassword" type="password" autocomplete="new-password"></label><label style="display:flex;gap:10px;align-items:center"><input id="logoutSessions" type="checkbox" checked> Đăng xuất khỏi các thiết bị khác</label>',confirmText:'Cập nhật mật khẩu',cancelText:'Hủy'});if(!accepted)return;const current=document.getElementById('currentPassword').value,next=document.getElementById('newPassword').value,confirm=document.getElementById('confirmPassword').value;if(!current)return window.showAppToast('Vui lòng nhập mật khẩu hiện tại.','error');if(!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(next))return window.showAppToast('Mật khẩu mới cần ít nhất 8 ký tự, chữ hoa, chữ thường và số.','error');if(next!==confirm)return window.showAppToast('Mật khẩu xác nhận không khớp.','error');window.LMSStore.save('security-events',{id:Date.now(),type:'password-change',logoutOtherSessions:document.getElementById('logoutSessions').checked,at:new Date().toISOString()});window.showAppToast('Đã cập nhật mật khẩu và ghi nhận sự kiện bảo mật.')});
+  save.addEventListener('click',()=>{const values=Object.fromEntries(editable.map(input=>[input.dataset.profileField,input.value.trim()]));if(!/^\S+@\S+\.\S+$/.test(values.email))return window.showAppToast('Email không hợp lệ.','error');if(values.phone&&!/^[0-9 +().-]{9,15}$/.test(values.phone))return window.showAppToast('Số điện thoại không hợp lệ.','error');window.LMSStore.write('profile',{...profile,...values,avatar:avatarData,updatedAt:new Date().toISOString()});root.querySelector('.card.pad b').textContent=values.name;dirty=false;window.showAppToast('Đã lưu thông tin cá nhân.')});window.addEventListener('beforeunload',event=>{if(!dirty)return;event.preventDefault();event.returnValue=''})
 })();

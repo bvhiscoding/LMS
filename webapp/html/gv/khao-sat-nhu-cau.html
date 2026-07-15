@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Khảo sát nhu cầu | E-Learning VBS</title>
+  <title>Khảo sát | E-Learning VBS</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -88,11 +88,11 @@
     <a class="nav-item" data-target="gv-exam" data-href="ngan-hang-de-thi.html"><i class="ic fa-solid fa-clipboard-question fa-icon" aria-hidden="true"></i>Ngân hàng đề thi</a>
     <a class="nav-item" data-target="gv-proctor" data-href="giam-sat-thi.html"><i class="ic fa-solid fa-shield-halved fa-icon" aria-hidden="true"></i>Giám sát thi</a>
     <a class="nav-item" data-target="gv-examsession" data-href="ca-thi.html"><i class="ic fa-solid fa-flag fa-icon" aria-hidden="true"></i>Tổ chức ca thi</a>
-    <a class="nav-item" data-target="gv-grade" data-href="diem-danh-cham-diem.html"><i class="ic fa-solid fa-check fa-icon" aria-hidden="true"></i>Điểm danh &amp; chấm điểm</a>
+
     <a class="nav-item" data-target="gv-cert" data-href="quan-ly-chung-chi.html"><i class="ic fa-solid fa-certificate fa-icon" aria-hidden="true"></i>Quản lý chứng chỉ</a>
     <div class="side-cap">Kế hoạch</div>
     <a class="nav-item" data-target="gv-plan" data-href="ke-hoach-dao-tao.html"><i class="ic fa-solid fa-calendar-days fa-icon" aria-hidden="true"></i>Kế hoạch &amp; nhu cầu</a>
-    <a class="nav-item active" data-target="gv-needsurvey" data-href="khao-sat-nhu-cau.html"><i class="ic fa-solid fa-file-lines fa-icon" aria-hidden="true"></i>Khảo sát nhu cầu</a>
+    <a class="nav-item active" data-target="gv-needsurvey" data-href="khao-sat-nhu-cau.html"><i class="ic fa-solid fa-file-lines fa-icon" aria-hidden="true"></i>Khảo sát</a>
     <a class="nav-item" data-target="gv-completion" data-href="xet-hoan-thanh.html"><i class="ic fa-solid fa-check fa-icon" aria-hidden="true"></i>Xét hoàn thành</a>
     <a class="nav-item" data-target="gv-cost" data-href="chi-phi-dao-tao.html"><i class="ic fa-solid fa-money-bill fa-icon" aria-hidden="true"></i>Chi phí đào tạo</a>
     <div class="side-cap">Chương trình</div>
@@ -120,12 +120,35 @@
 
 
 <main class="main need-survey-page"><section class="screen active" id="gv-needsurvey">
-  <header class="need-survey-head"><h1>Khảo sát nhu cầu đào tạo</h1></header>
-  <section class="need-survey-card">
-    <h2>Danh sách khảo sát</h2>
-    <div class="need-survey-filters"><label class="need-survey-search"><input id="needSurveySearch" type="search" placeholder="Tìm kiếm theo tên khảo sát..."><i class="fa-solid fa-magnifying-glass"></i></label><select id="needSurveyStatus" aria-label="Trạng thái"><option value="">-- Trạng thái --</option><option>Chưa thực hiện</option><option>Đã hoàn thành</option><option>Đã hết hạn</option></select><select id="needSurveyYear" aria-label="Năm"><option value="2025">Năm 2025</option><option value="2026">Năm 2026</option></select><button class="btn primary" id="openNeedRegistration"><i class="fa-solid fa-plus"></i>Đăng ký nhu cầu đào tạo</button><button class="btn ghost" id="resetNeedSurvey"><i class="fa-solid fa-rotate-right"></i>Đặt lại bộ lọc</button></div>
-    <div class="need-survey-table-wrap"><table class="need-survey-table"><thead><tr><th>STT</th><th>Tên khảo sát</th><th>Đơn vị áp dụng</th><th>Thời gian</th><th>Trạng thái</th><th>Thao tác</th></tr></thead><tbody id="needSurveyTableBody"></tbody></table></div>
-    <footer class="need-survey-footer"><span id="needSurveySummary"></span><div id="needSurveyPagination"></div></footer>
+  <header class="need-survey-head"><div><h1>Khảo sát</h1><p>Tạo, quản lý khảo sát định kỳ và thu thập nhu cầu đào tạo từ các đơn vị.</p></div></header>
+  <nav class="survey-mode-tabs" role="tablist" aria-label="Loại khảo sát">
+    <button class="survey-mode-tab active" type="button" role="tab" aria-selected="true" aria-controls="periodicSurveyPanel" data-survey-tab="periodic">Khảo sát định kỳ</button>
+    <button class="survey-mode-tab" type="button" role="tab" aria-selected="false" aria-controls="demandSurveyPanel" data-survey-tab="demand">Khảo sát theo nhu cầu</button>
+  </nav>
+
+  <section class="survey-panel" id="periodicSurveyPanel" role="tabpanel" data-survey-panel="periodic">
+    <form class="periodic-survey-filters" id="periodicSurveyFilters">
+      <label class="periodic-survey-search"><span class="sr-only">Tìm khảo sát định kỳ</span><input name="query" type="search" placeholder="Tìm kiếm theo tên khảo sát, mã..."><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></label>
+      <select name="status" aria-label="Trạng thái khảo sát"><option value="">-- Trạng thái --</option><option>Đang thực hiện</option><option>Đã hoàn thành</option><option>Đã kết thúc</option></select>
+      <select name="year" aria-label="Năm khảo sát"><option value="2025">Năm 2025</option><option value="2024">Năm 2024</option></select>
+      <select name="unit" aria-label="Đơn vị áp dụng"><option value="">-- Tất cả đơn vị --</option><option>Phòng Đào tạo</option><option>Phòng CNTT</option><option>Khoa Ngoại ngữ</option><option>Toàn bộ đơn vị</option></select>
+      <button class="btn ghost" type="button" id="periodicAdvancedFilter"><i class="fa-solid fa-filter"></i>Lọc nâng cao</button>
+      <button class="btn ghost" type="reset"><i class="fa-solid fa-rotate-right"></i>Đặt lại lọc</button>
+      <button class="btn primary periodic-create-survey" type="button" id="openPeriodicSurvey"><i class="fa-solid fa-plus"></i>Tạo khảo sát</button>
+    </form>
+    <section class="periodic-survey-card">
+      <div class="periodic-survey-table-wrap"><table class="periodic-survey-table"><thead><tr><th>STT</th><th>Mã khảo sát</th><th>Tên khảo sát</th><th>Đơn vị áp dụng</th><th>Thời gian</th><th>Tiến độ</th><th>Trạng thái</th><th>Thao tác</th></tr></thead><tbody id="periodicSurveyTableBody"></tbody></table></div>
+      <footer class="periodic-survey-footer"><span id="periodicSurveySummary"></span><label>Số dòng mỗi trang <select id="periodicSurveyPageSize"><option value="6">6</option><option value="10">10</option><option value="20">20</option></select></label><div id="periodicSurveyPagination"></div></footer>
+    </section>
+  </section>
+
+  <section class="survey-panel" id="demandSurveyPanel" role="tabpanel" data-survey-panel="demand" hidden>
+    <section class="need-survey-card">
+      <h2>Danh sách khảo sát theo nhu cầu</h2>
+      <div class="need-survey-filters"><label class="need-survey-search"><input id="needSurveySearch" type="search" placeholder="Tìm kiếm theo tên khảo sát..."><i class="fa-solid fa-magnifying-glass"></i></label><select id="needSurveyStatus" aria-label="Trạng thái"><option value="">-- Trạng thái --</option><option>Chưa thực hiện</option><option>Đã duyệt</option><option>Đã hoàn thành</option><option>Đã hết hạn</option></select><select id="needSurveyYear" aria-label="Năm"><option value="2025">Năm 2025</option><option value="2026">Năm 2026</option></select><button class="btn ghost need-export-report" type="button" id="exportTrainingRequests"><i class="fa-solid fa-file-export"></i>Xuất báo cáo</button><button class="btn primary" id="openNeedRegistration"><i class="fa-solid fa-plus"></i>Đăng ký nhu cầu đào tạo</button><button class="btn ghost" id="resetNeedSurvey"><i class="fa-solid fa-rotate-right"></i>Đặt lại bộ lọc</button></div>
+      <div class="need-survey-table-wrap"><table class="need-survey-table"><thead><tr><th>STT</th><th>Tên khảo sát</th><th>Đơn vị áp dụng</th><th>Thời gian</th><th>Trạng thái</th><th>Thao tác</th></tr></thead><tbody id="needSurveyTableBody"></tbody></table></div>
+      <footer class="need-survey-footer"><span id="needSurveySummary"></span><div id="needSurveyPagination"></div></footer>
+    </section>
   </section>
 
   <dialog class="need-registration-dialog" id="needRegistrationDialog"><form id="needRegistrationForm"><header><h2>Đăng ký nhu cầu đào tạo</h2><button type="button" data-close-registration aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></header><div class="need-registration-body">
@@ -139,7 +162,33 @@
     <label class="full"><span>Ghi chú (nếu có)</span><textarea name="note" maxlength="500" placeholder="Nhập thêm thông tin khác (nếu có)"></textarea><small><output data-count-for="note">0</output>/500</small></label>
   </div><footer><button type="button" class="btn ghost" data-close-registration>Hủy bỏ</button><button type="submit" class="btn primary"><i class="fa-regular fa-file-lines"></i>Gửi đăng ký</button></footer></form></dialog>
 
+  <dialog class="periodic-survey-dialog" id="periodicSurveyDialog">
+    <form id="periodicSurveyForm">
+      <header><h2>Tạo khảo sát định kỳ</h2><button type="button" data-close-periodic aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></header>
+      <div class="periodic-builder-body">
+        <aside class="periodic-builder-settings">
+          <h3>Thông tin khảo sát</h3>
+          <input name="code" type="hidden" required><input name="year" type="hidden" value="2026">
+          <label class="periodic-builder-field"><span>Tên khảo sát <b>*</b></span><input name="title" required placeholder="Nhập tên khảo sát"></label>
+          <label class="periodic-builder-field"><span>Mô tả khảo sát</span><textarea name="description" maxlength="500" placeholder="Nhập mô tả khảo sát (không bắt buộc)"></textarea></label>
+          <div class="periodic-builder-grid"><label class="periodic-builder-field"><span>Đơn vị áp dụng <b>*</b></span><select name="unit" required><option value="">Chọn đơn vị</option><option>Phòng Đào tạo</option><option>Phòng CNTT</option><option>Khoa Ngoại ngữ</option><option>Toàn bộ đơn vị</option></select></label><fieldset class="periodic-audience"><legend>Đối tượng thực hiện <b>*</b></legend><label><input type="checkbox" name="audience" value="Học viên" checked> Học viên</label><label><input type="checkbox" name="audience" value="Giảng viên"> Giảng viên</label><label><input type="checkbox" name="audience" value="Cán bộ quản lý"> Cán bộ quản lý</label><label><input type="checkbox" name="audience" value="Nhân viên"> Nhân viên</label><label><input type="checkbox" id="selectAllAudience"> Chọn tất cả</label></fieldset></div>
+          <div class="periodic-builder-grid periodic-date-grid"><label class="periodic-builder-field"><span>Thời gian bắt đầu <b>*</b></span><input name="start" type="date" required></label><label class="periodic-builder-field"><span>Thời gian kết thúc <b>*</b></span><input name="end" type="date" required></label></div>
+          <div class="periodic-toggle-list"><label><span>Gửi thông báo mỗi tham gia</span><input type="checkbox" name="notify" checked><i></i></label><label><span>Cho phép sửa câu trả lời sau khi nộp</span><input type="checkbox" name="allowEdit"><i></i></label><label><span>Ẩn tên người trả lời trong báo cáo kết quả</span><input type="checkbox" name="anonymous" checked><i></i></label><label><span>Hiển thị kết quả cho người tham gia</span><input type="checkbox" name="showResult"><i></i></label><label><span>Bắt buộc trả lời tất cả câu hỏi</span><input type="checkbox" name="requiredAll" checked><i></i></label></div>
+          <label class="periodic-builder-field periodic-note"><span>Ghi chú (không bắt buộc)</span><textarea name="note" maxlength="500" placeholder="Nhập ghi chú (nếu có)"></textarea></label>
+        </aside>
+        <section class="periodic-question-builder">
+          <h3>Bộ câu hỏi</h3>
+          <div class="periodic-question-toolbar"><nav><button type="button" class="active" data-question-tab="create">Tạo câu hỏi</button><button type="button" data-question-tab="upload">Upload file</button></nav><button type="button" class="periodic-add-question" id="addPeriodicQuestion"><i class="fa-solid fa-plus"></i> Thêm câu hỏi</button></div>
+          <div class="periodic-question-list" id="periodicQuestionList"></div>
+          <div class="periodic-question-summary"><span><i class="fa-regular fa-folder-open"></i></span><p>Đã tạo <b id="periodicQuestionCount">5</b> câu hỏi</p><button type="button" id="previewPeriodicSurvey"><i class="fa-regular fa-eye"></i> Xem trước khảo sát</button></div>
+        </section>
+      </div>
+      <footer><button type="button" class="btn ghost" data-close-periodic>Hủy bỏ</button><button class="btn primary">Lưu khảo sát</button></footer>
+    </form>
+  </dialog>
+
   <dialog class="need-survey-detail-dialog" id="needSurveyDetailDialog"><header><div><h2 id="needSurveyDetailTitle"></h2><p id="needSurveyDetailSub"></p></div><button type="button" data-close-survey-detail aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></header><div id="needSurveyDetailBody"></div><footer><button type="button" class="btn ghost" data-close-survey-detail>Đóng</button><button type="button" class="btn primary" id="completeNeedSurvey" hidden>Hoàn thành khảo sát</button></footer></dialog>
+  <dialog class="need-report-dialog" id="trainingRequestReportDialog"><form id="trainingRequestReportForm"><header><div><h2>Xuất báo cáo nhu cầu đào tạo</h2><p>Kiểm tra thông tin tổng hợp trước khi tạo tệp báo cáo.</p></div><button type="button" data-close-need-report aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></header><div class="need-report-body"><section class="need-report-settings"><label><span>Tên báo cáo</span><input name="reportName" value="Báo cáo tổng hợp nhu cầu đào tạo" required></label><label><span>Phạm vi dữ liệu</span><select name="scope"><option value="all">Toàn bộ đăng ký nhu cầu</option><option value="approved">Chỉ đăng ký đã phê duyệt</option><option value="high">Chỉ nhu cầu ưu tiên cao</option></select></label><label><span>Định dạng</span><select name="format"><option value="csv">CSV · Tương thích Microsoft Excel</option></select></label><label><span>Người lập báo cáo</span><input value="Nguyễn Văn An · CBQL" readonly></label></section><section class="need-report-summary" id="needReportSummary"></section><section class="need-report-preview"><header><div><h3>Bản xem trước</h3><p id="needReportPreviewNote"></p></div><span><i class="fa-regular fa-file-excel"></i> CSV</span></header><div><table><thead><tr><th>STT</th><th>Mã yêu cầu</th><th>Khóa học / chương trình</th><th>Lĩnh vực</th><th>Số người</th><th>Ưu tiên</th><th>Trạng thái</th></tr></thead><tbody id="needReportPreviewBody"></tbody></table></div></section><div class="need-report-info"><i class="fa-solid fa-circle-info"></i><span>Tệp xuất sẽ chứa đầy đủ lý do đăng ký, mục tiêu, hình thức, đối tượng và thông tin tổ chức của từng nhu cầu.</span></div></div><footer><button type="button" class="btn ghost" data-close-need-report>Hủy</button><button type="submit" class="btn primary"><i class="fa-solid fa-file-export"></i>Xuất báo cáo</button></footer></form></dialog>
   <div class="need-survey-toast" id="needSurveyToast" hidden role="status"></div>
 </section></main>
 <script src="../../js/app.js"></script>

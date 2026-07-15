@@ -8,139 +8,60 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/ad/danh-muc-he-thong.css">
 </head>
 <body data-role="ad" data-page="ad-catalog">
-
-
-
-<div id="loginScreen">
-  <div class="lg-brand">
-    <div style="display:flex;align-items:center;gap:12px"><div style="width:44px;height:44px;border-radius:11px;background:rgba(255,255,255,.15);display:grid;place-items:center;font-weight:700">VBS</div><div style="font-weight:700;font-size:17px">E-Learning VBS<div style="font-weight:400;font-size:11.5px;opacity:.8">Hệ thống Quản lý Đào tạo — TKV</div></div></div>
-    <div><div style="font-size:30px;font-weight:700;line-height:1.25;max-width:420px">Nền tảng đào tạo trực tuyến của Trường Quản trị Kinh doanh Vinacomin</div><p style="opacity:.85;margin-top:14px;font-size:14px;max-width:400px">Học mọi lúc mọi nơi · Thi trực tuyến an toàn · Lộ trình theo chức danh.</p></div>
-    <div style="opacity:.6;font-size:12px">© VBS — TKV 2026 · An toàn thông tin cấp độ 2</div>
-  </div>
-  <div class="lg-form">
-    <div class="lg-card">
-      <h1 style="font-size:24px;font-weight:700">Đăng nhập</h1>
-      <p class="muted" style="font-size:13.5px;margin:6px 0 22px">Chào mừng trở lại. Vui lòng đăng nhập để tiếp tục.</p>
-      <button class="btn primary" style="width:100%;justify-content:center;padding:13px;margin-bottom:16px" onclick="hideLogin()"><i class="ic sm fa-solid fa-shield-halved fa-icon" aria-hidden="true"></i>Đăng nhập bằng tài khoản AD-Domain (SSO)</button>
-      <div style="display:flex;align-items:center;gap:12px;color:var(--faint);font-size:12px;margin-bottom:16px"><span style="flex:1;height:1px;background:var(--border)"></span>hoặc tài khoản cục bộ<span style="flex:1;height:1px;background:var(--border)"></span></div>
-      <label class="fl">Tên đăng nhập / Email</label>
-      <div class="lg-in"><i class="ic sm fa-solid fa-users fa-icon" aria-hidden="true"></i><input value="an.nv@vbs.edu.vn"></div>
-      <label class="fl">Mật khẩu</label>
-      <div class="lg-in"><i class="ic sm fa-solid fa-lock fa-icon" aria-hidden="true"></i><input type="password" value="123456"><i class="ic sm fa-solid fa-eye fa-icon" style="cursor:pointer" aria-hidden="true"></i></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;font-size:12.5px;margin:2px 0 18px"><label style="display:flex;align-items:center;gap:6px;color:var(--muted)"><input type="checkbox" checked style="accent-color:var(--brand)">Ghi nhớ đăng nhập</label><a style="color:var(--brand);font-weight:600">Quên mật khẩu?</a></div>
-      <button class="btn primary" style="width:100%;justify-content:center;padding:13px" onclick="hideLogin()">Đăng nhập</button>
-      <div class="notice" style="margin-top:18px"><div class="ic-wrap"><i class="ic sm fa-solid fa-shield-halved fa-icon" aria-hidden="true"></i></div><div style="font-size:12px">Tài khoản cục bộ (ngoài AD) yêu cầu <b>xác thực 2 lớp (MFA)</b>. Máy trong mạng nội bộ ưu tiên đăng nhập AD-Domain.</div></div>
+  <header class="topbar">
+    <button class="hamb" type="button" aria-label="Mở điều hướng" onclick="document.body.classList.toggle('nav-open')"><i class="ic fa-solid fa-bars fa-icon"></i></button>
+    <div class="brand"><img src="../../public/logo-school-round.png" alt="VBS"><div class="bt">E-Learning VBS<small>Hệ thống Quản lý Đào tạo — TKV</small></div></div>
+    <div class="searchbar"><i class="ic sm fa-solid fa-magnifying-glass fa-icon"></i><input aria-label="Tìm kiếm toàn hệ thống" placeholder="Tìm khóa học, học viên, tài liệu..."></div>
+    <div class="top-right">
+      <div class="role-switch" id="roleSwitch">
+        <button data-role="hv" data-href="../../index.html">Học viên</button><button data-role="gv" data-href="../gv/dashboard-giang-vien.html">Giảng viên / CBQL</button><button class="active" data-role="ad" data-href="quan-ly-nguoi-dung.html">Quản trị HT</button><button data-role="ld" data-href="../ld/dashboard-lanh-dao.html">Lãnh đạo</button>
+      </div>
+      <button class="iconbtn" id="bellBtn" aria-label="Thông báo"><i class="ic fa-solid fa-bell fa-icon"></i><span class="dot"></span></button>
+      <div class="avatar" id="topAvatar">NA</div>
+      <button class="iconbtn" aria-label="Đăng xuất"><i class="ic fa-solid fa-right-from-bracket fa-icon"></i></button>
     </div>
-  </div>
-</div>
+  </header>
+  <div class="scrim" onclick="document.body.classList.remove('nav-open')"></div>
+  <aside class="sidebar"><nav class="side-role active" data-role="ad"></nav></aside>
 
-<!-- SVG sprite -->
-<!-- ===== TOPBAR ===== -->
-<header class="topbar">
-  <button class="hamb" onclick="document.body.classList.toggle('nav-open')"><i class="ic fa-solid fa-bars fa-icon" aria-hidden="true"></i></button>
-  <div class="brand">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQUxwCBSVQ2aKD4ZYIaXSvhYwQeepgJ3Lg6vq8DxoiqU2VJ0Ulhdpqxlki&s=10" alt="VBS" onerror="this.style.display='none'">
-    <div class="bt">E-Learning VBS<small>Hệ thống Quản lý Đào tạo — TKV</small></div>
-  </div>
-  <div class="searchbar"><i class="ic sm fa-solid fa-magnifying-glass fa-icon" aria-hidden="true"></i><input placeholder="Tìm khóa học, học viên, tài liệu..."></div>
-  <div class="top-right">
-    <div class="role-switch" id="roleSwitch">
-      <button data-role="hv" data-href="../../index.html" class="active">Học viên</button>
-      <button data-role="gv" data-href="../gv/dashboard-giang-vien.html">Giảng viên / CBQL</button>
-      <button data-role="ad" data-href="quan-ly-nguoi-dung.html">Quản trị HT</button>
-      <button data-role="ld" data-href="../ld/dashboard-lanh-dao.html">Lãnh đạo</button>
+  <main class="main catalog-page"><section class="screen active" id="ad-catalog">
+    <nav class="catalog-breadcrumb" aria-label="Đường dẫn">Trang chủ <i class="fa-solid fa-chevron-right"></i> Quản trị hệ thống <i class="fa-solid fa-chevron-right"></i> <strong>Danh mục hệ thống</strong></nav>
+    <div class="catalog-head">
+      <div><h1>Danh mục hệ thống</h1><p>Quản lý cấu trúc phân cấp và dữ liệu dùng chung trong toàn hệ thống.</p></div>
+      <div class="catalog-head-actions"><button class="btn ghost" id="importCatalog"><i class="fa-solid fa-arrow-up-from-bracket"></i>Import CSV</button><button class="btn primary" id="addCatalog"><i class="fa-solid fa-plus"></i>Thêm danh mục</button></div>
     </div>
-    <button class="iconbtn" id="bellBtn"><i class="ic fa-solid fa-bell fa-icon" aria-hidden="true"></i><span class="dot"></span></button>
-    <div class="avatar" id="topAvatar">NA</div>
-    <button class="iconbtn" onclick="showLogin()" title="Đăng nhập / Đăng xuất"><i class="ic fa-solid fa-right-from-bracket fa-icon" aria-hidden="true"></i></button>
-  </div>
-</header>
-<div class="scrim" onclick="document.body.classList.remove('nav-open')"></div>
 
-<!-- ===== SIDEBAR ===== -->
-<aside class="sidebar">
-  <nav class="side-role active" data-role="hv">
-    <div class="side-cap">Học tập</div>
-    <a class="nav-item" data-target="hv-dash" data-href="../../index.html"><i class="ic fa-solid fa-house fa-icon" aria-hidden="true"></i>Trang chủ</a>
-    <a class="nav-item" data-target="hv-courses" data-href="../hv/khoa-hoc-cua-toi.html"><i class="ic fa-solid fa-book-open fa-icon" aria-hidden="true"></i>Khóa học của tôi<span class="badge2">4</span></a>
-    <a class="nav-item" data-target="hv-learn" data-href="../hv/hoc-bai-giang.html"><i class="ic fa-solid fa-circle-play fa-icon" aria-hidden="true"></i>Học bài giảng</a>
-    <a class="nav-item" data-target="hv-essay" data-href="../hv/bai-tu-luan.html"><i class="ic fa-solid fa-file-lines fa-icon" aria-hidden="true"></i>Bài tự luận</a>
-    <a class="nav-item" data-target="hv-schedule" data-href="../hv/lich-hoc-thi.html"><i class="ic fa-solid fa-calendar-days fa-icon" aria-hidden="true"></i>Lịch học &amp; thi</a>
-    <a class="nav-item" data-target="hv-exam" data-href="../hv/lam-bai-thi.html"><i class="ic fa-solid fa-clipboard-question fa-icon" aria-hidden="true"></i>Làm bài thi</a>
-    <a class="nav-item" data-target="hv-result" data-href="../hv/ket-qua-thi.html"><i class="ic fa-solid fa-flag fa-icon" aria-hidden="true"></i>Kết quả bài thi</a>
-    <div class="side-cap">Tương tác</div>
-    <a class="nav-item" data-target="hv-discussion" data-href="../hv/thao-luan.html"><i class="ic fa-solid fa-users fa-icon" aria-hidden="true"></i>Thảo luận &amp; hỏi đáp</a>
-    <a class="nav-item" data-target="hv-survey" data-href="../hv/khao-sat.html"><i class="ic fa-solid fa-file-lines fa-icon" aria-hidden="true"></i>Khảo sát</a>
-    <div class="side-cap">Thành tích</div>
-    <a class="nav-item" data-target="hv-cert" data-href="../hv/chung-chi-hoc-vien.html"><i class="ic fa-solid fa-certificate fa-icon" aria-hidden="true"></i>Chứng chỉ</a>
-    <a class="nav-item" data-target="hv-rank" data-href="../hv/xep-hang.html"><i class="ic fa-solid fa-star fa-icon" aria-hidden="true"></i>Xếp hạng &amp; điểm</a>
-    <div class="side-cap">Tài khoản</div>
-    <a class="nav-item" data-target="hv-profile" data-href="../hv/thong-tin-ca-nhan.html"><i class="ic fa-solid fa-gear fa-icon" aria-hidden="true"></i>Thông tin cá nhân</a>
-  </nav>
-  <nav class="side-role" data-role="gv">
-    <div class="side-cap">Nghiệp vụ đào tạo</div>
-    <a class="nav-item" data-target="gv-dash" data-href="../gv/dashboard-giang-vien.html"><i class="ic fa-solid fa-house fa-icon" aria-hidden="true"></i>Tổng quan</a>
-    <a class="nav-item" data-target="gv-classes" data-href="../gv/quan-ly-lop-hoc.html"><i class="ic fa-solid fa-book-open fa-icon" aria-hidden="true"></i>Quản lý lớp học</a>
-    <a class="nav-item" data-target="gv-content" data-href="../gv/quan-ly-hoc-lieu.html"><i class="ic fa-solid fa-video fa-icon" aria-hidden="true"></i>Nội dung &amp; học liệu</a>
-    <a class="nav-item" data-target="gv-exam" data-href="../gv/ngan-hang-de-thi.html"><i class="ic fa-solid fa-clipboard-question fa-icon" aria-hidden="true"></i>Ngân hàng đề thi</a>
-    <a class="nav-item" data-target="gv-proctor" data-href="../gv/giam-sat-thi.html"><i class="ic fa-solid fa-shield-halved fa-icon" aria-hidden="true"></i>Giám sát thi</a>
-    <a class="nav-item" data-target="gv-examsession" data-href="../gv/ca-thi.html"><i class="ic fa-solid fa-flag fa-icon" aria-hidden="true"></i>Tổ chức ca thi</a>
-    <a class="nav-item" data-target="gv-grade" data-href="../gv/diem-danh-cham-diem.html"><i class="ic fa-solid fa-check fa-icon" aria-hidden="true"></i>Điểm danh &amp; chấm điểm</a>
-    <a class="nav-item" data-target="gv-cert" data-href="../gv/quan-ly-chung-chi.html"><i class="ic fa-solid fa-certificate fa-icon" aria-hidden="true"></i>Quản lý chứng chỉ</a>
-    <div class="side-cap">Kế hoạch</div>
-    <a class="nav-item" data-target="gv-plan" data-href="../gv/ke-hoach-dao-tao.html"><i class="ic fa-solid fa-calendar-days fa-icon" aria-hidden="true"></i>Kế hoạch &amp; nhu cầu</a>
-    <a class="nav-item" data-target="gv-needsurvey" data-href="../gv/khao-sat-nhu-cau.html"><i class="ic fa-solid fa-file-lines fa-icon" aria-hidden="true"></i>Khảo sát nhu cầu</a>
-    <a class="nav-item" data-target="gv-completion" data-href="../gv/xet-hoan-thanh.html"><i class="ic fa-solid fa-check fa-icon" aria-hidden="true"></i>Xét hoàn thành</a>
-    <a class="nav-item" data-target="gv-cost" data-href="../gv/chi-phi-dao-tao.html"><i class="ic fa-solid fa-money-bill fa-icon" aria-hidden="true"></i>Chi phí đào tạo</a>
-    <div class="side-cap">Chương trình</div>
-    <a class="nav-item" data-target="gv-instructor" data-href="../gv/quan-ly-giang-vien.html"><i class="ic fa-solid fa-users fa-icon" aria-hidden="true"></i>Quản lý giảng viên</a>
-    <a class="nav-item" data-target="gv-competency" data-href="../gv/khung-nang-luc.html"><i class="ic fa-solid fa-bullseye fa-icon" aria-hidden="true"></i>Khung năng lực</a>
-    <a class="nav-item" data-target="gv-program" data-href="../gv/chu-de-chuong-trinh.html"><i class="ic fa-solid fa-book-open fa-icon" aria-hidden="true"></i>Chủ đề &amp; chương trình</a>
-  </nav>
-  <nav class="side-role" data-role="ad">
-    <div class="side-cap">Quản trị hệ thống</div>
-    <a class="nav-item" data-target="ad-report" data-href="bao-cao.html"><i class="ic fa-solid fa-chart-column fa-icon" aria-hidden="true"></i>Báo cáo</a>
-    <a class="nav-item" data-target="ad-users" data-href="quan-ly-nguoi-dung.html"><i class="ic fa-solid fa-users fa-icon" aria-hidden="true"></i>Người dùng<span class="badge2">5k</span></a>
-    <a class="nav-item" data-target="ad-rbac" data-href="phan-quyen.html"><i class="ic fa-solid fa-shield-halved fa-icon" aria-hidden="true"></i>Phân quyền (RBAC)</a>
-    <a class="nav-item active" data-target="ad-catalog" data-href="danh-muc-he-thong.html"><i class="ic fa-solid fa-list fa-icon" aria-hidden="true"></i>Danh mục hệ thống</a>
-    <div class="side-cap">Cấu hình</div>
-    <a class="nav-item" data-target="ad-config" data-href="thiet-lap-he-thong.html"><i class="ic fa-solid fa-gear fa-icon" aria-hidden="true"></i>Thiết lập hệ thống</a>
-    <a class="nav-item" data-target="ad-log" data-href="nhat-ky-he-thong.html"><i class="ic fa-solid fa-file-lines fa-icon" aria-hidden="true"></i>Nhật ký (log)</a>
-  </nav>
-  <nav class="side-role" data-role="ld">
-    <div class="side-cap">Báo cáo &amp; phân tích</div>
-    <a class="nav-item" data-target="ld-dash" data-href="../ld/dashboard-lanh-dao.html"><i class="ic fa-solid fa-chart-column fa-icon" aria-hidden="true"></i>Dashboard tổng hợp</a>
-    <a class="nav-item" data-target="ld-kpi" data-href="../ld/bao-cao-kpi.html"><i class="ic fa-solid fa-bullseye fa-icon" aria-hidden="true"></i>KPI đào tạo</a>
-    <a class="nav-item" data-target="ld-unit" data-href="../ld/bao-cao-don-vi.html"><i class="ic fa-solid fa-users fa-icon" aria-hidden="true"></i>Báo cáo theo đơn vị</a>
-  </nav>
-  <div class="side-foot">Prototype giao diện · v0.2<br>© VBS — TKV 2026</div>
-</aside>
+    <section class="catalog-workspace" aria-label="Quản lý cây danh mục">
+      <aside class="catalog-tree-panel" aria-labelledby="treeTitle">
+        <div class="tree-panel-head"><div><span class="section-eyebrow">Cấu trúc phân cấp</span><h2 id="treeTitle">Nhóm danh mục</h2></div><button type="button" id="expandAllTree" title="Mở tất cả nhánh" aria-label="Mở tất cả nhánh"><i class="fa-solid fa-angles-down"></i></button></div>
+        <p class="tree-help">Bấm mũi tên để mở hoặc thu nhánh.</p>
+        <nav class="explorer-tree" id="explorerTree" aria-label="Cây nhóm danh mục"></nav>
+      </aside>
 
+      <section class="catalog-section list-section" aria-labelledby="listTitle">
+        <div class="catalog-selection-path" id="treePath" aria-live="polite"></div>
+        <div class="section-heading list-heading"><div><span class="section-eyebrow">Dữ liệu danh mục</span><h2 id="listTitle">Đơn vị / Tổ chức</h2><p id="listDescription">Các mục trực thuộc nhánh đang chọn.</p></div><label class="catalog-search"><span class="sr-only">Tìm danh mục</span><i class="fa-solid fa-magnifying-glass"></i><input id="catalogSearch" type="search" placeholder="Tìm theo mã hoặc tên..."></label></div>
+        <div class="catalog-table-wrap"><table class="catalog-table"><thead><tr><th>Mã</th><th>Tên danh mục</th><th>Cấp</th><th>Nguồn dữ liệu</th><th>Trạng thái</th><th class="action-column">Thao tác</th></tr></thead><tbody id="catalogTableBody"></tbody></table></div>
+        <div class="catalog-empty" id="catalogEmpty" hidden><i class="fa-regular fa-folder-open"></i><h3>Không tìm thấy danh mục</h3><p>Thử thay đổi từ khóa hoặc chọn một nhánh khác.</p></div>
+        <div class="catalog-footer"><span id="catalogSummary"></span><span>Đồng bộ gần nhất: 08:30, 15/07/2026</span></div>
+      </section>
+    </section>
+  </section></main>
 
-<main class="main"><section class="screen active" id="ad-catalog">
-  <div class="page-head"><div><div class="crumb">Quản trị › Danh mục hệ thống</div><h1>Danh mục hệ thống</h1><div class="sub">Quản lý danh mục dùng chung, cập nhật từ import hoặc nhập tay.</div></div><div style="display:flex;gap:8px"><button class="btn ghost"><i class="ic sm fa-solid fa-file-lines fa-icon" aria-hidden="true"></i>Import</button><button class="btn primary"><i class="ic sm fa-solid fa-plus fa-icon" aria-hidden="true"></i>Thêm mục</button></div></div>
-  <div class="row" style="align-items:flex-start">
-    <div class="card pad" style="flex:1">
-      <div class="sec-title"><h2>Nhóm danh mục</h2></div>
-      <div class="list-row" style="padding:11px 8px;background:var(--brand-050);border-radius:8px;margin:0 -8px"><i class="ic fa-solid fa-list fa-icon" style="color:var(--brand)" aria-hidden="true"></i><div style="flex:1;font-size:13px;font-weight:600;color:var(--brand)">Đơn vị / Tổ chức</div></div>
-      <div class="list-row" style="padding:11px 8px;margin:0 -8px"><i class="ic faint fa-solid fa-bullseye fa-icon" aria-hidden="true"></i><div style="flex:1;font-size:13px">Chức danh</div></div>
-      <div class="list-row" style="padding:11px 8px;margin:0 -8px"><i class="ic faint fa-solid fa-book-open fa-icon" aria-hidden="true"></i><div style="flex:1;font-size:13px">Chủ đề / Phân nhóm</div></div>
-      <div class="list-row" style="padding:11px 8px;margin:0 -8px"><i class="ic faint fa-solid fa-money-bill fa-icon" aria-hidden="true"></i><div style="flex:1;font-size:13px">Danh mục chi phí</div></div>
-    </div>
-    <div class="card" style="flex:2;overflow:hidden">
-      <div style="padding:14px 18px" class="sec-title"><h2 style="margin:0">Đơn vị / Tổ chức</h2><span class="faint" style="font-size:12px">Cây tổ chức</span></div>
-      <table class="tbl"><thead><tr><th>Mã</th><th>Tên đơn vị</th><th>Cấp</th><th>Nguồn</th><th></th></tr></thead><tbody>
-      <tr><td><b>TKV</b></td><td>Tập đoàn TKV</td><td>1</td><td><span class="badge b-gray">HR-TKV</span></td><td><button class="btn ghost sm"><i class="ic sm fa-solid fa-gear fa-icon" aria-hidden="true"></i></button></td></tr>
-      <tr><td><b>VBS</b></td><td style="padding-left:28px">└ Trường QTKD Vinacomin</td><td>2</td><td><span class="badge b-gray">HR-TKV</span></td><td><button class="btn ghost sm"><i class="ic sm fa-solid fa-gear fa-icon" aria-hidden="true"></i></button></td></tr>
-      <tr><td><b>HL</b></td><td style="padding-left:28px">└ Công ty Than Hà Lầm</td><td>2</td><td><span class="badge b-gray">HR-TKV</span></td><td><button class="btn ghost sm"><i class="ic sm fa-solid fa-gear fa-icon" aria-hidden="true"></i></button></td></tr>
-      <tr><td><b>NB</b></td><td style="padding-left:28px">└ Công ty Than Núi Béo</td><td>2</td><td><span class="badge b-amber">Nhập tay</span></td><td><button class="btn ghost sm"><i class="ic sm fa-solid fa-gear fa-icon" aria-hidden="true"></i></button></td></tr>
-      </tbody></table>
-    </div>
-  </div>
-</section></main>
-<script src="../../js/app.js"></script>
-<script src="../../js/danh-muc-he-thong.js"></script>
+  <dialog class="catalog-dialog" id="catalogDialog"><form id="catalogForm">
+    <div class="dialog-head"><div><h2 id="catalogDialogTitle">Thêm danh mục</h2><p>Khai báo thông tin và vị trí trong cây danh mục.</p></div><button type="button" class="dialog-close" data-close-dialog aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="dialog-body"><input type="hidden" name="id"><label class="form-field"><span>Mã danh mục <b>*</b></span><input name="code" required maxlength="16" placeholder="VD: VBS-DT"></label><label class="form-field"><span>Tên danh mục <b>*</b></span><input name="name" required maxlength="100" placeholder="Nhập tên danh mục"></label><label class="form-field"><span>Danh mục cha</span><select name="parent"></select></label><label class="form-field"><span>Nguồn dữ liệu</span><select name="source"><option>Nhập tay</option><option>HR-TKV</option><option>LMS</option></select></label></div>
+    <div class="dialog-actions"><button type="button" class="btn ghost" data-close-dialog>Hủy</button><button type="submit" class="btn primary">Lưu danh mục</button></div>
+  </form></dialog>
+
+  <dialog class="catalog-dialog detail-dialog" id="detailDialog"><div class="dialog-head"><div><span class="section-eyebrow">Thông tin danh mục</span><h2 id="detailTitle"></h2></div><button type="button" class="dialog-close" data-close-detail aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></div><div class="detail-grid" id="detailContent"></div><div class="dialog-actions"><button type="button" class="btn ghost" data-close-detail>Đóng</button><button type="button" class="btn primary" id="detailEdit"><i class="fa-solid fa-pen"></i>Chỉnh sửa</button></div></dialog>
+
+  <dialog class="confirm-dialog" id="deleteDialog"><div class="confirm-icon"><i class="fa-solid fa-trash-can"></i></div><h2>Xóa danh mục?</h2><p id="deleteMessage"></p><div class="dialog-actions"><button type="button" class="btn ghost" data-cancel-delete>Hủy</button><button type="button" class="btn danger" id="confirmDelete">Xóa danh mục</button></div></dialog>
+
+  <script src="../../js/app.js"></script>
+  <script src="../../js/danh-muc-he-thong.js"></script>
 </body>
 </html>

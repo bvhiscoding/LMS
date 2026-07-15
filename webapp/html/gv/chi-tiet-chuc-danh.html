@@ -1,1 +1,57 @@
-<!doctype html><html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Chi tiết chức danh | E-Learning VBS</title><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../css/main.css"><link rel="stylesheet" href="../../css/gv/khung-nang-luc.css"></head><body data-role="gv" data-page="gv-position-detail"><main class="main competency-page"><section class="screen active"><header class="competency-head"><div><div class="crumb">Quản lý lộ trình đào tạo <i class="fa-solid fa-chevron-right"></i> Chi tiết chức danh</div><h1>Chi tiết chức danh</h1></div></header><section class="position-hero"><i class="fa-solid fa-briefcase"></i><div><h2>Trưởng phòng Kinh doanh</h2><p>Mã chức danh: <b>TP.KD.01</b> &nbsp; Đơn vị áp dụng: <b>Phòng Kinh doanh</b> &nbsp; <span class="tag green">Đang hoạt động</span></p><small>Chịu trách nhiệm quản lý, điều hành các hoạt động kinh doanh của phòng, đảm bảo đạt mục tiêu doanh số và phát triển thị trường.</small></div><div><button class="btn ghost" id="editPosition"><i class="fa-regular fa-pen-to-square"></i> Sửa</button><button class="btn danger" id="deletePosition"><i class="fa-regular fa-trash-can"></i> Xóa</button></div></section><nav class="competency-tabs" id="detailTabs"><button class="active" data-tab="info">Thông tin</button><button data-tab="skills">Khung năng lực</button><button data-tab="learning">Nội dung học tập</button></nav><div id="detailPanel"></div><dialog class="competency-dialog wide" id="learningDialog"><header><div><h2>Gắn nội dung học tập</h2><p>Chọn các nội dung học tập để gắn cho chức danh</p></div><button data-close><i class="fa-solid fa-xmark"></i></button></header><div class="learning-filter"><input placeholder="Nhập từ khóa..."><select><option>Tất cả chủ đề</option><option>Kỹ năng quản lý</option></select></div><div id="learningList"></div><footer><button class="btn ghost" data-close>Hủy</button><button class="btn primary" id="saveLearning">Lưu nội dung đã chọn</button></footer></dialog><div class="competency-toast" id="competencyToast" hidden></div></section></main><script src="../../js/gv-shell.js"></script><script src="../../js/app.js"></script><script src="../../js/chi-tiet-chuc-danh.js"></script></body></html>
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Chi tiết chức danh | E-Learning VBS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/gv/khung-nang-luc.css">
+</head>
+<body data-role="gv" data-page="gv-position-detail">
+  <main class="main competency-page"><section class="screen active">
+    <header class="competency-head"><div><div class="crumb">Quản lý lộ trình đào tạo <i class="fa-solid fa-chevron-right"></i> Chi tiết chức danh</div><h1>Chi tiết chức danh</h1></div></header>
+    <section class="position-hero"><i class="fa-solid fa-briefcase"></i><div><h2>Trưởng phòng Kinh doanh</h2><p>Mã chức danh: <b>TP.KD.01</b> &nbsp; Đơn vị áp dụng: <b>Phòng Kinh doanh</b> &nbsp; <span class="tag green">Đang hoạt động</span></p><small>Chịu trách nhiệm quản lý, điều hành các hoạt động kinh doanh của phòng, đảm bảo đạt mục tiêu doanh số và phát triển thị trường.</small></div><div><button class="btn ghost" id="editPosition"><i class="fa-regular fa-pen-to-square"></i> Sửa</button><button class="btn danger" id="deletePosition"><i class="fa-regular fa-trash-can"></i> Xóa</button></div></section>
+    <nav class="competency-tabs" id="detailTabs"><button class="active" data-tab="info">Thông tin</button><button data-tab="skills">Khung năng lực</button><button data-tab="learning">Nội dung học tập</button></nav>
+    <div id="detailPanel"></div>
+
+    <dialog class="skill-picker-dialog" id="skillDialog">
+      <section class="skill-picker-shell">
+        <header><div><h2>Gán năng lực</h2><p>Chọn các năng lực có sẵn để gán cho chức danh: <b>Trưởng phòng Kinh doanh</b></p></div><button type="button" data-close-skill aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></header>
+        <div class="skill-picker-body">
+          <div class="skill-picker-filters">
+            <label><span>Từ khóa</span><div class="skill-search"><input id="skillSearch" type="search" placeholder="Nhập từ khóa..."><i class="fa-solid fa-magnifying-glass"></i></div></label>
+            <label><span>Nhóm năng lực</span><select id="skillGroupFilter"><option value="">-- Tất cả nhóm --</option><option>Lãnh đạo & Quản lý</option><option>Năng lực cốt lõi</option><option>Năng lực chuyên môn</option></select></label>
+            <label><span>Loại năng lực</span><select id="skillTypeFilter"><option value="">-- Tất cả loại --</option><option>Bắt buộc</option><option>Khuyến nghị</option></select></label>
+          </div>
+          <div class="skill-selection-bar"><strong>Đã chọn <span id="skillSelectedCount">3</span> năng lực</strong><button type="button" id="clearSkillSelection">Bỏ chọn tất cả</button></div>
+          <div class="skill-picker-list" id="skillPickerList"></div>
+          <div class="skill-picker-empty" id="skillPickerEmpty" hidden><i class="fa-regular fa-folder-open"></i><p>Không tìm thấy năng lực phù hợp.</p></div>
+          <nav class="skill-picker-pagination" id="skillPagination" aria-label="Phân trang năng lực"></nav>
+        </div>
+        <footer><button type="button" class="btn ghost" data-close-skill>Hủy</button><button type="button" class="btn primary" id="saveSkills">Lưu (3)</button></footer>
+      </section>
+    </dialog>
+
+    <dialog class="learning-picker-dialog" id="learningDialog">
+      <section class="learning-picker-shell">
+        <header><div><h2>Gắn nội dung học tập</h2><p>Chọn các nội dung học tập để gắn cho chức danh: <b>Trưởng phòng Kinh doanh</b></p></div><button type="button" data-close aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></header>
+        <div class="learning-picker-body">
+          <div class="learning-picker-filters">
+            <label><span>Từ khóa</span><div class="learning-search"><input id="learningSearch" type="search" placeholder="Nhập từ khóa..."><i class="fa-solid fa-magnifying-glass"></i></div></label>
+            <label><span>Chủ đề</span><select id="learningTopicFilter"><option value="">-- Tất cả chủ đề --</option><option>Kỹ năng quản lý</option><option>Quản trị nhân sự</option><option>Kỹ năng bán hàng</option><option>Tin học văn phòng</option></select></label>
+            <label><span>Loại nội dung</span><select id="learningTypeFilter"><option value="">-- Tất cả loại --</option><option>Khóa học</option><option>Video</option><option>Tài liệu</option></select></label>
+          </div>
+          <div class="learning-selection-bar"><strong>Đã chọn <span id="learningSelectedCount">3</span> nội dung</strong><button type="button" id="clearLearningSelection">Bỏ chọn tất cả</button></div>
+          <div class="learning-picker-list" id="learningList"></div>
+          <div class="learning-picker-empty" id="learningPickerEmpty" hidden><i class="fa-regular fa-folder-open"></i><p>Không tìm thấy nội dung phù hợp.</p></div>
+          <nav class="learning-picker-pagination" id="learningPagination" aria-label="Phân trang nội dung học tập"></nav>
+        </div>
+        <footer><button type="button" class="btn ghost" data-close>Hủy</button><button type="button" class="btn primary" id="saveLearning">Lưu (3)</button></footer>
+      </section>
+    </dialog>
+    <div class="competency-toast" id="competencyToast" hidden></div>
+  </section></main>
+  <script src="../../js/gv-shell.js"></script><script src="../../js/app.js"></script><script src="../../js/chi-tiet-chuc-danh.js"></script>
+</body>
+</html>

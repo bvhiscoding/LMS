@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Chi tiết chương trình | E-Learning VBS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/gv/chu-de-chuong-trinh.css">
+</head>
+<body data-role="gv" data-page="gv-program">
+  <main class="main topic-detail-page">
+    <section class="screen active">
+      <header class="topic-detail-head">
+        <button id="backPrograms" aria-label="Quay lại"><i class="fa-solid fa-arrow-left"></i></button>
+        <div><div class="crumb">Chương trình <i class="fa-solid fa-chevron-right"></i> Chi tiết chương trình</div><h1 id="programTitle">Chi tiết chương trình</h1></div>
+      </header>
+      <section class="topic-hero">
+        <div class="topic-hero-image"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div><h2 id="programName"></h2><p id="programDescription"></p><h3>Phân nhóm: <span id="programGroup"></span> · <em id="programStatus"></em></h3></div>
+        <div><button class="btn ghost" id="copyProgram"><i class="fa-regular fa-copy"></i>Sao chép</button><button class="btn primary" id="editProgram"><i class="fa-solid fa-pen"></i>Chỉnh sửa</button></div>
+      </section>
+      <nav class="topic-detail-tabs"><button class="active" data-program-tab="overview">Tổng quan</button><button data-program-tab="topics">Cấu trúc chủ đề</button><button data-program-tab="classes">Lớp triển khai</button><button data-program-tab="history">Lịch sử phiên bản</button></nav>
+      <section class="topic-detail-panel" id="programPanel"></section>
+      <div class="topic-toast" id="programToast" hidden role="status"></div>
+    </section>
+  </main>
+  <script src="../../js/gv-shell.js"></script><script src="../../js/app.js"></script><script src="../../js/chi-tiet-chuong-trinh.js"></script>
+</body>
+</html>

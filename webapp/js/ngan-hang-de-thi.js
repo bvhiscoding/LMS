@@ -1,10 +1,11 @@
 (() => {
   const view = document.getElementById('bankView');
   if (!view) return;
+  view.dataset.realBankActions = 'true';
   const byId = (id) => document.getElementById(id);
   const escapeHtml = (value) => String(value).replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[char]);
 
-  const questions = [
+  let questions = [
     ['CH-001245', 'An toàn lao động là gì?', 'Trắc nghiệm', 'Dễ', 0.5],
     ['CH-001246', 'Mục tiêu của công tác an toàn lao động là?', 'Trắc nghiệm', 'Trung bình', 0.5],
     ['CH-001247', 'Theo bạn, yếu tố nào sau đây không phải là nguy cơ mất an toàn?', 'Trắc nghiệm', 'Khó', 0.5],
@@ -22,7 +23,7 @@
     date: `${20 - Math.floor(index / 2)}/05/2024`, status: index === 7 ? 'Ngừng sử dụng' : 'Sử dụng'
   }));
 
-  const exams = [
+  let exams = [
     ['DE-000123', 'Đề thi An toàn lao động - Cơ bản', 'An toàn lao động', 40, 40, 60, 'Thủ công', 'Nguyễn Văn A'],
     ['DE-000122', 'Đề thi An toàn lao động - Nâng cao', 'An toàn lao động', 50, 50, 75, 'Tự động', 'Nguyễn Văn A'],
     ['DE-000121', 'Đề thi PCCC cơ sở - Mức 2', 'Phòng cháy chữa cháy', 30, 30, 45, 'Thủ công', 'Trần Thị B'],
@@ -33,9 +34,11 @@
     ['DE-000116', 'Đề thi An toàn lao động - Ôn tập', 'An toàn lao động', 60, 60, 90, 'Thủ công', 'Nguyễn Văn A']
   ].map((row, index) => ({ id: 123 - index, code: row[0], name: row[1], category: row[2], count: row[3], score: row[4], duration: row[5], method: row[6], author: row[7] }));
 
+  questions = window.LMSStore.seed('questions',questions);
+  exams = window.LMSStore.seed('exams',exams);
   const state = {
     tab: new URLSearchParams(location.search).get('tab') === 'exams' ? 'exams' : 'questions',
-    page: 1, pageSize: 10, filters: {}, manualTab: 'bank', selectedQuestions: new Set([0, 1, 2])
+    page: 1, pageSize: 10, filters: {}
   };
   let activeExam = null;
   let detailPreviewZoom = 85;
@@ -47,12 +50,12 @@
   const normalize = (value) => String(value ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toLowerCase();
   const levelClass = (level) => level === 'Dễ' ? '' : level === 'Khó' ? 'hard' : 'medium';
 
-  const questionView = () => `<div class="bank-toolbar"><h2><i class="fa-regular fa-circle-question"></i>Danh sách câu hỏi</h2><div><button class="btn ghost" data-action="import"><i class="fa-solid fa-file-arrow-up"></i>Nhập Excel</button><a class="btn primary" href="them-cau-hoi.html"><i class="fa-solid fa-plus"></i>Thêm câu hỏi</a><button class="btn ghost" data-action="bulk">Khác <i class="fa-solid fa-chevron-down"></i></button></div></div>
+  const questionView = () => `<div class="bank-toolbar"><h2><i class="fa-regular fa-circle-question"></i>Danh sách câu hỏi</h2><div><button class="btn ghost" data-action="import"><i class="fa-solid fa-file-arrow-up"></i>Nhập Excel</button><a class="btn primary" href="them-cau-hoi.html"><i class="fa-solid fa-plus"></i>Thêm câu hỏi</a></div></div>
     <form class="bank-filter" id="bankFilter"><label class="bank-search"><span>Tìm kiếm</span><input name="q" placeholder="Tìm kiếm câu hỏi, mã câu hỏi..."><i class="fa-solid fa-magnifying-glass"></i></label><label><span>Chuyên đề</span><select name="category"><option value="">Tất cả</option><option>An toàn lao động</option><option>Kỹ thuật mỏ</option><option>An toàn vận hành</option></select></label><label><span>Loại câu hỏi</span><select name="type"><option value="">Tất cả</option><option>Trắc nghiệm</option><option>Đúng / Sai</option><option>Tự luận</option></select></label><label><span>Mức độ</span><select name="level"><option value="">Tất cả</option><option>Dễ</option><option>Trung bình</option><option>Khó</option></select></label><label><span>Trạng thái</span><select name="status"><option value="">Tất cả</option><option>Sử dụng</option><option>Ngừng sử dụng</option></select></label><button type="button" class="btn ghost" data-action="reset"><i class="fa-solid fa-filter-circle-xmark"></i>Xóa lọc</button></form>
     ${tableShell('<th><input type="checkbox" data-select-all></th><th>Mã câu hỏi</th><th>Nội dung câu hỏi</th><th>Loại câu hỏi</th><th>Chủ đề</th><th>Mức độ</th><th>Điểm</th><th>Người tạo</th><th>Thao tác</th>')}`;
 
-  const examView = () => `<div class="bank-toolbar"><h2><i class="fa-regular fa-file-lines"></i>Danh sách đề thi</h2><div><button class="btn ghost" data-action="import"><i class="fa-solid fa-file-arrow-up"></i>Nhập Excel</button><button class="btn ghost" data-action="filter-focus"><i class="fa-solid fa-filter"></i>Bộ lọc</button><button class="btn primary" data-action="open-manual-exam"><i class="fa-solid fa-plus"></i>Tạo đề thủ công</button><button class="btn primary green" data-action="open-auto-exam"><i class="fa-solid fa-wand-magic-sparkles"></i>Tạo đề tự động</button></div></div>
-    <form class="bank-filter exam-filter" id="bankFilter"><label class="bank-search"><span>Tìm kiếm</span><input name="q" placeholder="Tìm kiếm theo mã đề, tên đề thi..."><i class="fa-solid fa-magnifying-glass"></i></label><label><span>Chuyên đề</span><select name="category"><option value="">Tất cả chuyên đề</option><option>An toàn lao động</option><option>Phòng cháy chữa cháy</option><option>Sơ cứu y tế</option></select></label><label><span>Hình thức tạo</span><select name="method"><option value="">Tất cả</option><option>Thủ công</option><option>Tự động</option></select></label><label><span>Người tạo</span><select name="author"><option value="">Tất cả người tạo</option><option>Nguyễn Văn A</option><option>Trần Thị B</option><option>Lê Văn C</option></select></label><button type="button" class="btn ghost" data-action="reset"><i class="fa-solid fa-rotate-left"></i>Xóa bộ lọc</button></form>
+  const examView = () => `<div class="bank-toolbar"><h2><i class="fa-regular fa-file-lines"></i>Danh sách đề thi</h2><div><button class="btn ghost" data-action="import"><i class="fa-solid fa-file-arrow-up"></i>Nhập Excel</button><button class="btn ghost" data-action="filter-focus"><i class="fa-solid fa-filter"></i>Bộ lọc</button><button class="btn primary" data-action="open-random-exam"><i class="fa-solid fa-shuffle"></i>Tạo đề ngẫu nhiên</button><button class="btn primary green" data-action="open-auto-exam"><i class="fa-solid fa-wand-magic-sparkles"></i>Tạo đề tự động</button></div></div>
+    <form class="bank-filter exam-filter" id="bankFilter"><label class="bank-search"><span>Tìm kiếm</span><input name="q" placeholder="Tìm kiếm theo mã đề, tên đề thi..."><i class="fa-solid fa-magnifying-glass"></i></label><label><span>Chuyên đề</span><select name="category"><option value="">Tất cả chuyên đề</option><option>An toàn lao động</option><option>Phòng cháy chữa cháy</option><option>Sơ cứu y tế</option></select></label><label><span>Hình thức tạo</span><select name="method"><option value="">Tất cả</option><option>Ngẫu nhiên</option><option>Thủ công</option><option>Tự động</option></select></label><label><span>Người tạo</span><select name="author"><option value="">Tất cả người tạo</option><option>Nguyễn Văn A</option><option>Trần Thị B</option><option>Lê Văn C</option></select></label><button type="button" class="btn ghost" data-action="reset"><i class="fa-solid fa-rotate-left"></i>Xóa bộ lọc</button></form>
     ${tableShell('<th><input type="checkbox" data-select-all></th><th>Mã đề</th><th>Tên đề thi</th><th>Chuyên đề</th><th>Số câu</th><th>Tổng điểm</th><th>Thời gian</th><th>Hình thức tạo</th><th>Người tạo</th><th>Thao tác</th>')}`;
 
   function tableShell(headers) {
@@ -75,9 +78,9 @@
     const rows = data.slice((state.page - 1) * state.pageSize, state.page * state.pageSize);
     const body = byId('bankBody');
     if (state.tab === 'questions') {
-      body.innerHTML = rows.map((item) => `<tr><td><input type="checkbox"></td><td><a href="chi-tiet-cau-hoi.html?id=${item.id}">${item.code}</a></td><td>${escapeHtml(item.content)}</td><td><span class="bank-badge">${item.type}</span></td><td>${item.topic}</td><td><span class="bank-badge ${levelClass(item.level)}">${item.level}</span></td><td>${item.score}</td><td>${item.author}<small>${item.date}</small></td><td>${actionMenu(item, 'question')}</td></tr>`).join('');
+      body.innerHTML = rows.map((item) => `<tr><td><input type="checkbox" data-record-id="${item.id}"></td><td><a href="chi-tiet-cau-hoi.html?id=${item.id}">${item.code||`CH-${String(item.id).padStart(6,'0')}`}</a></td><td>${escapeHtml(item.content)}</td><td><span class="bank-badge">${item.type}</span></td><td>${item.topic||item.category}</td><td><span class="bank-badge ${levelClass(item.level)}">${item.level}</span></td><td>${item.score}</td><td>${item.author||'Nguyễn Văn A'}<small>${item.date||new Date(item.createdAt||Date.now()).toLocaleDateString('vi-VN')}</small></td><td>${actionMenu(item, 'question')}</td></tr>`).join('');
     } else {
-      body.innerHTML = rows.map((item) => `<tr><td><input type="checkbox"></td><td><button class="exam-code-link" data-action="view-exam" data-id="${item.id}">${item.code}</button></td><td>${item.name}</td><td>${item.category}</td><td>${item.count}</td><td>${item.score.toFixed(1)}</td><td>${item.duration} phút</td><td><span class="bank-badge ${item.method === 'Tự động' ? 'auto' : ''}">${item.method}</span></td><td>${item.author}</td><td>${actionMenu(item, 'exam')}</td></tr>`).join('');
+      body.innerHTML = rows.map((item) => `<tr><td><input type="checkbox" data-record-id="${item.id}"></td><td><button class="exam-code-link" data-action="view-exam" data-id="${item.id}">${item.code}</button></td><td>${item.name}</td><td>${item.category}</td><td>${item.count}</td><td>${Number(item.score).toFixed(1)}</td><td>${item.duration} phút</td><td><span class="bank-badge ${item.method === 'Tự động' ? 'auto' : ''}">${item.method}</span></td><td>${item.author}</td><td>${actionMenu(item, 'exam')}</td></tr>`).join('');
     }
     if (!rows.length) body.innerHTML = `<tr><td colspan="10" class="bank-empty">Không tìm thấy dữ liệu phù hợp</td></tr>`;
     const from = data.length ? (state.page - 1) * state.pageSize + 1 : 0;
@@ -104,20 +107,6 @@
   }
   function updateAutoTotal() {
     byId('autoQuestionTotal').textContent = [...document.querySelectorAll('[data-matrix-count]')].reduce((sum, input) => sum + Number(input.value || 0), 0);
-  }
-
-  function renderManualQuestions() {
-    const query = normalize(byId('manualQuestionSearch')?.value || '');
-    const visible = questions.map((item, index) => ({ item, index })).filter(({ item, index }) => (!query || normalize(`${item.code} ${item.content}`).includes(query)) && (state.manualTab === 'bank' || state.selectedQuestions.has(index)));
-    byId('manualQuestionBody').innerHTML = visible.map(({ item, index }) => {
-      const selected = state.selectedQuestions.has(index);
-      return `<tr><td><input type="checkbox" data-manual-question="${index}" ${selected ? 'checked' : ''}></td><td>${item.code}</td><td title="${escapeHtml(item.content)}">${escapeHtml(item.content)}</td><td>${item.type}</td><td><span class="question-level ${levelClass(item.level)}">${item.level}</span></td><td>${item.score.toFixed(1)}</td><td><button type="button" class="add-question ${selected ? 'selected' : ''}" data-toggle-question="${index}" aria-label="${selected ? 'Bỏ câu hỏi' : 'Thêm câu hỏi'}"><i class="fa-solid ${selected ? 'fa-check' : 'fa-plus'}"></i></button></td></tr>`;
-    }).join('') || '<tr><td colspan="7" class="bank-empty">Không có câu hỏi phù hợp</td></tr>';
-    const selected = [...state.selectedQuestions].map((index) => questions[index]).filter(Boolean);
-    byId('manualSelectedCount').textContent = `${selected.length} câu`;
-    byId('manualSelectedTabCount').textContent = selected.length;
-    byId('manualSelectedScore').textContent = `${selected.reduce((sum, item) => sum + item.score, 0).toFixed(1)} / 10`;
-    document.querySelectorAll('[data-manual-tab]').forEach((button) => button.classList.toggle('active', button.dataset.manualTab === state.manualTab));
   }
 
   function paperTemplate(exam) {
@@ -185,7 +174,7 @@
   view.addEventListener('change', (event) => {
     if (event.target.matches('[data-select-all]')) document.querySelectorAll('#bankBody input[type=checkbox]').forEach((checkbox) => { checkbox.checked = event.target.checked; });
   });
-  view.addEventListener('click', (event) => {
+  view.addEventListener('click', async (event) => {
     const button = event.target.closest('[data-action],[data-page]'); if (!button) return;
     if (button.dataset.page) { state.page = Number(button.dataset.page); renderRows(); return; }
     const action = button.dataset.action;
@@ -193,28 +182,16 @@
     if (action === 'reset') { button.closest('form').reset(); state.filters = {}; renderRows(); }
     if (action === 'import') byId('importDialog').showModal();
     if (action === 'open-auto-exam') { renderAutoMatrix(); byId('autoExamDialog').showModal(); }
-    if (action === 'open-manual-exam') { state.manualTab = 'bank'; renderManualQuestions(); byId('manualExamDialog').showModal(); }
+    if (action === 'open-random-exam') byId('randomExamDialog').showModal();
     if (action === 'view-exam') openExamDetail(button.dataset.id);
-    if (action === 'bulk') toast('Đã mở nhóm thao tác hàng loạt');
+    if (action === 'bulk') { const selected=[...view.querySelectorAll('[data-record-id]:checked')].map(input=>input.dataset.recordId);if(!selected.length){toast('Hãy chọn ít nhất một bản ghi');return}const accepted=await window.appDialog({title:'Thao tác hàng loạt',html:`<p class="app-dialog-note">Đã chọn <b>${selected.length}</b> ${state.tab==='questions'?'câu hỏi':'đề thi'}.</p><label class="field">Thao tác<select id="bankBulkAction"><option value="activate">Chuyển sang sử dụng</option><option value="pause">Ngừng sử dụng</option><option value="duplicate">Tạo bản sao</option><option value="delete">Xóa đã chọn</option></select></label><p>Thao tác xóa không thể hoàn tác trong danh sách hiện tại.</p>`,confirmText:'Áp dụng',cancelText:'Hủy'});if(!accepted)return;const command=byId('bankBulkAction').value,target=state.tab==='questions'?questions:exams;if(command==='delete'){const filtered=target.filter(item=>!selected.includes(String(item.id)));if(state.tab==='questions')questions=filtered;else exams=filtered}else if(command==='duplicate'){selected.forEach(id=>{const item=target.find(record=>String(record.id)===id);if(item)target.unshift({...item,id:Date.now()+Math.random(),code:`${item.code}-COPY`,name:item.name?`${item.name} - Bản sao`:undefined,status:'Ngừng sử dụng'})})}else selected.forEach(id=>{const item=target.find(record=>String(record.id)===id);if(item)item.status=command==='activate'?'Sử dụng':'Ngừng sử dụng'});window.LMSStore.write(state.tab==='questions'?'questions':'exams',target);renderRows();toast(`Đã cập nhật ${selected.length} bản ghi`); }
+    if (action === 'copy') {const target=state.tab==='questions'?questions:exams,item=target.find(record=>String(record.id)===button.dataset.id);if(item){const copy={...item,id:Date.now(),code:`${item.code}-COPY`,name:item.name?`${item.name} - Bản sao`:undefined,status:'Ngừng sử dụng'};target.unshift(copy);window.LMSStore.write(state.tab==='questions'?'questions':'exams',target);renderRows();toast('Đã tạo bản sao')}}
+    if (action === 'delete') {const target=state.tab==='questions'?questions:exams,item=target.find(record=>String(record.id)===button.dataset.id);if(item){const accepted=await window.appDialog({title:'Xóa dữ liệu',html:`<p class="app-dialog-danger"><b>${escapeHtml(item.code)} · ${escapeHtml(item.name||item.content)}</b></p><p>Bản ghi sẽ bị xóa khỏi ngân hàng dữ liệu.</p>`,confirmText:'Xóa',cancelText:'Hủy'});if(accepted){if(state.tab==='questions')questions=questions.filter(record=>record.id!==item.id);else exams=exams.filter(record=>record.id!==item.id);window.LMSStore.write(state.tab==='questions'?'questions':'exams',state.tab==='questions'?questions:exams);renderRows();toast('Đã xóa dữ liệu')}}}
     if (action === 'filter-focus') byId('bankFilter').querySelector('input').focus();
   });
 
   byId('autoMatrixBody').addEventListener('input', updateAutoTotal);
-  byId('manualExamDialog').addEventListener('click', (event) => {
-    const tab = event.target.closest('[data-manual-tab]');
-    if (tab) { state.manualTab = tab.dataset.manualTab; renderManualQuestions(); return; }
-    const toggle = event.target.closest('[data-toggle-question]');
-    if (toggle) { const index = Number(toggle.dataset.toggleQuestion); state.selectedQuestions.has(index) ? state.selectedQuestions.delete(index) : state.selectedQuestions.add(index); renderManualQuestions(); return; }
-    if (event.target.closest('[data-show-selected]')) { state.manualTab = 'selected'; renderManualQuestions(); }
-    if (event.target.closest('[data-save-draft]')) toast('Đã lưu bản nháp đề thi');
-    if (event.target.closest('[data-preview-manual]')) openExamDetail(exams[0].id);
-  });
-  byId('manualExamDialog').addEventListener('change', (event) => {
-    if (event.target.matches('[data-manual-question]')) { const index = Number(event.target.dataset.manualQuestion); event.target.checked ? state.selectedQuestions.add(index) : state.selectedQuestions.delete(index); renderManualQuestions(); }
-    if (event.target.id === 'manualSelectAll') { questions.forEach((_, index) => event.target.checked ? state.selectedQuestions.add(index) : state.selectedQuestions.delete(index)); renderManualQuestions(); }
-  });
-  byId('manualQuestionSearch').addEventListener('input', renderManualQuestions);
-  byId('examDetailDialog').addEventListener('click', (event) => {
+  byId('examDetailDialog').addEventListener('click', async (event) => {
     if (event.target.closest('[data-close-dialog]')) {
       if (byId('examDetailDialog').open) byId('examDetailDialog').close();
       return;
@@ -227,16 +204,12 @@
     }
     const action = event.target.closest('[data-detail-action]')?.dataset.detailAction;
     if (!action) return;
-    if (action === 'copy') toast('Đã sao chép đề thi');
-    if (action === 'export') toast('Đã tạo bản xuất PDF');
+    if (action === 'copy') {const copy={...activeExam,id:Date.now(),code:`${activeExam.code}-COPY`,name:`${activeExam.name} - Bản sao`};exams.unshift(copy);window.LMSStore.write('exams',exams);renderRows();toast('Đã sao chép đề thi');}
+    if (action === 'export') {const printWindow=window.open('','_blank','width=980,height=760');if(!printWindow){toast('Trình duyệt đang chặn cửa sổ in');return}printWindow.document.write(`<html><head><title>${escapeHtml(activeExam.code)}</title><style>body{font:15px Arial;max-width:800px;margin:40px auto;line-height:1.5}.paper-answers{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}h2{text-align:center}</style></head><body>${paperTemplate(activeExam)}</body></html>`);printWindow.document.close();printWindow.focus();setTimeout(()=>printWindow.print(),250);toast('Đã mở bản in để lưu PDF');}
     if (action === 'edit') setExamDetailMode(true);
     if (action === 'cancel-edit') { renderExamDetail(activeExam); setExamDetailMode(false); }
     if (action === 'save-edit') byId('examDetailEditForm').requestSubmit();
-    if (action === 'delete' && confirm('Xóa đề thi này?')) {
-      const index = exams.indexOf(activeExam);
-      if (index >= 0) exams.splice(index, 1);
-      byId('examDetailDialog').close(); renderRows(); toast('Đã xóa đề thi');
-    }
+    if (action === 'delete') {const used=Number(activeExam.usedCount||0);if(used){toast('Đề đã được sử dụng; hãy lưu trữ thay vì xóa');return}const accepted=await window.appDialog({title:'Xóa đề thi',html:`<p class="app-dialog-danger"><b>${escapeHtml(activeExam.code)} · ${escapeHtml(activeExam.name)}</b></p><p>${activeExam.count} câu hỏi · ${activeExam.duration} phút · chưa có ca thi liên kết.</p>`,confirmText:'Xóa đề',cancelText:'Hủy'});if(accepted){exams=exams.filter(item=>item.id!==activeExam.id);window.LMSStore.write('exams',exams);byId('examDetailDialog').close();renderRows();toast('Đã xóa đề thi')}}
   });
   byId('examDetailEditForm').addEventListener('input', () => {
     if (!activeExam) return;
@@ -251,14 +224,18 @@
     activeExam.duration = Number(byId('editExamDuration').value);
     activeExam.score = Number(byId('editExamScore').value);
     activeExam.note = byId('editExamNote').value.trim();
-    renderExamDetail(activeExam); renderRows(); setExamDetailMode(false); toast('Đã lưu thay đổi đề thi');
+    window.LMSStore.write('exams',exams); renderExamDetail(activeExam); renderRows(); setExamDetailMode(false); toast('Đã lưu thay đổi đề thi');
   });
 
   document.querySelectorAll('[data-close-dialog]').forEach((button) => button.addEventListener('click', () => button.closest('dialog').close()));
   document.querySelectorAll('.bank-dialog').forEach((dialog) => dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); }));
-  byId('autoExamBuilderForm').addEventListener('submit', (event) => { event.preventDefault(); if (!event.currentTarget.reportValidity()) return; byId('autoExamDialog').close(); toast('Đã tạo đề thi tự động'); });
-  byId('manualExamBuilderForm').addEventListener('submit', (event) => { event.preventDefault(); if (!event.currentTarget.reportValidity()) return; exams.unshift({ id: Date.now(), code: `DE-${String(Date.now()).slice(-6)}`, name: event.currentTarget.elements.name.value, category: 'An toàn lao động', count: state.selectedQuestions.size, score: 10, duration: 45, method: 'Thủ công', author: 'Nguyễn Văn A' }); byId('manualExamDialog').close(); renderRows(); toast('Đã lưu đề thi thủ công'); });
-  byId('importForm').addEventListener('submit', (event) => { event.preventDefault(); });
+  byId('autoExamBuilderForm').addEventListener('submit', (event) => { event.preventDefault(); if (!event.currentTarget.reportValidity()) return;const inputs=[...event.currentTarget.querySelectorAll('.auto-form-grid input,.auto-form-grid select')],total=Number(byId('autoQuestionTotal').textContent),exam={id:Date.now(),code:`DE-${String(Date.now()).slice(-6)}`,name:event.currentTarget.elements.name.value.trim(),category:inputs[1]?.value||'An toàn lao động',count:total,score:Number(inputs[3]?.value||10),duration:Number(inputs[2]?.value||45),method:'Tự động',author:'Nguyễn Văn A',matrix:[...document.querySelectorAll('[data-matrix-count]')].map(input=>Number(input.value))};exams.unshift(exam);window.LMSStore.write('exams',exams);byId('autoExamDialog').close();renderRows();toast(`Đã tạo đề ${exam.code} với ${total} câu`); });
+  const randomForm = byId('randomExamForm');
+  const updateRandomPassUnit = () => { const score=Number(randomForm.elements.score.value)||0,pass=Number(randomForm.elements.passScore.value)||0,percent=score?Math.round(pass/score*100):0;byId('randomPassUnit').textContent=`điểm (${percent}%)`;randomForm.elements.passScore.max=String(score); };
+  randomForm.addEventListener('input', updateRandomPassUnit);
+  randomForm.addEventListener('submit', (event) => { event.preventDefault();if(!event.currentTarget.reportValidity())return;const data=Object.fromEntries(new FormData(event.currentTarget)),score=Number(data.score),passScore=Number(data.passScore),count=Number(data.count),duration=Number(data.duration);if(passScore>score){toast('Điểm đạt không được lớn hơn tổng điểm');event.currentTarget.elements.passScore.focus();return}const matching=questions.filter(item=>normalize(item.category||item.topic||'')===normalize(data.category)),pool=(matching.length?matching:questions).slice();for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]]}const selected=pool.slice(0,count),exam={id:Date.now(),code:`DE-${String(Date.now()).slice(-6)}`,name:data.name.trim(),description:data.description.trim(),note:data.description.trim(),category:data.category,count,score,duration,passScore,method:'Ngẫu nhiên',author:'Nguyễn Văn A',questionIds:selected.map(item=>item.id),shuffleQuestions:true,shuffleAnswers:true};exams.unshift(exam);window.LMSStore.write('exams',exams);byId('randomExamDialog').close();renderRows();toast(`Đã tạo đề ${exam.code} với ${count} câu hỏi ngẫu nhiên`);event.currentTarget.reset();updateRandomPassUnit(); });
+  const importForm=byId('importForm'),importInput=importForm.querySelector('input[type=file]');importForm.dataset.realImport='true';importInput.accept='.csv,text/csv';importInput.closest('label').querySelector('b').textContent='Chọn hoặc kéo thả tệp CSV';importInput.closest('label').querySelector('small').textContent='Định dạng .csv, tối đa 10MB';
+  importForm.addEventListener('submit', async (event) => {event.preventDefault();if(!event.currentTarget.reportValidity())return;const file=importInput.files[0];if(file.size>10*1024*1024){toast('Tệp vượt quá 10MB');return}const lines=(await file.text()).replace(/^\uFEFF/,'').split(/\r?\n/).filter(Boolean),headers=lines.shift()?.split(',').map(value=>normalize(value))||[],rows=lines.map((line,index)=>{const cells=line.split(',').map(value=>value.trim().replace(/^"|"$/g,'')),get=(...keys)=>{const position=headers.findIndex(header=>keys.includes(header));return position>=0?cells[position]:''};return state.tab==='questions'?{row:index+2,code:get('code','ma','mã'),content:get('content','noi dung','nội dung'),type:get('type','loai','loại')||'Trắc nghiệm',category:get('category','chuyen de','chuyên đề')||'An toàn lao động',topic:get('topic','chu de','chủ đề')||'An toàn lao động',level:get('level','muc do','mức độ')||'Trung bình',score:Number(get('score','diem','điểm')||1),status:'Sử dụng',author:'Nguyễn Văn A'}:{row:index+2,code:get('code','ma','mã'),name:get('name','ten','tên'),category:get('category','chuyen de','chuyên đề')||'An toàn lao động',count:Number(get('count','so cau','số câu')||0),score:Number(get('score','diem','điểm')||10),duration:Number(get('duration','thoi gian','thời gian')||45),method:get('method','hinh thuc','hình thức')||'Thủ công',author:'Nguyễn Văn A'}}),valid=rows.filter(item=>item.code&&(state.tab==='questions'?item.content:item.name)),duplicates=valid.filter(item=>(state.tab==='questions'?questions:exams).some(record=>normalize(record.code)===normalize(item.code))),accepted=await window.appDialog({title:'Kiểm tra dữ liệu nhập',html:`<div class="app-dialog-wide"><div class="app-dialog-summary"><span><b>${rows.length}</b>dòng dữ liệu</span><span><b>${valid.length-duplicates.length}</b>có thể nhập</span><span><b>${rows.length-valid.length+duplicates.length}</b>lỗi / trùng</span></div><p class="app-dialog-note">Chỉ dòng có mã và ${state.tab==='questions'?'nội dung câu hỏi':'tên đề thi'} hợp lệ, không trùng mã mới được nhập.</p><div style="overflow:auto;max-height:320px"><table class="bank-table"><thead><tr><th>Dòng</th><th>Mã</th><th>Nội dung</th><th>Kết quả</th></tr></thead><tbody>${rows.map(item=>{const duplicate=duplicates.includes(item),invalid=!item.code||!(item.content||item.name);return`<tr><td>${item.row}</td><td>${escapeHtml(item.code||'—')}</td><td>${escapeHtml(item.content||item.name||'—')}</td><td>${invalid?'Thiếu dữ liệu':duplicate?'Trùng mã':'Hợp lệ'}</td></tr>`}).join('')}</tbody></table></div></div>`,confirmText:`Nhập ${valid.length-duplicates.length} bản ghi`,cancelText:'Hủy'});if(!accepted)return;const imported=valid.filter(item=>!duplicates.includes(item)).map((item,index)=>({...item,id:Date.now()+index})),target=state.tab==='questions'?questions:exams;target.unshift(...imported);window.LMSStore.write(state.tab==='questions'?'questions':'exams',target);importForm.closest('dialog').close();importForm.reset();renderRows();toast(`Đã nhập ${imported.length} bản ghi`);});
 
-  renderAutoMatrix(); renderManualQuestions(); render();
+  renderAutoMatrix(); updateRandomPassUnit(); render();
 })();

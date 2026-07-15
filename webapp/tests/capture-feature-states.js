@@ -94,10 +94,6 @@ async (page) => {
     await page.locator('button').filter({ hasText: /1[.,][02]00đ/ }).first().click();
   });
 
-  await capture('gv-diem-danh-ma-qr', async () => {
-    await go('/html/gv/diem-danh-cham-diem.html');
-    await page.locator('#gv-grade .page-head button').first().click();
-  });
   await capture('gv-hoc-lieu-tao-noi-dung', async () => {
     await go('/html/gv/quan-ly-hoc-lieu.html');
     await page.locator('#gv-content .page-head button').nth(1).click();

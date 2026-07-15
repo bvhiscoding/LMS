@@ -54,26 +54,24 @@
     </form>
   </dialog>
 
-  <dialog class="bank-dialog exam-builder-dialog manual-builder-dialog" id="manualExamDialog">
-    <form id="manualExamBuilderForm">
-      <header><h2>Tạo đề thủ công</h2><button type="button" data-close-dialog aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></header>
-      <div class="exam-builder-body">
-        <div class="manual-form-grid">
-          <label class="wide"><span>Tên đề thi</span><input name="name" value="Đề thi cuối khóa - An toàn lao động" required></label>
-          <label><span>Chuyên đề</span><select><option>An toàn lao động</option><option>Phòng cháy chữa cháy</option></select></label>
-          <label><span>Thời gian làm bài (phút)</span><input type="number" value="45"></label>
-          <label><span>Tổng điểm</span><input type="number" value="10"></label>
-          <div class="manual-checks"><label><input type="checkbox" checked> Xáo trộn câu hỏi</label><label><input type="checkbox" checked> Xáo trộn đáp án</label></div>
+  <dialog class="bank-dialog random-exam-dialog" id="randomExamDialog">
+    <form id="randomExamForm">
+      <header><h2>Tạo đề thi ngẫu nhiên</h2><button type="button" data-close-dialog aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></header>
+      <div class="random-exam-body">
+        <h3><span>1.</span> Thông tin đề thi</h3>
+        <div class="random-exam-grid">
+          <label><span>Tên đề thi <em>*</em></span><input name="name" value="Đề thi An toàn lao động - Ngẫu nhiên" required></label>
+          <label><span>Mô tả</span><textarea name="description" rows="3">Đề thi được tạo tự động từ ngân hàng câu hỏi theo tỷ lệ và số lượng câu hỏi đã chọn.</textarea></label>
+          <label><span>Chuyên đề <em>*</em></span><select name="category" required><option>An toàn lao động</option><option>Phòng cháy chữa cháy</option><option>Sơ cứu y tế</option><option>An toàn điện</option></select></label>
+          <label><span>Hình thức tạo</span><select name="method" aria-readonly="true"><option>Ngẫu nhiên</option></select></label>
+          <label><span>Thời gian làm bài <em>*</em></span><div class="random-input-unit"><input name="duration" type="number" value="60" min="5" max="300" required><b>phút</b></div></label>
+          <label><span>Tổng số câu hỏi <em>*</em></span><div class="random-input-unit"><input name="count" type="number" value="40" min="1" max="200" required><b>câu</b></div></label>
+          <label><span>Tổng điểm <em>*</em></span><div class="random-input-unit"><input name="score" type="number" value="40.0" min="1" step="0.5" required><b>điểm</b></div></label>
+          <label><span>Điểm đạt <em>*</em></span><div class="random-input-unit"><input name="passScore" type="number" value="28.0" min="0" step="0.5" required><b id="randomPassUnit">điểm (70%)</b></div></label>
         </div>
-        <section class="manual-question-section">
-          <h3>Chọn câu hỏi</h3>
-          <nav class="manual-tabs"><button type="button" class="active" data-manual-tab="bank">Ngân hàng câu hỏi</button><button type="button" data-manual-tab="selected">Câu hỏi đã chọn (<span id="manualSelectedTabCount">3</span>)</button></nav>
-          <div class="manual-filters"><label><i class="fa-solid fa-magnifying-glass"></i><input id="manualQuestionSearch" placeholder="Tìm theo mã câu hỏi, nội dung..."></label><select><option>Chủ đề</option></select><select><option>Loại câu hỏi</option></select><select><option>Mức độ</option></select><button type="button" aria-label="Lọc"><i class="fa-solid fa-filter"></i></button></div>
-          <div class="manual-table-wrap"><table class="manual-question-table"><thead><tr><th><input id="manualSelectAll" type="checkbox"></th><th>Mã câu hỏi</th><th>Nội dung câu hỏi</th><th>Loại</th><th>Mức độ</th><th>Điểm</th><th>Thao tác</th></tr></thead><tbody id="manualQuestionBody"></tbody></table></div>
-          <div class="manual-summary"><span><i class="fa-regular fa-circle-check"></i> Đã chọn: <b id="manualSelectedCount">3 câu</b></span><span><i class="fa-regular fa-star"></i> Tổng điểm hiện tại: <b id="manualSelectedScore">2.0 / 10</b></span><button type="button" data-show-selected><i class="fa-regular fa-eye"></i> Xem danh sách đã chọn</button></div>
-        </section>
+        <div class="random-exam-note"><i class="fa-solid fa-circle-info"></i><span>Hệ thống sẽ tự động chọn câu hỏi ngẫu nhiên theo tiêu chí đã thiết lập.</span></div>
       </div>
-      <footer class="manual-footer"><button type="button" class="btn ghost" data-close-dialog>Hủy</button><span></span><button type="button" class="btn ghost" data-save-draft>Lưu nháp</button><button type="button" class="btn ghost" data-preview-manual>Xem trước đề</button><button class="btn primary">Lưu đề thi</button></footer>
+      <footer><button type="button" class="btn ghost" data-close-dialog>Hủy bỏ</button><button class="btn primary">Tạo đề thi</button></footer>
     </form>
   </dialog>
 
@@ -81,7 +79,7 @@
     <section class="exam-detail-shell">
       <header class="exam-detail-modal-header">
         <div class="exam-detail-heading"><span><i class="fa-solid fa-file-circle-check"></i></span><div><h2 id="examDetailModalTitle">Chi tiết đề thi</h2><p id="examDetailModalSubtitle">Xem thông tin cấu hình và nội dung đề</p></div></div>
-        <div class="exam-detail-header-actions" id="examDetailHeaderActions"><button type="button" class="btn ghost" data-detail-action="copy"><i class="fa-regular fa-copy"></i>Sao chép</button><button type="button" class="btn ghost" data-detail-action="export"><i class="fa-solid fa-download"></i>Xuất PDF</button><button type="button" class="btn primary" data-detail-action="edit"><i class="fa-solid fa-pen"></i>Chỉnh sửa</button><button type="button" class="exam-detail-close" data-close-dialog aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></div>
+        <div class="exam-detail-header-actions" id="examDetailHeaderActions"><button type="button" class="btn ghost" data-detail-action="copy" aria-label="Sao chép đề" title="Sao chép đề"><i class="fa-regular fa-copy"></i></button><button type="button" class="btn ghost" data-detail-action="export" aria-label="Xuất PDF" title="Xuất PDF"><i class="fa-solid fa-download"></i></button><button type="button" class="btn primary" data-detail-action="edit" aria-label="Chỉnh sửa đề" title="Chỉnh sửa đề"><i class="fa-solid fa-pen"></i></button><button type="button" class="exam-detail-close" data-close-dialog aria-label="Đóng" title="Đóng"><i class="fa-solid fa-xmark"></i></button></div>
       </header>
       <div class="exam-detail-body">
         <section class="exam-detail-hero">

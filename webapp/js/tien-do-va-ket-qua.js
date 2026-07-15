@@ -12,12 +12,26 @@
       } else window.appDialog({ title: name, message: row?.innerText.replace(/\s+/g, ' ') || 'Thông tin chi tiết kết quả.', confirmText: 'Đóng', cancelText: '' });
     });
   });
-  root.querySelectorAll('.search-box input').forEach(input => input.addEventListener('input', () => {
-    const table = input.closest('.panel-card')?.querySelector('table'); const term = input.value.toLocaleLowerCase('vi');
-    table?.querySelectorAll('tbody tr').forEach(row => row.hidden = !row.textContent.toLocaleLowerCase('vi').includes(term));
-  }));
+  const paginationControllers = new Map();
+  root.querySelectorAll('.pagination').forEach(pagination => {
+    const card = pagination.closest('.panel-card'), table = card?.querySelector('table'), pages = pagination.querySelector('.pages'), summary = pagination.querySelector(':scope > span');
+    if (!table || !pages) return;
+    const rows = [...table.querySelectorAll('tbody tr')], pageSize = 5;
+    let currentPage = Number(new URLSearchParams(location.search).get(`${table.className.split(' ')[0]}Page`)) || 1;
+    const renderPage = () => {
+      const search = card.querySelector('.search-box input')?.value.toLocaleLowerCase('vi') || '';
+      const filtered = rows.filter(row => !search || row.textContent.toLocaleLowerCase('vi').includes(search));
+      const pageCount = Math.max(1, Math.ceil(filtered.length / pageSize)); currentPage = Math.min(currentPage, pageCount);
+      rows.forEach(row => { row.hidden = true; }); filtered.slice((currentPage - 1) * pageSize, currentPage * pageSize).forEach(row => { row.hidden = false; });
+      const from = filtered.length ? (currentPage - 1) * pageSize + 1 : 0, to = Math.min(currentPage * pageSize, filtered.length);
+      summary.textContent = `Hiển thị ${from} - ${to} trong ${filtered.length} bản ghi`;
+      pages.innerHTML = `<button type="button" data-result-page="${currentPage-1}" ${currentPage===1?'disabled':''} aria-label="Trang trước">‹</button>${Array.from({length:pageCount},(_,index)=>`<button type="button" data-result-page="${index+1}" class="${currentPage===index+1?'active':''}">${index+1}</button>`).join('')}<button type="button" data-result-page="${currentPage+1}" ${currentPage===pageCount?'disabled':''} aria-label="Trang sau">›</button>`;
+    };
+    pages.addEventListener('click',event=>{const button=event.target.closest('[data-result-page]');if(!button||button.disabled)return;currentPage=Number(button.dataset.resultPage);const url=new URL(location.href);url.searchParams.set(`${table.className.split(' ')[0]}Page`,currentPage);history.replaceState(null,'',url);renderPage()});
+    paginationControllers.set(card,{render:renderPage,reset:()=>{currentPage=1;renderPage()}}); renderPage();
+  });
+  root.querySelectorAll('.search-box input').forEach(input => input.addEventListener('input', () => paginationControllers.get(input.closest('.panel-card'))?.reset()));
   root.querySelectorAll('.filter-box').forEach(button => button.addEventListener('click', () => window.appDialog({ title: 'Bộ lọc', message: 'Dữ liệu hiện đang được lọc theo học kỳ và trạng thái đang chọn trên trang.', confirmText: 'Đã hiểu', cancelText: '' })));
-  root.querySelectorAll('.pages').forEach(pages => pages.addEventListener('click', event => { const button = event.target.closest('button'); if (!button) return; pages.querySelectorAll('button').forEach(item => item.classList.toggle('active', item === button)); window.showAppToast(`Đã chuyển trang ${button.textContent.trim()}.`); }));
   const assignmentDetail = root.querySelector('.assignment-detail');
   const assignmentTable = root.querySelector('.assignment-list .result-table');
   if (assignmentDetail && assignmentTable) {

@@ -1,4 +1,52 @@
 (() => {
+  const prefix = 'vbs-lms:';
+  const clone = value => value == null ? value : JSON.parse(JSON.stringify(value));
+  const read = (key, fallback = []) => {
+    try {
+      const value = localStorage.getItem(prefix + key);
+      return value == null ? clone(fallback) : JSON.parse(value);
+    } catch (error) {
+      console.warn(`Không thể đọc dữ liệu ${key}`, error);
+      return clone(fallback);
+    }
+  };
+  const write = (key, value) => {
+    localStorage.setItem(prefix + key, JSON.stringify(value));
+    window.dispatchEvent(new CustomEvent('lms:data-change', { detail:{ key, value:clone(value) } }));
+    return value;
+  };
+  window.LMSStore = Object.freeze({
+    read,
+    write,
+    seed(key, records) {
+      if (localStorage.getItem(prefix + key) == null) write(key, records);
+      return read(key, records);
+    },
+    all(key, fallback = []) { return read(key, fallback); },
+    find(key, id) { return read(key, []).find(item => String(item.id) === String(id)); },
+    save(key, record) {
+      const records = read(key, []);
+      const now = new Date().toISOString();
+      const index = records.findIndex(item => String(item.id) === String(record.id));
+      const saved = { ...record, id:record.id || `${key}-${Date.now()}`, updatedAt:now };
+      if (index >= 0) records[index] = { ...records[index], ...saved };
+      else records.unshift({ ...saved, createdAt:saved.createdAt || now });
+      write(key, records);
+      return saved;
+    },
+    remove(key, id) {
+      const records = read(key, []);
+      const removed = records.find(item => String(item.id) === String(id));
+      if (removed) write(key, records.filter(item => String(item.id) !== String(id)));
+      return removed;
+    },
+    nextId(key) {
+      return Math.max(0, ...read(key, []).map(item => Number(item.id) || 0)) + 1;
+    }
+  });
+})();
+
+(() => {
   const appScriptUrl = document.currentScript?.src || new URL('js/app.js', window.location.href).href;
   if (!document.querySelector('link[href*="font-awesome"],link[href*="fontawesome"]')) {
     const fontAwesome = document.createElement('link');
@@ -120,12 +168,11 @@
         ['gv-exam','../html/gv/ngan-hang-de-thi.html','fa-clipboard-question','Ngân hàng đề thi'],
         ['gv-proctor','../html/gv/giam-sat-thi.html','fa-shield-halved','Giám sát thi'],
         ['gv-examsession','../html/gv/ca-thi.html','fa-flag','Tổ chức ca thi'],
-        ['gv-grade','../html/gv/diem-danh-cham-diem.html','fa-check','Điểm danh &amp; chấm điểm'],
         ['gv-cert','../html/gv/quan-ly-chung-chi.html','fa-certificate','Quản lý chứng chỉ']
       ]},
       { title:'Kế hoạch', items:[
         ['gv-plan','../html/gv/ke-hoach-dao-tao.html','fa-calendar-days','Kế hoạch &amp; nhu cầu'],
-        ['gv-needsurvey','../html/gv/khao-sat-nhu-cau.html','fa-file-lines','Khảo sát nhu cầu'],
+        ['gv-needsurvey','../html/gv/khao-sat-nhu-cau.html','fa-file-lines','Khảo sát'],
         ['gv-completion','../html/gv/xet-hoan-thanh.html','fa-circle-check','Xét hoàn thành'],
         ['gv-cost','../html/gv/chi-phi-dao-tao.html','fa-money-bill','Chi phí đào tạo']
       ]},
@@ -356,6 +403,7 @@ document.addEventListener('click', event => {
 document.addEventListener('click', async event => {
   const action = event.target.closest('[data-course-action="copy"], [data-course-action="delete"], #classBody [data-action="copy"], #classBody [data-action="delete"], #bankBody [data-action="copy"], #bankBody [data-action="delete"]');
   if (!action) return;
+  if (action.closest('[data-real-actions="true"]') || action.closest('#bankView')?.dataset.realBankActions === 'true') return;
   event.preventDefault(); event.stopImmediatePropagation();
   const row = action.closest('tr'); if (!row) return;
   const removing = action.dataset.action === 'delete' || action.dataset.courseAction === 'delete';
@@ -373,6 +421,7 @@ document.addEventListener('click', async event => {
 document.addEventListener('click', event => {
   const button = event.target.closest('#proctorBody [data-action="result"], #proctorBody [data-action="more"], #proctorTableBody [data-action="result"], #proctorTableBody [data-action="more"]');
   if (!button) return;
+  if (button.closest('[data-real-actions="true"]')) return;
   event.preventDefault(); event.stopImmediatePropagation();
   if (button.dataset.action === 'result') window.appDialog({ title: 'Kết quả ca thi', html: '<p><b>42</b> thí sinh · <b>38</b> đạt · <b>4</b> chưa đạt</p><p>Điểm trung bình: <b>7,9/10</b></p>', confirmText: 'Đóng', cancelText: '' });
   else window.appDialog({ title: 'Thao tác ca thi', html: `<p>Mã ca: <b>${button.dataset.id}</b></p><button class="btn ghost" type="button" onclick="navigator.clipboard?.writeText('${button.dataset.id}');window.showAppToast('Đã sao chép mã ca thi')">Sao chép mã</button>`, confirmText: 'Đóng', cancelText: '' });
@@ -384,6 +433,7 @@ document.addEventListener('click', async event => {
   if (!manual && !bulk) return;
   const bank = event.target.closest('#examBankView, .exam-bank-view, main');
   if (!bank?.querySelector('#bankBody')) return;
+  if (bank.querySelector('#bankView')?.dataset.realBankActions === 'true' || document.getElementById('bankView')?.dataset.realBankActions === 'true') return;
   event.preventDefault(); event.stopImmediatePropagation();
   if (manual) {
     const accepted = await window.appDialog({ title: 'Tạo đề thi thủ công', html: '<label class="field">Tên đề<input id="manualExamName" value="Đề kiểm tra an toàn mới"></label><label class="field">Số câu<input id="manualExamCount" type="number" min="1" value="20"></label><label class="field">Thời gian (phút)<input id="manualExamTime" type="number" min="5" value="30"></label>', confirmText: 'Tạo đề' });
@@ -398,6 +448,7 @@ document.addEventListener('click', async event => {
 
 document.addEventListener('submit', event => {
   if (!event.target.matches('#importForm, #autoExamForm')) return;
+  if (event.target.dataset.realImport === 'true') return;
   if (!event.target.reportValidity()) return;
   event.preventDefault(); event.stopImmediatePropagation();
   const tbody = document.getElementById('bankBody'); const sample = tbody?.querySelector('tr');

@@ -1,12 +1,7 @@
 (() => {
-  const form = document.getElementById('postTrainingSurvey');
-  if (!form) return;
-  ['goal', 'materials', 'lms', 'satisfaction'].forEach(name => form.querySelector(`[name="${name}"]`)?.setAttribute('required', ''));
-  form.querySelector('.survey-actions .ghost').addEventListener('click', () => history.length > 1 ? history.back() : location.href = 'khoa-hoc-cua-toi.html');
-  form.addEventListener('submit', event => {
-    if (!form.checkValidity()) { event.preventDefault(); event.stopImmediatePropagation(); form.reportValidity(); return; }
-    form.querySelectorAll('input, textarea, button').forEach(control => control.disabled = true);
-    form.classList.add('submitted');
-    window.showAppToast('Cảm ơn bạn. Khảo sát đã được ghi nhận.');
-  }, true);
+  const form=document.getElementById('postTrainingSurvey');if(!form)return;const surveyId='post-java-basic-2025',existing=window.LMSStore.find('survey-responses',surveyId);['goal','materials','lms','satisfaction'].forEach(name=>form.querySelector(`[name="${name}"]`)?.setAttribute('required',''));
+  const renderSubmitted=response=>{form.querySelectorAll('input,textarea,button').forEach(control=>control.disabled=true);form.classList.add('submitted');const actions=form.querySelector('.survey-actions');actions.innerHTML=`<div class="notice" style="width:100%"><div class="ic-wrap"><i class="fa-solid fa-circle-check"></i></div><div><b>Khảo sát đã được gửi</b><div class="faint">Ghi nhận lúc ${new Date(response.submittedAt).toLocaleString('vi-VN')}</div></div></div>`};
+  if(existing){Object.entries(existing.answers||{}).forEach(([name,value])=>{const controls=form.querySelectorAll(`[name="${name}"]`);controls.forEach(control=>{if(control.type==='radio')control.checked=control.value===String(value);else control.value=value})});form.querySelector('#feedback').value=existing.feedback||'';renderSubmitted(existing);return}
+  form.querySelector('.survey-actions .ghost').addEventListener('click',()=>history.length>1?history.back():location.href='khoa-hoc-cua-toi.html');
+  form.addEventListener('submit',async event=>{event.preventDefault();event.stopImmediatePropagation();if(!form.checkValidity()){form.reportValidity();return}const values=Object.fromEntries(new FormData(form)),accepted=await window.appDialog({title:'Gửi khảo sát sau đào tạo',html:`<p class="app-dialog-note">Bạn sắp gửi phản hồi cho khóa học <b>Lập trình Java cơ bản</b>. Sau khi gửi, nội dung sẽ chuyển sang chế độ chỉ đọc.</p><div class="app-dialog-summary"><span><b>${values.instructor_rating}/5</b>giảng viên</span><span><b>${values.satisfaction}/5</b>hài lòng</span><span><b>${form.querySelector('#feedback').value.length}</b>ký tự góp ý</span></div><p>Thông tin phản hồi được sử dụng để cải thiện nội dung, giảng viên và trải nghiệm LMS.</p>`,confirmText:'Gửi khảo sát',cancelText:'Kiểm tra lại'});if(!accepted)return;const response={id:surveyId,courseId:'java-basic',courseName:'Lập trình Java cơ bản',answers:values,feedback:form.querySelector('#feedback').value.trim(),submittedAt:new Date().toISOString(),status:'Đã gửi'};window.LMSStore.save('survey-responses',response);renderSubmitted(response);window.showAppToast('Cảm ơn bạn. Khảo sát đã được ghi nhận.')},true);
 })();

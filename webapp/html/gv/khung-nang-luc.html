@@ -1,1 +1,45 @@
+<<<<<<< ours
 <!doctype html><html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Chức danh & khung năng lực | E-Learning VBS</title><link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../../css/main.css"><link rel="stylesheet" href="../../css/gv/khung-nang-luc.css"></head><body data-role="gv" data-page="gv-competency"><main class="main competency-page"><section class="screen active"><header class="competency-head"><div><div class="crumb">Chương trình <i class="fa-solid fa-chevron-right"></i> Quản lý lộ trình đào tạo</div><h1>Chức danh & khung năng lực</h1><p>Xây dựng chức danh, chuẩn năng lực và lộ trình học tập tương ứng</p></div><button class="btn primary" id="mainAdd"><i class="fa-solid fa-plus"></i> Thêm chức danh</button></header><nav class="competency-tabs" id="competencyTabs"><button class="active" data-tab="positions">Quản lý chức danh</button><button data-tab="frameworks">Khung năng lực</button><button data-tab="paths">Lộ trình theo chức danh</button></nav><form class="competency-filter" id="competencyFilter"><label><input name="q" placeholder="Tìm theo tên, mã, mô tả..."><i class="fa-solid fa-magnifying-glass"></i></label><select name="unit"><option value="">Tất cả đơn vị</option><option>Phòng Kinh doanh</option><option>Phòng Nhân sự</option><option>Trung tâm CNTT</option></select><select name="status"><option value="">Tất cả trạng thái</option><option>Đang hoạt động</option><option>Tạm dừng</option></select><button type="reset" class="btn ghost">Xóa bộ lọc</button></form><div id="competencyPanel"></div><dialog class="competency-dialog" id="positionDialog"><header><div><h2>Thêm chức danh</h2><p>Tạo mới chức danh để xây dựng lộ trình đào tạo</p></div><button data-close><i class="fa-solid fa-xmark"></i></button></header><form id="positionForm"><label>Tên chức danh *<input required placeholder="Nhập tên chức danh"></label><label>Mã chức danh<input placeholder="Nhập mã chức danh"></label><label>Đơn vị áp dụng *<select required><option>Phòng Kinh doanh</option><option>Phòng Nhân sự</option><option>Trung tâm CNTT</option></select></label><label>Mô tả<textarea maxlength="500" placeholder="Nhập mô tả chức danh"></textarea></label><label>Trạng thái<select><option>Đang hoạt động</option><option>Tạm dừng</option></select></label><footer><button type="button" class="btn ghost" data-close>Hủy</button><button class="btn primary"><i class="fa-regular fa-floppy-disk"></i> Lưu</button></footer></form></dialog><dialog class="competency-dialog" id="levelDialog"><header><div><h2>Quản lý cấp độ năng lực</h2><p>Năng lực lãnh đạo</p></div><button data-close><i class="fa-solid fa-xmark"></i></button></header><div id="levelBody"></div><footer><button class="btn ghost" data-close>Đóng</button><button class="btn primary" id="addLevel"><i class="fa-solid fa-plus"></i> Thêm cấp độ</button></footer></dialog><div class="competency-toast" id="competencyToast" hidden></div></section></main><script src="../../js/gv-shell.js"></script><script src="../../js/app.js"></script><script src="../../js/khung-nang-luc.js"></script></body></html>
+=======
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Chức danh & khung năng lực | E-Learning VBS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/gv/khung-nang-luc.css">
+</head>
+<body data-role="gv" data-page="gv-competency">
+  <main class="main competency-page"><section class="screen active">
+    <header class="competency-head"><div><div class="crumb">Chương trình <i class="fa-solid fa-chevron-right"></i> Quản lý lộ trình đào tạo</div><h1>Chức danh & khung năng lực</h1><p>Xây dựng chức danh, chuẩn năng lực và lộ trình học tập tương ứng</p></div><button class="btn primary" id="mainAdd"><i class="fa-solid fa-plus"></i> Thêm chức danh</button></header>
+    <nav class="competency-tabs" id="competencyTabs"><button class="active" data-tab="positions">Quản lý chức danh</button><button data-tab="frameworks">Khung năng lực</button><button data-tab="paths">Lộ trình theo chức danh</button></nav>
+    <form class="competency-filter" id="competencyFilter"><label><input name="q" placeholder="Tìm theo tên, mã, mô tả..."><i class="fa-solid fa-magnifying-glass"></i></label><select name="unit"><option value="">Tất cả đơn vị</option><option>Phòng Kinh doanh</option><option>Phòng Nhân sự</option><option>Trung tâm CNTT</option></select><select name="status"><option value="">Tất cả trạng thái</option><option>Đang hoạt động</option><option>Tạm dừng</option></select><button type="reset" class="btn ghost">Xóa bộ lọc</button></form>
+    <div id="competencyPanel"></div>
+
+    <dialog class="competency-dialog" id="positionDialog"><header><div><h2>Thêm chức danh</h2><p>Tạo mới chức danh để xây dựng lộ trình đào tạo</p></div><button type="button" data-close aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></header><form id="positionForm"><label>Tên chức danh *<input required placeholder="Nhập tên chức danh"></label><label>Mã chức danh<input placeholder="Nhập mã chức danh"></label><label>Đơn vị áp dụng *<select required><option>Phòng Kinh doanh</option><option>Phòng Nhân sự</option><option>Trung tâm CNTT</option></select></label><label>Mô tả<textarea maxlength="500" placeholder="Nhập mô tả chức danh"></textarea></label><label>Trạng thái<select><option>Đang hoạt động</option><option>Tạm dừng</option></select></label><footer><button type="button" class="btn ghost" data-close>Hủy</button><button class="btn primary"><i class="fa-regular fa-floppy-disk"></i> Lưu</button></footer></form></dialog>
+
+    <dialog class="competency-dialog competency-create-dialog" id="competencyCreateDialog">
+      <header><div><h2>Thêm năng lực</h2><p>Tạo năng lực mới trong thư viện khung năng lực</p></div><button type="button" data-close aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></header>
+      <form id="competencyCreateForm">
+        <div class="competency-create-grid">
+          <label><span>Tên năng lực <em>*</em></span><input name="name" required maxlength="120" placeholder="Ví dụ: Năng lực tư duy chiến lược"></label>
+          <label><span>Mã năng lực <em>*</em></span><input name="code" required maxlength="20" placeholder="Ví dụ: NL-TDCL"></label>
+          <label><span>Nhóm năng lực <em>*</em></span><select name="group" required><option value="">Chọn nhóm năng lực</option><option>Lãnh đạo & Quản lý</option><option>Năng lực cốt lõi</option><option>Năng lực chuyên môn</option></select></label>
+          <label><span>Số cấp độ <em>*</em></span><select name="levels" required><option value="3">3 cấp độ</option><option value="4" selected>4 cấp độ</option><option value="5">5 cấp độ</option></select></label>
+          <label class="wide"><span>Mô tả năng lực <em>*</em></span><textarea name="description" required maxlength="500" placeholder="Mô tả kiến thức, kỹ năng và hành vi thể hiện năng lực..."></textarea><small><span id="competencyDescriptionCount">0</span>/500 ký tự</small></label>
+          <label><span>Trạng thái</span><select name="status"><option>Đang hoạt động</option><option>Tạm dừng</option></select></label>
+        </div>
+        <div class="competency-create-note"><i class="fa-solid fa-circle-info"></i><span>Sau khi tạo, bạn có thể thiết lập mô tả chi tiết cho từng cấp độ năng lực.</span></div>
+        <footer><button type="button" class="btn ghost" data-close>Hủy</button><button class="btn primary"><i class="fa-solid fa-plus"></i> Tạo năng lực</button></footer>
+      </form>
+    </dialog>
+
+    <dialog class="competency-dialog" id="levelDialog"><header><div><h2>Quản lý cấp độ năng lực</h2><p>Năng lực lãnh đạo</p></div><button type="button" data-close aria-label="Đóng"><i class="fa-solid fa-xmark"></i></button></header><div id="levelBody"></div><footer><button class="btn ghost" data-close>Đóng</button><button class="btn primary" id="addLevel"><i class="fa-solid fa-plus"></i> Thêm cấp độ</button></footer></dialog>
+    <div class="competency-toast" id="competencyToast" hidden></div>
+  </section></main>
+  <script src="../../js/gv-shell.js"></script><script src="../../js/app.js"></script><script src="../../js/khung-nang-luc.js"></script>
+</body>
+</html>
+>>>>>>> theirs
