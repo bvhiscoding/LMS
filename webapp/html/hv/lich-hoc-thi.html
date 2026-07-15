@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/hv/lich-hoc-thi.css">
 </head>
 <body data-role="hv" data-page="hv-schedule">
 
@@ -119,17 +120,20 @@
 
 
 <main class="main"><section class="screen active" id="hv-schedule">
-  <div class="page-head"><div><div class="crumb">Học tập › Lịch học &amp; thi</div><h1>Lịch học &amp; thi</h1><div class="sub">Tháng 7/2026</div></div><div class="toolbar" style="margin:0"><span class="chip on">Tháng</span><span class="chip">Tuần</span><span class="chip">Danh sách</span></div></div>
-  <div class="card pad">
-    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:8px;text-align:center;color:var(--muted);font-size:12px;font-weight:600;margin-bottom:10px"><div>T2</div><div>T3</div><div>T4</div><div>T5</div><div>T6</div><div>T7</div><div>CN</div></div>
-    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:8px" id="cal"></div>
+  <div class="page-head"><div><div class="crumb">Học tập › Lịch học &amp; thi</div><h1>Lịch học &amp; thi</h1><div class="sub">Tháng 7/2026</div></div><div class="toolbar schedule-view-tabs" style="margin:0"><span class="chip on">Tháng</span><span class="chip">Tuần</span><span class="chip">Danh sách</span></div></div>
+  <div class="schedule-search-panel">
+    <label class="schedule-search"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input id="scheduleEventSearch" type="search" placeholder="Tìm theo tên sự kiện, khóa học, giảng viên, địa điểm..." autocomplete="off"><button type="button" id="clearScheduleSearch" aria-label="Xóa nội dung tìm kiếm" hidden><i class="fa-solid fa-xmark"></i></button></label>
+    <span id="scheduleSearchSummary">Tất cả sự kiện trong tháng</span>
   </div>
-  <div class="card pad" style="margin-top:18px">
-    <div class="sec-title"><h2>Sự kiện sắp tới</h2></div>
-    <div class="list-row"><div style="width:44px;text-align:center;flex:none"><div style="font-size:11px;color:var(--muted)">T4</div><b style="font-size:18px;color:var(--brand)">09</b></div><div style="width:4px;height:36px;background:var(--accent);border-radius:2px;flex:none"></div><div style="flex:1"><b>Thi cuối khóa — An toàn lao động</b><div class="faint" style="font-size:12px">09:00–10:00 · Trực tuyến · Mã đề 04</div></div><span class="badge b-amber">Sắp diễn ra</span></div>
-    <div class="list-row"><div style="width:44px;text-align:center;flex:none"><div style="font-size:11px;color:var(--muted)">T6</div><b style="font-size:18px">11</b></div><div style="width:4px;height:36px;background:var(--brand);border-radius:2px;flex:none"></div><div style="flex:1"><b>Buổi học trực tiếp — Quản trị KD</b><div class="faint" style="font-size:12px">14:00–16:30 · Phòng 301</div></div><span class="badge b-blue">Đã đăng ký</span></div>
-    <div class="list-row"><div style="width:44px;text-align:center;flex:none"><div style="font-size:11px;color:var(--muted)">T7</div><b style="font-size:18px">12</b></div><div style="width:4px;height:36px;background:var(--success);border-radius:2px;flex:none"></div><div style="flex:1"><b>Khảo sát sau đào tạo</b><div class="faint" style="font-size:12px">Mở cả ngày · Trực tuyến</div></div><span class="badge b-gray">Chờ mở</span></div>
+  <div class="card schedule-calendar-card" id="scheduleCalendarCard">
+    <div class="schedule-weekdays"><div>T2</div><div>T3</div><div>T4</div><div>T5</div><div>T6</div><div>T7</div><div>CN</div></div>
+    <div id="cal" class="schedule-calendar"></div>
   </div>
+  <div class="card schedule-list-card" id="scheduleListCard" hidden>
+    <div class="sec-title"><div><h2 id="scheduleListTitle">Sự kiện tháng 7</h2><p id="scheduleListCount"></p></div></div>
+    <div id="scheduleEventList" class="schedule-event-list"></div>
+  </div>
+  <div class="schedule-empty" id="scheduleEmpty" hidden><i class="fa-regular fa-calendar-xmark"></i><h3>Không tìm thấy sự kiện</h3><p>Thử tìm bằng tên khóa học, loại sự kiện, giảng viên hoặc địa điểm khác.</p></div>
 </section></main>
 <script src="../../js/app.js"></script>
 <script src="../../js/lich-hoc-thi.js"></script>

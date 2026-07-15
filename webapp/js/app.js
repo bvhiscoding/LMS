@@ -594,6 +594,177 @@ document.getElementById('testNext')?.addEventListener('click', event => {
   window.showAppToast('Đã tạo bài kiểm tra cho lớp.');
 }, true);
 
+// Global AI learning assistant. Uses an API when LMS_AI_ENDPOINT is configured,
+// otherwise falls back to contextual prototype responses for the static demo.
+(() => {
+  if (document.getElementById('lmsAiAssistant')) return;
+  const pageTitle = document.querySelector('main h1')?.textContent.trim() || document.title.split('|')[0].trim() || 'E-Learning VBS';
+  const role = document.body.dataset.role || 'hv';
+  const page = document.body.dataset.page || '';
+  const storageKey = 'lms-ai-chat-history';
+  const roleLabel = role === 'ad' ? 'Quản trị hệ thống' : role === 'gv' ? 'Giảng viên / CBQL' : 'Học viên';
+  const assistant = document.createElement('div');
+  assistant.id = 'lmsAiAssistant';
+  assistant.className = 'lms-ai-assistant';
+  assistant.innerHTML = `
+    <section class="lms-ai-panel" id="lmsAiPanel" aria-label="Trợ lý AI E-Learning" hidden>
+      <header class="lms-ai-header">
+        <div class="lms-ai-identity"><span class="lms-ai-avatar"><i class="fa-solid fa-wand-magic-sparkles"></i></span><div><h2>Trợ lý học tập AI</h2><p><i></i> Sẵn sàng hỗ trợ · ${escapeHtml(roleLabel)}</p></div></div>
+        <div class="lms-ai-header-actions"><button type="button" id="lmsAiReset" aria-label="Tạo cuộc trò chuyện mới" title="Cuộc trò chuyện mới"><i class="fa-solid fa-rotate-right"></i></button><button type="button" id="lmsAiClose" aria-label="Thu nhỏ trợ lý AI"><i class="fa-solid fa-minus"></i></button></div>
+      </header>
+      <div class="lms-ai-context"><i class="fa-regular fa-file-lines"></i><span>Đang hỗ trợ tại: <b>${escapeHtml(pageTitle)}</b></span></div>
+      <div class="lms-ai-messages" id="lmsAiMessages" role="log" aria-live="polite"></div>
+      <div class="lms-ai-followups" id="lmsAiFollowups"><span>Gợi ý câu hỏi tiếp theo</span><div id="lmsAiSuggestions"></div></div>
+      <form class="lms-ai-composer" id="lmsAiForm"><textarea id="lmsAiInput" rows="1" maxlength="1000" placeholder="Nhập câu hỏi cho trợ lý AI..." aria-label="Nội dung câu hỏi"></textarea><button type="submit" id="lmsAiSend" aria-label="Gửi câu hỏi"><i class="fa-solid fa-arrow-up"></i></button></form>
+      <footer>AI có thể đưa ra thông tin chưa chính xác. Hãy kiểm tra nội dung quan trọng.</footer>
+    </section>
+    <button class="lms-ai-toggle" id="lmsAiToggle" type="button" aria-label="Mở trợ lý AI" aria-controls="lmsAiPanel" aria-expanded="false"><span><i class="fa-solid fa-wand-magic-sparkles"></i></span><b>Hỏi AI</b><em></em></button>`;
+  document.body.appendChild(assistant);
+
+  const panel = document.getElementById('lmsAiPanel');
+  const toggle = document.getElementById('lmsAiToggle');
+  const close = document.getElementById('lmsAiClose');
+  const reset = document.getElementById('lmsAiReset');
+  const form = document.getElementById('lmsAiForm');
+  const input = document.getElementById('lmsAiInput');
+  const send = document.getElementById('lmsAiSend');
+  const messages = document.getElementById('lmsAiMessages');
+  const suggestions = document.getElementById('lmsAiSuggestions');
+  let history = [];
+  let waiting = false;
+
+  try { history = JSON.parse(sessionStorage.getItem(storageKey) || '[]'); } catch { history = []; }
+  if (!Array.isArray(history)) history = [];
+
+  const initialSuggestions = () => {
+    if (page.includes('schedule')) return ['Lịch học tiếp theo của tôi?', 'Tôi có bài thi nào sắp tới?', 'Nhắc tôi các hạn nộp bài'];
+    if (page.includes('course') || page.includes('class')) return ['Tóm tắt thông tin trên trang', 'Gợi ý lộ trình học phù hợp', 'Tôi cần hoàn thành nội dung nào?'];
+    if (page.includes('exam') || page.includes('test')) return ['Cách chuẩn bị cho bài thi?', 'Giải thích quy chế làm bài', 'Gợi ý kế hoạch ôn tập'];
+    if (role === 'gv') return ['Tóm tắt dữ liệu trên trang', 'Gợi ý công việc cần ưu tiên', 'Cách hỗ trợ học viên hiệu quả?'];
+    if (role === 'ad') return ['Tóm tắt trạng thái hệ thống', 'Gợi ý kiểm tra dữ liệu', 'Các tác vụ quản trị phổ biến'];
+    return ['Tôi nên học gì tiếp theo?', 'Tóm tắt nội dung trên trang', 'Lịch học và bài thi sắp tới'];
+  };
+
+  function saveHistory() {
+    try { sessionStorage.setItem(storageKey, JSON.stringify(history.slice(-24))); } catch { /* Storage can be unavailable in private mode. */ }
+  }
+
+  function addMessage(kind, text, persist = true) {
+    const row = document.createElement('div');
+    row.className = `lms-ai-message ${kind}`;
+    const avatar = document.createElement('span');
+    avatar.className = 'lms-ai-message-avatar';
+    avatar.innerHTML = kind === 'assistant' ? '<i class="fa-solid fa-wand-magic-sparkles"></i>' : '<i class="fa-regular fa-user"></i>';
+    const bubble = document.createElement('div');
+    bubble.className = 'lms-ai-message-bubble';
+    bubble.textContent = text;
+    row.append(avatar, bubble);
+    messages.appendChild(row);
+    messages.scrollTop = messages.scrollHeight;
+    if (persist) { history.push({ kind, text, at: Date.now() }); saveHistory(); }
+    return row;
+  }
+
+  function renderSuggestions(items) {
+    suggestions.replaceChildren();
+    items.slice(0, 3).forEach((text) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.textContent = text;
+      button.addEventListener('click', () => { input.value = text; submitQuestion(); });
+      suggestions.appendChild(button);
+    });
+  }
+
+  function localReply(question) {
+    const query = question.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').toLowerCase();
+    if (/lich|su kien|sap toi|thoi gian/.test(query)) return 'Bạn có thể mở mục “Lịch học & thi” để xem lịch theo tháng, tuần hoặc danh sách. Hãy dùng ô tìm kiếm để lọc nhanh theo tên khóa học, giảng viên, địa điểm hay loại sự kiện.';
+    if (/thi|kiem tra|on tap|bai tap/.test(query)) return 'Để chuẩn bị hiệu quả, hãy kiểm tra thời gian mở bài, thời lượng và nội dung cần ôn; sau đó chia phần kiến thức thành các phiên 25–30 phút. Bạn cũng nên hoàn thành bài luyện tập trước khi vào bài thi chính thức.';
+    if (/khoa hoc|hoc tiep|lo trinh|noi dung/.test(query)) return `Tại trang “${pageTitle}”, bạn nên ưu tiên nội dung đang học dở hoặc có hạn gần nhất. Sau mỗi bài, hãy kiểm tra điều kiện hoàn thành và làm bài đánh giá nếu có.`;
+    if (/chung chi|hoan thanh|ket qua|diem/.test(query)) return 'Kết quả và chứng chỉ phụ thuộc vào tiến độ, điểm đạt và điều kiện hoàn thành của khóa học. Bạn có thể kiểm tra từng mục trong trang kết quả; nếu dữ liệu chưa cập nhật, hãy liên hệ giảng viên hoặc CBQL lớp.';
+    if (/tom tat|trang nay|dang xem/.test(query)) return `Bạn đang ở trang “${pageTitle}” với vai trò ${roleLabel}. Mình có thể giúp giải thích chức năng, tìm thông tin cần chú ý và đề xuất bước tiếp theo trên trang này.`;
+    if (/giang vien|hoc vien|quan ly|bao cao/.test(query)) return 'Bạn có thể bắt đầu bằng cách lọc đúng phạm vi dữ liệu, kiểm tra các bản ghi đang chờ xử lý, rồi dùng báo cáo hoặc thao tác hàng loạt để tiết kiệm thời gian. Mình có thể hướng dẫn chi tiết theo tác vụ bạn đang làm.';
+    if (/xin chao|hello|chao|ban la ai/.test(query)) return `Xin chào! Mình là trợ lý AI của E-Learning VBS. Mình đang đồng hành cùng bạn tại trang “${pageTitle}” và có thể hỗ trợ về khóa học, lịch học, bài thi, kết quả và thao tác trên hệ thống.`;
+    return `Mình đã ghi nhận câu hỏi về “${question}”. Trong bản mẫu này, mình có thể hướng dẫn theo dữ liệu và chức năng của E-Learning VBS. Bạn hãy nói rõ khóa học, sự kiện hoặc thao tác cần hỗ trợ để mình trả lời sát hơn.`;
+  }
+
+  function followupsFor(question) {
+    const query = question.toLowerCase();
+    if (query.includes('thi') || query.includes('kiểm tra')) return ['Lập kế hoạch ôn tập 7 ngày', 'Điều kiện để đạt là gì?', 'Mở trang làm bài thi'];
+    if (query.includes('lịch') || query.includes('sự kiện')) return ['Lọc các sự kiện trong tuần', 'Sự kiện nào diễn ra trực tuyến?', 'Tìm các hạn nộp bài'];
+    if (query.includes('khóa học') || query.includes('học tiếp')) return ['Khóa học nào sắp hết hạn?', 'Xem tiến độ học tập', 'Gợi ý cách học hiệu quả'];
+    return ['Giải thích chi tiết hơn', 'Tóm tắt thành các bước', 'Tôi nên làm gì tiếp theo?'];
+  }
+
+  async function requestReply(question) {
+    if (window.LMS_AI_ENDPOINT) {
+      const response = await fetch(window.LMS_AI_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: question, history: history.slice(-10), context: { page, pageTitle, role } }) });
+      if (!response.ok) throw new Error('AI request failed');
+      const data = await response.json();
+      return { text: data.reply || data.message, suggestions: data.suggestions };
+    }
+    await new Promise((resolve) => setTimeout(resolve, 650));
+    return { text: localReply(question), suggestions: followupsFor(question) };
+  }
+
+  async function submitQuestion() {
+    const question = input.value.trim();
+    if (!question || waiting) return;
+    input.value = '';
+    input.style.height = '';
+    addMessage('user', question);
+    waiting = true;
+    send.disabled = true;
+    const typing = addMessage('assistant typing', 'Đang suy nghĩ', false);
+    try {
+      const result = await requestReply(question);
+      typing.remove();
+      addMessage('assistant', result.text || 'Mình chưa thể trả lời câu hỏi này. Vui lòng thử diễn đạt theo cách khác.');
+      renderSuggestions(Array.isArray(result.suggestions) ? result.suggestions : followupsFor(question));
+    } catch {
+      typing.remove();
+      addMessage('assistant', 'Kết nối AI đang gián đoạn. Bạn có thể thử lại sau hoặc tiếp tục sử dụng các chức năng trên trang.');
+      renderSuggestions(['Thử gửi lại câu hỏi', 'Tóm tắt nội dung trên trang', 'Tôi nên làm gì tiếp theo?']);
+    } finally {
+      waiting = false;
+      send.disabled = false;
+      input.focus();
+    }
+  }
+
+  function openPanel() {
+    panel.hidden = false;
+    toggle.hidden = true;
+    toggle.setAttribute('aria-expanded', 'true');
+    requestAnimationFrame(() => { panel.classList.add('open'); input.focus(); messages.scrollTop = messages.scrollHeight; });
+  }
+  function closePanel() {
+    panel.classList.remove('open');
+    toggle.hidden = false;
+    toggle.setAttribute('aria-expanded', 'false');
+    setTimeout(() => { if (!panel.classList.contains('open')) panel.hidden = true; }, 180);
+    toggle.focus();
+  }
+  function resetChat() {
+    history = [];
+    saveHistory();
+    messages.replaceChildren();
+    addMessage('assistant', `Xin chào! Mình có thể giúp gì cho bạn tại trang “${pageTitle}”?`);
+    renderSuggestions(initialSuggestions());
+  }
+
+  if (history.length) history.forEach((message) => addMessage(message.kind, message.text, false));
+  else addMessage('assistant', `Xin chào! Mình là trợ lý AI của E-Learning VBS. Mình có thể giúp bạn tìm thông tin, giải thích chức năng và gợi ý bước tiếp theo tại trang “${pageTitle}”.`);
+  renderSuggestions(initialSuggestions());
+  toggle.addEventListener('click', openPanel);
+  close.addEventListener('click', closePanel);
+  reset.addEventListener('click', resetChat);
+  form.addEventListener('submit', (event) => { event.preventDefault(); submitQuestion(); });
+  input.addEventListener('keydown', (event) => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); submitQuestion(); } });
+  input.addEventListener('input', () => { input.style.height = ''; input.style.height = `${Math.min(input.scrollHeight, 96)}px`; });
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && !panel.hidden) closePanel(); });
+})();
+
 if (sessionStorage.getItem('lms-force-login') === '1') {
   sessionStorage.removeItem('lms-force-login');
   showLogin();
